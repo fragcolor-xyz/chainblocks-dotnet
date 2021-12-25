@@ -7,21 +7,9 @@ using Chainblocks;
 
 public class Test1 : MonoBehaviour
 {
-  CBVar ActivateUnmanaged(IntPtr context, IntPtr input)
-  {
-    Native.Core.Suspend(context, 2.0);
-    var res = new CBVar();
-    res.type = 12;
-    res.vector3 = new Vector3(1, 2, 3);
-    //! WE CAN'T TOUCH THE GC HERE or we crash...
-    return res;
-  }
-
-  ActivateUnmanagedDelegate _activateUnmanagedDelegate;
-
   IntPtr _env;
 
-  IntPtr _positionPtr;
+  ExternalVariable _position;
 
   IntPtr _node;
 
@@ -32,32 +20,24 @@ public class Test1 : MonoBehaviour
 
     _env = Native.cbLispCreate("");
 
-    _activateUnmanagedDelegate = new ActivateUnmanagedDelegate(ActivateUnmanaged);
-    var fptr = Marshal.GetFunctionPointerForDelegate(_activateUnmanagedDelegate);
-    var sptr = "0x" + fptr.ToString("X");
-    var chain = Native.cbLispEval(_env, "(do (defloop test (Msg \"XXX\") (UnsafeActivate! " + sptr + ") (ExpectFloat3) (Log) .position (Log)) test)");
+    using (var chain = new Variable())
+    {
+      Native.cbLispEval(_env, "(Chain \"test\" :Looped (Msg \"XXX\") .position (Log) (Pause 1.0))", chain.Ptr);
 
-    var fooPosition = new CBVar();
-    fooPosition.vector3 = new Vector3(3, 4, 5);
-    fooPosition.type = 12;
-    fooPosition.flags = (1 << 2);
-    _positionPtr = Marshal.AllocHGlobal(Marshal.SizeOf(fooPosition));
-    Marshal.StructureToPtr(fooPosition, _positionPtr, false);
-    Native.Core.SetExternalVariable(chain.chainRef, "position", _positionPtr);
+      _position = new ExternalVariable(chain.Value.chainRef, "position");
+      _position.Value.vector3 = new Vector3(3, 4, 5);
+      _position.Value.type = 12;
+      _position.Value.flags = (1 << 2);
 
-    _node = Native.Core.CreateNode();
-    Native.Core.Schedule(_node, chain.chainRef);
+      _node = Native.Core.CreateNode();
+      Native.Core.Schedule(_node, chain.Value.chainRef);
+    }
   }
 
   // Update is called once per frame
   void Update()
   {
-    var position = new CBVar();
-    position.vector3 = this.transform.position;
-    position.type = 12;
-    position.flags = (1 << 2);
-    // TODO I can't remember but I'm sure there might be a faster way to do this
-    Marshal.StructureToPtr(position, _positionPtr, false);
+    _position.Value.vector3 = this.transform.position;
     Native.Core.Tick(_node);
   }
 }
