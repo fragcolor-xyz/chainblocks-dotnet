@@ -51,17 +51,11 @@ namespace Chainblocks
     [FieldOffset(0)]
     public IntPtr chainRef;
 
-    [FieldOffset(28)]
+    [FieldOffset(16)]
     public byte type;
 
-    [FieldOffset(29)]
-    public byte innerType;
-
-    [FieldOffset(30)]
-    public byte flags;
-
-    [FieldOffset(31)]
-    public byte _unusedByte;
+    [FieldOffset(18)]
+    public ushort flags;
   }
 
   [StructLayout(LayoutKind.Sequential)]
