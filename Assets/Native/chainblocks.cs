@@ -56,6 +56,14 @@ namespace Chainblocks
 
     [FieldOffset(18)]
     public ushort flags;
+
+    static CBVar From(Vector3 v)
+    {
+      var ret = new CBVar();
+      ret.vector3 = v;
+      ret.type = 12;
+      return ret;
+    }
   }
 
   [StructLayout(LayoutKind.Sequential)]
@@ -250,6 +258,12 @@ namespace Chainblocks
     static public void Schedule(this CBCore core, IntPtr nodeRef, IntPtr chainRef)
     {
       var scheduleDelegate = Marshal.GetDelegateForFunctionPointer<ScheduleDelegate>(core._schedule);
+      scheduleDelegate(nodeRef, chainRef);
+    }
+
+    static public void Unschedule(this CBCore core, IntPtr nodeRef, IntPtr chainRef)
+    {
+      var scheduleDelegate = Marshal.GetDelegateForFunctionPointer<ScheduleDelegate>(core._unschedule);
       scheduleDelegate(nodeRef, chainRef);
     }
 
