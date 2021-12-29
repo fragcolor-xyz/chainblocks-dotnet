@@ -213,61 +213,61 @@ namespace Chainblocks
 
   public static class CBCoreExt
   {
-    static public IntPtr Alloc(this CBCore core, UInt32 size)
+    static public IntPtr Alloc(ref this CBCore core, UInt32 size)
     {
       var allocDelegate = Marshal.GetDelegateForFunctionPointer<AllocDelegate>(core._alloc);
       return allocDelegate(size);
     }
 
-    static public void Free(this CBCore core, IntPtr ptr)
+    static public void Free(ref this CBCore core, IntPtr ptr)
     {
       var freeDelegate = Marshal.GetDelegateForFunctionPointer<FreeDelegate>(core._free);
       freeDelegate(ptr);
     }
 
-    static public byte Suspend(this CBCore core, IntPtr context, double duration)
+    static public byte Suspend(ref this CBCore core, IntPtr context, double duration)
     {
       var suspendDelegate = Marshal.GetDelegateForFunctionPointer<SuspendDelegate>(core._suspend);
       return suspendDelegate(context, duration);
     }
 
-    static public IntPtr AllocExternalVariable(this CBCore core, IntPtr chain, string name)
+    static public IntPtr AllocExternalVariable(ref this CBCore core, IntPtr chain, string name)
     {
       var allocExternalVariableDelegate = Marshal.GetDelegateForFunctionPointer<AllocExternalVariableDelegate>(core._allocExternalVariable);
       return allocExternalVariableDelegate(chain, name);
     }
 
-    static public void FreeExternalVariable(this CBCore core, IntPtr chain, string name)
+    static public void FreeExternalVariable(ref this CBCore core, IntPtr chain, string name)
     {
       var freeExternalVariableDelegate = Marshal.GetDelegateForFunctionPointer<FreeExternalVariableDelegate>(core._freeExternalVariable);
       freeExternalVariableDelegate(chain, name);
     }
 
-    static public IntPtr CreateNode(this CBCore core)
+    static public IntPtr CreateNode(ref this CBCore core)
     {
       var createNodeDelegate = Marshal.GetDelegateForFunctionPointer<CreateNodeDelegate>(core._createNode);
       return createNodeDelegate();
     }
 
-    static public byte Tick(this CBCore core, IntPtr nodeRef)
+    static public byte Tick(ref this CBCore core, IntPtr nodeRef)
     {
       var tickDelegate = Marshal.GetDelegateForFunctionPointer<TickDelegate>(core._tick);
       return tickDelegate(nodeRef);
     }
 
-    static public void Schedule(this CBCore core, IntPtr nodeRef, IntPtr chainRef)
+    static public void Schedule(ref this CBCore core, IntPtr nodeRef, IntPtr chainRef)
     {
       var scheduleDelegate = Marshal.GetDelegateForFunctionPointer<ScheduleDelegate>(core._schedule);
       scheduleDelegate(nodeRef, chainRef);
     }
 
-    static public void Unschedule(this CBCore core, IntPtr nodeRef, IntPtr chainRef)
+    static public void Unschedule(ref this CBCore core, IntPtr nodeRef, IntPtr chainRef)
     {
       var scheduleDelegate = Marshal.GetDelegateForFunctionPointer<ScheduleDelegate>(core._unschedule);
       scheduleDelegate(nodeRef, chainRef);
     }
 
-    static public void DestroyVar(this CBCore core, IntPtr varRef)
+    static public void DestroyVar(ref this CBCore core, IntPtr varRef)
     {
       var destroyVarDelegate = Marshal.GetDelegateForFunctionPointer<DestroyVarDelegate>(core._destroyVar);
       destroyVarDelegate(varRef);
