@@ -20,7 +20,7 @@ public class Test1 : MonoBehaviour
 
     _position = new ExternalVariable(_chain.Value.chainRef, "position");
     _position.Value.vector3 = new Vector3(3, 4, 5);
-    _position.Value.type = 12;
+    _position.Value.type = CBType.Float3;
     _position.Value.flags = (1 << 2);
 
     Native.Core.Schedule(ChainblocksGame.Node, _chain.Value.chainRef);
