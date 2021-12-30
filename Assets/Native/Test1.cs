@@ -1,9 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System.Runtime.InteropServices;
-using System;
 using Chainblocks;
+using UnityEngine;
 
 public class Test1 : MonoBehaviour
 {
@@ -18,8 +14,9 @@ public class Test1 : MonoBehaviour
     _chain = new Variable();
     Native.cbLispEval(ChainblocksGame.Env, "(Chain \"test\" :Looped (Msg \"XXX\") .position (Log) (Pause 1.0))", _chain.Ptr);
 
+    var position = new Vector3(3, 4, 5);
     _position = new ExternalVariable(_chain.Value.chainRef, "position");
-    _position.Value.vector3 = new Vector3(3, 4, 5);
+    _position.Value.float3 = position.ToFloat3();
     _position.Value.type = CBType.Float3;
     _position.Value.flags = (1 << 2);
 
@@ -37,6 +34,7 @@ public class Test1 : MonoBehaviour
   // Update is called once per frame
   void Update()
   {
-    _position.Value.vector3 = this.transform.position;
+    var position = this.transform.position;
+    _position.Value.float3 = position.ToFloat3();
   }
 }

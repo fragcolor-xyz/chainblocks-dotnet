@@ -1,7 +1,6 @@
 using System;
+using System.Runtime.CompilerServices;
 using System.Threading;
-
-using Unity.Collections.LowLevel.Unsafe;
 
 namespace Chainblocks
 {
@@ -18,7 +17,7 @@ namespace Chainblocks
       {
         unsafe
         {
-          return ref UnsafeUtility.AsRef<CBVar>(_var.ToPointer());
+          return ref Unsafe.AsRef<CBVar>(_var.ToPointer());
         }
       }
     }

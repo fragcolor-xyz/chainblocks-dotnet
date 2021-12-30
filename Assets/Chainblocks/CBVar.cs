@@ -1,8 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
 
-using UnityEngine;
-
 namespace Chainblocks
 {
   [StructLayout(LayoutKind.Explicit, Size = 32)]
@@ -10,7 +8,28 @@ namespace Chainblocks
   {
     //! Native struct, don't edit
     [FieldOffset(0)]
-    public Vector3 vector3;
+    public double @float;
+
+    [FieldOffset(0)]
+    public Float2 float2;
+
+    [FieldOffset(0)]
+    public Float3 float3;
+
+    [FieldOffset(0)]
+    public Float4 float4;
+
+    [FieldOffset(0)]
+    public long @int;
+
+    [FieldOffset(0)]
+    public Int2 int2;
+
+    [FieldOffset(0)]
+    public Int3 int3;
+
+    [FieldOffset(0)]
+    public Int4 int4;
 
     [FieldOffset(0)]
     public IntPtr chainRef;
@@ -20,13 +39,53 @@ namespace Chainblocks
 
     [FieldOffset(18)]
     public ushort flags;
+  }
 
-    static CBVar From(Vector3 v)
-    {
-      var ret = new CBVar();
-      ret.vector3 = v;
-      ret.type = CBType.Float3;
-      return ret;
-    }
+  [StructLayout(LayoutKind.Sequential)]
+  public struct Float2
+  {
+    public double x;
+    public double y;
+  }
+
+  [StructLayout(LayoutKind.Sequential)]
+  public struct Float3
+  {
+    public float x;
+    public float y;
+    public float z;
+  }
+
+  [StructLayout(LayoutKind.Sequential)]
+  public struct Float4
+  {
+    public float x;
+    public float y;
+    public float z;
+    public float w;
+  }
+
+  [StructLayout(LayoutKind.Sequential)]
+  public struct Int2
+  {
+    public long x;
+    public long y;
+  }
+
+  [StructLayout(LayoutKind.Sequential)]
+  public struct Int3
+  {
+    public int x;
+    public int y;
+    public int z;
+  }
+
+  [StructLayout(LayoutKind.Sequential)]
+  public struct Int4
+  {
+    public int x;
+    public int y;
+    public int z;
+    public int w;
   }
 }
