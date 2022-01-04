@@ -9,8 +9,7 @@ Hierarchy:
         - ref!! 6ab758c8-3ceb-4702-b86b-ea686c6f672e
         - ref!! b206e43f-e19a-44c7-a66d-2cff507cb342
         - ref!! d387a07d-e8a1-45aa-9561-0d4d2f2c3e7e
-        - ref!! c2663665-81bb-49a6-97ad-97fb74a86909
-        - ref!! d9a467c1-a83e-4f7d-8fef-d1431138dc31
+        - ref!! 9b1d041c-77ba-48f2-8767-1e4743f15369
     Parts:
         -   Entity:
                 Id: 6ab758c8-3ceb-4702-b86b-ea686c6f672e
@@ -18,8 +17,8 @@ Hierarchy:
                 Components:
                     db9ed603d153f19e4f365d9c9e85446e: !TransformComponent
                         Id: 6788b9d8-5303-4a57-bcce-6889e29142e3
-                        Position: {X: 2.6, Y: 0.6, Z: -1.0}
-                        Rotation: {X: 0.0, Y: 0.82903755, Z: 0.0, W: 0.5591929}
+                        Position: {X: 0.0, Y: 1.0, Z: -10.0}
+                        Rotation: {X: 0.0, Y: 0.0, Z: 0.0, W: 1.0}
                         Scale: {X: 1.0, Y: 1.0, Z: 1.0}
                         Children: {}
                     5bd949d56b9cbae13c8ad503131a9f07: !CameraComponent
@@ -36,13 +35,28 @@ Hierarchy:
                         KeyboardRotationSpeed: {X: 3.0, Y: 3.0}
                         MouseRotationSpeed: {X: 1.0, Y: 1.0}
                         TouchRotationSpeed: {X: 1.0, Y: 0.7}
+                    14e38215e4200381931ab2a1f1ea7fe8: !MyGame.Test1,MyGame
+                        Id: daa55f81-862c-4c8b-a150-784fb8490192
+        -   Entity:
+                Id: 9b1d041c-77ba-48f2-8767-1e4743f15369
+                Name: ChainblocksController
+                Components:
+                    cf43b1cc8ac5c04142e97b0de418fd82: !TransformComponent
+                        Id: 5864ec5d-2588-4e32-aaeb-fc6a8ee5fb84
+                        Position: {X: 0.0, Y: 0.0, Z: 0.0}
+                        Rotation: {X: 0.0, Y: 0.0, Z: -1.1591046E-08, W: 1.0}
+                        Scale: {X: 1.0, Y: 1.0, Z: 1.0}
+                        Children: {}
+                    3d9c9d5e94672d0688c09af92128e4d8: !MyGame.ChainblocksController,MyGame
+                        Id: af657bb3-00e1-4fe1-bb7f-ad23c90435ac
+                        Priority: -1
         -   Entity:
                 Id: b206e43f-e19a-44c7-a66d-2cff507cb342
                 Name: Directional light
                 Components:
                     a2f983125f55a50e55753aab5f0d2061: !TransformComponent
                         Id: 4c1c3d3f-0cd0-4e38-ab23-1a11d6be18df
-                        Position: {X: 0.0, Y: 2.0, Z: 0.0}
+                        Position: {X: 0.0, Y: 3.0, Z: 0.0}
                         Rotation: {X: 1.131334E-08, Y: -0.9659258, Z: -0.25881904, W: -4.222196E-08}
                         Scale: {X: 1.0, Y: 1.0, Z: 1.0}
                         Children: {}
@@ -61,20 +75,8 @@ Hierarchy:
                                 ComputeTransmittance: false
                                 BiasParameters: {}
                         Intensity: 20.0
-        -   Entity:
-                Id: c2663665-81bb-49a6-97ad-97fb74a86909
-                Name: Ground
-                Components:
-                    39026bf5f5cf3896d6ab4db2af310f54: !TransformComponent
-                        Id: 83cfd956-9b08-476d-a625-85910e343515
-                        Position: {X: 0.0, Y: 0.0, Z: 0.0}
-                        Rotation: {X: 0.0, Y: 0.0, Z: 0.0, W: 1.0}
-                        Scale: {X: 1.0, Y: 1.0, Z: 1.0}
-                        Children: {}
-                    6a9c063d40d05fac49d14b72ceee5307: !ModelComponent
-                        Id: e45050f7-62ea-4bdd-880d-6d25d0f30578
-                        Model: c8ef97ee-3bac-4974-b388-0090b5fa5af7:Ground
-                        Materials: {}
+                    b447e5559e9eef034fdfa3c88605f440: !MyGame.Test1,MyGame
+                        Id: 154aa4a8-d45d-4bfe-ba3e-7ed61bfec3f2
         -   Entity:
                 Id: d387a07d-e8a1-45aa-9561-0d4d2f2c3e7e
                 Name: Skybox
@@ -92,17 +94,3 @@ Hierarchy:
                         Id: fc6b2e33-f580-426c-bcc4-bb40904de41d
                         Type: !LightSkybox
                             Skybox: 47fced96-ecd8-4740-a2b5-9771862194fc:Skybox
-        -   Entity:
-                Id: d9a467c1-a83e-4f7d-8fef-d1431138dc31
-                Name: Sphere
-                Components:
-                    01f00e667799f85fe71b413a79bce439: !TransformComponent
-                        Id: 46e6ddd2-8aa6-4252-9a75-a94c07c82c72
-                        Position: {X: 0.0, Y: 0.5, Z: 0.0}
-                        Rotation: {X: 0.0, Y: 0.0, Z: 0.0, W: 1.0}
-                        Scale: {X: 1.0, Y: 1.0, Z: 1.0}
-                        Children: {}
-                    1153fb036f60817372225c65494eadfe: !ModelComponent
-                        Id: ea1d98a0-6e25-4e4a-a76c-1ef04aa35811
-                        Model: 814f490c-ef89-40b9-b566-30f252fc10e8:Sphere
-                        Materials: {}
