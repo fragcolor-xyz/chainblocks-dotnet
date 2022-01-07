@@ -6,9 +6,9 @@ namespace Chainblocks
 {
   public sealed class ExternalVariable : IDisposable
   {
-    IntPtr _var;
-    string _name;
-    IntPtr _chain;
+    internal IntPtr _var;
+    internal string _name;
+    internal IntPtr _chain;
     private int _disposeState;
 
     public ref CBVar Value
@@ -35,12 +35,12 @@ namespace Chainblocks
     }
 
     public void Dispose()
-    {      
+    {
       Dispose(true);
       GC.SuppressFinalize(this);
     }
 
-    private void Dispose(bool disposing)
+    private void Dispose(bool _)
     {
       if (Interlocked.CompareExchange(ref _disposeState, 1, 0) != 0) return;
 

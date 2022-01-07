@@ -7,7 +7,7 @@ namespace Chainblocks
   public sealed class Variable : IDisposable
   {
     private IntPtr _mem;
-    private bool _destroy;
+    private readonly bool _destroy;
     private int _disposeState;
 
     public ref CBVar Value
@@ -43,7 +43,7 @@ namespace Chainblocks
       GC.SuppressFinalize(this);
     }
 
-    private void Dispose(bool disposing)
+    private void Dispose(bool _)
     {
       if (Interlocked.CompareExchange(ref _disposeState, 1, 0) != 0) return;
 
@@ -54,5 +54,5 @@ namespace Chainblocks
       Native.Core.Free(_mem);
       _mem = IntPtr.Zero;
     }
-  }    
+  }
 }

@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 namespace Chainblocks
 {
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-  internal delegate IntPtr AllocDelegate(UInt32 size);
+  internal delegate IntPtr AllocDelegate(uint size);
 
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
   internal delegate void FreeDelegate(IntPtr ptr);
