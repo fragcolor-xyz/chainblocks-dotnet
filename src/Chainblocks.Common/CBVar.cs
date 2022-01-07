@@ -32,7 +32,7 @@ namespace Chainblocks
     public Int4 int4;
 
     [FieldOffset(0)]
-    public IntPtr chainRef;
+    public Chain chain;
 
     [FieldOffset(16)]
     public CBType type;

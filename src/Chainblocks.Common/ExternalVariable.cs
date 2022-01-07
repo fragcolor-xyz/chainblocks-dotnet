@@ -8,7 +8,7 @@ namespace Chainblocks
   {
     internal IntPtr _var;
     internal string _name;
-    internal IntPtr _chain;
+    internal Chain _chain;
     private int _disposeState;
 
     public ref CBVar Value
@@ -22,7 +22,7 @@ namespace Chainblocks
       }
     }
 
-    public ExternalVariable(IntPtr chain, string name)
+    public ExternalVariable(Chain chain, string name)
     {
       _chain = chain;
       _name = name;

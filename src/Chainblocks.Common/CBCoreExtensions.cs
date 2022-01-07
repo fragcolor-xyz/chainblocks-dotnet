@@ -23,40 +23,40 @@ namespace Chainblocks
       return suspendDelegate(context, duration);
     }
 
-    public static IntPtr AllocExternalVariable(this ref CBCore core, IntPtr chain, string name)
+    public static IntPtr AllocExternalVariable(this ref CBCore core, Chain chain, string name)
     {
       var allocExternalVariableDelegate = Marshal.GetDelegateForFunctionPointer<AllocExternalVariableDelegate>(core._allocExternalVariable);
-      return allocExternalVariableDelegate(chain, name);
+      return allocExternalVariableDelegate(chain._ref, name);
     }
 
-    public static void FreeExternalVariable(this ref CBCore core, IntPtr chain, string name)
+    public static void FreeExternalVariable(this ref CBCore core, Chain chain, string name)
     {
       var freeExternalVariableDelegate = Marshal.GetDelegateForFunctionPointer<FreeExternalVariableDelegate>(core._freeExternalVariable);
-      freeExternalVariableDelegate(chain, name);
+      freeExternalVariableDelegate(chain._ref, name);
     }
 
-    public static IntPtr CreateNode(this ref CBCore core)
+    public static Node CreateNode(this ref CBCore core)
     {
       var createNodeDelegate = Marshal.GetDelegateForFunctionPointer<CreateNodeDelegate>(core._createNode);
-      return createNodeDelegate();
+      return new Node { _ref = createNodeDelegate() };
     }
 
-    public static byte Tick(this ref CBCore core, IntPtr nodeRef)
+    public static byte Tick(this ref CBCore core, Node node)
     {
       var tickDelegate = Marshal.GetDelegateForFunctionPointer<TickDelegate>(core._tick);
-      return tickDelegate(nodeRef);
+      return tickDelegate(node._ref);
     }
 
-    public static void Schedule(this ref CBCore core, IntPtr nodeRef, IntPtr chainRef)
+    public static void Schedule(this ref CBCore core, Node node, Chain chain)
     {
       var scheduleDelegate = Marshal.GetDelegateForFunctionPointer<ScheduleDelegate>(core._schedule);
-      scheduleDelegate(nodeRef, chainRef);
+      scheduleDelegate(node._ref, chain._ref);
     }
 
-    public static void Unschedule(this ref CBCore core, IntPtr nodeRef, IntPtr chainRef)
+    public static void Unschedule(this ref CBCore core, Node node, Chain chain)
     {
       var scheduleDelegate = Marshal.GetDelegateForFunctionPointer<ScheduleDelegate>(core._unschedule);
-      scheduleDelegate(nodeRef, chainRef);
+      scheduleDelegate(node._ref, chain._ref);
     }
 
     public static void DestroyVar(this ref CBCore core, IntPtr varRef)
