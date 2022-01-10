@@ -1,7 +1,8 @@
 using System.Runtime.CompilerServices;
+
 using UnityEngine;
 
-namespace Chainblocks
+namespace Fragcolor.Chainblocks
 {
     public static class ChainblocksExtensions
     {

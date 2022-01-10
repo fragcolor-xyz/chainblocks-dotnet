@@ -1,26 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
-using System;
 using UnityEngine;
-using Chainblocks;
 
 public interface IFragmentProvider
 {
-  string GetCode();
+    string GetCode();
 }
 
 public class Fragment : MonoBehaviour
 {
-  public IFragmentProvider FragmentProvider;
+    public IFragmentProvider FragmentProvider;
 
-  public string URI;
+    public string URI;
 
-  void Awake()
-  {
+    void Awake()
+    {
+    }
 
-  }
-
-  void Update()
-  {
-  }
+    void Update()
+    {
+    }
 }
