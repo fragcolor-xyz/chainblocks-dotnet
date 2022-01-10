@@ -1,4 +1,7 @@
-﻿using Microsoft.Xna.Framework;
+/* SPDX-License-Identifier: BSD-3-Clause */
+/* Copyright © 2022 Fragcolor Pte. Ltd. */
+
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -6,8 +9,11 @@ namespace MyGame
 {
     public class Game1 : Game
     {
-        private GraphicsDeviceManager _graphics;
-        private SpriteBatch _spriteBatch;
+#pragma warning disable IDE0052 // Remove unread private members
+        private readonly GraphicsDeviceManager _graphics;
+#pragma warning restore IDE0052 // Remove unread private members
+
+        private readonly Test1 _test = new Test1();
 
         public Game1()
         {
@@ -18,16 +24,11 @@ namespace MyGame
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            Components.Add(new ChainblocksController(this));
 
             base.Initialize();
-        }
 
-        protected override void LoadContent()
-        {
-            _spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            // TODO: use this.Content to load your game content here
+            _test.Initialize();
         }
 
         protected override void Update(GameTime gameTime)
@@ -35,7 +36,7 @@ namespace MyGame
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            _test.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -43,9 +44,6 @@ namespace MyGame
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            // TODO: Add your drawing code here
-
             base.Draw(gameTime);
         }
     }
