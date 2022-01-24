@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 
-namespace Chainblocks
+namespace Fragcolor.Chainblocks
 {
   public sealed class LispEnv : IDisposable
   {

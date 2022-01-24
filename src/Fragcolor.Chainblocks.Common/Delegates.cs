@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Chainblocks
+namespace Fragcolor.Chainblocks
 {
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
   internal delegate IntPtr AllocDelegate(uint size);

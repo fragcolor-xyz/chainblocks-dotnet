@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Threading;
 
-namespace Chainblocks
+namespace Fragcolor.Chainblocks
 {
   public static class Native
   {

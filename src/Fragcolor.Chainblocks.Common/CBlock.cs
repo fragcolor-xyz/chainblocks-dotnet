@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Chainblocks
+namespace Fragcolor.Chainblocks
 {
   [StructLayout(LayoutKind.Sequential)]
   public struct CBlock

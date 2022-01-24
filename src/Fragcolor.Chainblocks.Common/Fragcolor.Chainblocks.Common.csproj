@@ -1,19 +1,19 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <!--<Authors></Authors>-->
+    <Authors>Fragcolor</Authors>
     <Copyright>Copyright © Fragcolor 2022</Copyright>
     <!--<Description></Description>-->
-    <AssemblyName>Chainblocks.Common</AssemblyName>
-    <AssemblyTitle>Chainblocks.Common</AssemblyTitle>
+    <AssemblyName>Fragcolor.Chainblocks.Common</AssemblyName>
+    <AssemblyTitle>Fragcolor.Chainblocks.Common</AssemblyTitle>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <VersionPrefix>0.0.1.0</VersionPrefix>
+    <VersionPrefix>0.0.2</VersionPrefix>
     <TargetFrameworks>net48;netstandard2.0;net6.0</TargetFrameworks>
-    <PackageId>Chainblocks.Common</PackageId>
+    <PackageId>Fragcolor.Chainblocks.Common</PackageId>
     <PackageLicenseExpression>BSD-3-Clause</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/fragcolor-xyz/chainblocks-dotnet</PackageProjectUrl>
     <!-- <PackageReleaseNotes></PackageReleaseNotes> -->
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <PackageTags>chainblocks csharp interop</PackageTags>
+    <PackageTags>fragcolor chainblocks csharp interop</PackageTags>
     <!-- /begin support for sourcelink -->
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <IncludeSymbols>true</IncludeSymbols>
@@ -26,7 +26,7 @@
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <RootNamespace>Chainblocks</RootNamespace>
+    <RootNamespace>Fragcolor.Chainblocks</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.0.0" />

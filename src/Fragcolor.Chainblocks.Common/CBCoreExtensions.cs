@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Chainblocks
+namespace Fragcolor.Chainblocks
 {
   public static class CBCoreExtensions
   {

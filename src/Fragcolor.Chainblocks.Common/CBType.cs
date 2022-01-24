@@ -1,4 +1,4 @@
-namespace Chainblocks
+namespace Fragcolor.Chainblocks
 {
   public enum CBType : byte
   {

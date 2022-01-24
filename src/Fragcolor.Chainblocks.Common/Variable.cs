@@ -2,7 +2,7 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Threading;
 
-namespace Chainblocks
+namespace Fragcolor.Chainblocks
 {
   public sealed class Variable : IDisposable
   {
