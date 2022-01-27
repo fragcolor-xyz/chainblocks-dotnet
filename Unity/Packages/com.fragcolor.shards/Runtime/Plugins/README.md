@@ -1,10 +1,11 @@
-# Unity integration
+﻿# Unity integration
 
 ## Required external libraries
 
 ### libshards
 
 Get it from [shards](https://github.com/fragcolor-xyz/shards) repo by building the `shards-dll` target.
+Copy it in the appropriate CPU folder depending on the platform (e.g. x86_64).
 
 ### Fragcolor.Shards.Common
 
