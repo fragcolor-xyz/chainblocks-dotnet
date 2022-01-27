@@ -1,0 +1,96 @@
+!SceneAsset
+Id: b941005f-311c-417e-9667-98a50a53d222
+SerializedVersion: {Stride: 3.1.0.1}
+Tags: []
+ChildrenIds: []
+Offset: {X: 0.0, Y: 0.0, Z: 0.0}
+Hierarchy:
+    RootParts:
+        - ref!! 6ab758c8-3ceb-4702-b86b-ea686c6f672e
+        - ref!! b206e43f-e19a-44c7-a66d-2cff507cb342
+        - ref!! d387a07d-e8a1-45aa-9561-0d4d2f2c3e7e
+        - ref!! 9b1d041c-77ba-48f2-8767-1e4743f15369
+    Parts:
+        -   Entity:
+                Id: 6ab758c8-3ceb-4702-b86b-ea686c6f672e
+                Name: Camera
+                Components:
+                    db9ed603d153f19e4f365d9c9e85446e: !TransformComponent
+                        Id: 6788b9d8-5303-4a57-bcce-6889e29142e3
+                        Position: {X: 0.0, Y: 1.0, Z: -10.0}
+                        Rotation: {X: 0.0, Y: 0.0, Z: 0.0, W: 1.0}
+                        Scale: {X: 1.0, Y: 1.0, Z: 1.0}
+                        Children: {}
+                    5bd949d56b9cbae13c8ad503131a9f07: !CameraComponent
+                        Id: d38a9fc8-a1d7-484a-90e1-ae141f32c194
+                        Name: null
+                        Projection: Perspective
+                        Slot: aba0b189-b691-4ee2-9bb2-7c0def8dc4ad
+                    11b148ede24af579ea734bb613d65a71: !MyGame.BasicCameraController,MyGame
+                        Id: 8f2f8b53-dc14-4008-8410-93b8ed7f595c
+                        Gamepad: false
+                        KeyboardMovementSpeed: {X: 5.0, Y: 5.0, Z: 5.0}
+                        TouchMovementSpeed: {X: 0.7, Y: 0.7, Z: 0.3}
+                        SpeedFactor: 5.0
+                        KeyboardRotationSpeed: {X: 3.0, Y: 3.0}
+                        MouseRotationSpeed: {X: 1.0, Y: 1.0}
+                        TouchRotationSpeed: {X: 1.0, Y: 0.7}
+                    14e38215e4200381931ab2a1f1ea7fe8: !MyGame.Test1,MyGame
+                        Id: daa55f81-862c-4c8b-a150-784fb8490192
+        -   Entity:
+                Id: 9b1d041c-77ba-48f2-8767-1e4743f15369
+                Name: ChainblocksController
+                Components:
+                    cf43b1cc8ac5c04142e97b0de418fd82: !TransformComponent
+                        Id: 5864ec5d-2588-4e32-aaeb-fc6a8ee5fb84
+                        Position: {X: 0.0, Y: 0.0, Z: 0.0}
+                        Rotation: {X: 0.0, Y: 0.0, Z: -1.1591046E-08, W: 1.0}
+                        Scale: {X: 1.0, Y: 1.0, Z: 1.0}
+                        Children: {}
+                    3d9c9d5e94672d0688c09af92128e4d8: !MyGame.ChainblocksController,MyGame
+                        Id: af657bb3-00e1-4fe1-bb7f-ad23c90435ac
+                        Priority: -1
+        -   Entity:
+                Id: b206e43f-e19a-44c7-a66d-2cff507cb342
+                Name: Directional light
+                Components:
+                    a2f983125f55a50e55753aab5f0d2061: !TransformComponent
+                        Id: 4c1c3d3f-0cd0-4e38-ab23-1a11d6be18df
+                        Position: {X: 0.0, Y: 3.0, Z: 0.0}
+                        Rotation: {X: 1.131334E-08, Y: -0.9659258, Z: -0.25881904, W: -4.222196E-08}
+                        Scale: {X: 1.0, Y: 1.0, Z: 1.0}
+                        Children: {}
+                    a591e09648cd5d9e203dade0fa0ea488: !LightComponent
+                        Id: 6ec72d46-19aa-40a3-af35-251587f3b722
+                        Type: !LightDirectional
+                            Color: !ColorRgbProvider
+                                Value: {R: 1.0, G: 1.0, B: 1.0}
+                            Shadow:
+                                Enabled: true
+                                Filter: !LightShadowMapFilterTypePcf
+                                    FilterSize: Filter5x5
+                                Size: Large
+                                DepthRange: {}
+                                PartitionMode: !LightDirectionalShadowMap.PartitionLogarithmic {}
+                                ComputeTransmittance: false
+                                BiasParameters: {}
+                        Intensity: 20.0
+                    b447e5559e9eef034fdfa3c88605f440: !MyGame.Test1,MyGame
+                        Id: 154aa4a8-d45d-4bfe-ba3e-7ed61bfec3f2
+        -   Entity:
+                Id: d387a07d-e8a1-45aa-9561-0d4d2f2c3e7e
+                Name: Skybox
+                Components:
+                    dadc22ffc97bfdd46e81112b152c454d: !TransformComponent
+                        Id: 55162196-ef33-43a2-ac0f-795b79c9bec9
+                        Position: {X: 0.0, Y: 2.0, Z: -2.0}
+                        Rotation: {X: 0.0, Y: 0.0, Z: 0.0, W: 1.0}
+                        Scale: {X: 1.0, Y: 1.0, Z: 1.0}
+                        Children: {}
+                    687be90a6c776afbe3925f80a1e5f861: !BackgroundComponent
+                        Id: 0f4c7df5-710b-48fe-b836-1c62a6e41785
+                        Texture: 38c563fa-40c5-4bb0-8583-820507de4205:Skybox texture
+                    2e233ba8cc07bae8c5ad9823f2d875ee: !LightComponent
+                        Id: fc6b2e33-f580-426c-bcc4-bb40904de41d
+                        Type: !LightSkybox
+                            Skybox: 47fced96-ecd8-4740-a2b5-9771862194fc:Skybox
