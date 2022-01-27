@@ -1,0 +1,18 @@
+{
+    "name": "Fragcolor.Chainblocks.UnityEditor",
+    "rootNamespace": "",
+    "references": [
+        "Fragcolor.Chainblocks.UnityEngine"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

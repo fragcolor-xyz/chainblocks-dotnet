@@ -5,10 +5,11 @@
 ### libcbl
 
 Get it from [chainblocks](https://github.com/fragcolor-xyz/chainblocks) repo by building the `cbl-dll` target.
+Copy it in the appropriate CPU folder depending on the platform (e.g. x86_64).
 
-### Chainblocks.Common
+### Fragcolor.Chainblocks.Common
 
-Compile the project under `src/`  and copy the `Chainblocks.Common.dll` here.
+Compile the project under `src/`  and copy the `Fragcolor.Chainblocks.Common.dll` here.
 
 ### System.Runtime.CompilerServices.Unsafe
 
