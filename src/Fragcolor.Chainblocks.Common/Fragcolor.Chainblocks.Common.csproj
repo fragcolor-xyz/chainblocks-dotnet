@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Authors>Fragcolor</Authors>
+    <Copyright>Copyright © Fragcolor 2022</Copyright>
+    <!--<Description></Description>-->
+    <AssemblyName>Fragcolor.Chainblocks.Common</AssemblyName>
+    <AssemblyTitle>Fragcolor.Chainblocks.Common</AssemblyTitle>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <VersionPrefix>0.0.2</VersionPrefix>
+    <TargetFrameworks>net48;netstandard2.0;net6.0</TargetFrameworks>
+    <PackageId>Fragcolor.Chainblocks.Common</PackageId>
+    <PackageLicenseExpression>BSD-3-Clause</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/fragcolor-xyz/chainblocks-dotnet</PackageProjectUrl>
+    <!-- <PackageReleaseNotes></PackageReleaseNotes> -->
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageTags>fragcolor chainblocks csharp interop</PackageTags>
+    <!-- /begin support for sourcelink -->
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <!-- /end support for sourcelink -->
+    <GeneratePackageOnBuild Condition="'$(Configuration)' == 'Release'">true</GeneratePackageOnBuild>
+    <Configurations>Debug;Release</Configurations>
+    <AnalysisLevel>latest</AnalysisLevel>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <RootNamespace>Fragcolor.Chainblocks</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.0.0" />
+  </ItemGroup>
+</Project>
