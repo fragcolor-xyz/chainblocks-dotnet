@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  #
+  # Build common library
+  #
+  common-library-build:
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        build-type: ["Debug", "Release"]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 6.0.x
+      - name: Build
+        run: dotnet build src/Chainblocks.sln -c ${{ matrix.build-type }}
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: Fragcolor.Chainblocks.Common-${{ matrix.build-type }}
+          path: src/Fragcolor.Chainblocks.Common/bin/${{ matrix.build-type }}/
+          if-no-files-found: error
