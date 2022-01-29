@@ -44,6 +44,47 @@ jobs:
           if-no-files-found: error
 
   #
+  # Build Godot sample
+  #
+  godot-sample-build:    
+    needs: common-library-build
+    runs-on: ubuntu-latest
+    env:
+      GODOT_VERSION: 3.4.2
+      RELEASE_NAME: stable
+    container:
+      image: barichello/godot-ci:mono-3.4.2
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+      - name: Setup nuget
+        uses: nuget/setup-nuget@v1
+      - name: Setup nuget local source
+        run: |
+          nuget source add -source "`pwd`/Nuget_Source" -name "Local"
+      - name: Setup godot
+        run: |
+          mkdir -v -p ~/.local/share/godot/templates
+          mv /root/.local/share/godot/templates/${GODOT_VERSION}.${RELEASE_NAME}.mono ~/.local/share/godot/templates/${GODOT_VERSION}.${RELEASE_NAME}.mono
+      - name: Download common library
+        uses: actions/download-artifact@v2
+        with:
+          name: common-library-build-Release
+          path: Nuget_Source
+      - name: Build
+        run: |
+          mkdir -v -p build/Windows
+          cd Godot
+          godot -v --export "Windows Desktop" ../build/Windows/Godot.exe
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: Godot-build
+          path: build/Windows/
+
+  #
   # Build Monogame sample
   #
   monogame-sample-build:    
