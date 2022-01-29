@@ -42,3 +42,37 @@ jobs:
             src/Fragcolor.Chainblocks.Common/bin/${{ matrix.build-type }}/*.nupkg
             src/Fragcolor.Chainblocks.Common/bin/${{ matrix.build-type }}/*.snupkg
           if-no-files-found: error
+
+  #
+  # Build Monogame sample
+  #
+  monogame-sample-build:    
+    needs: common-library-build
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.1.x
+      - name: Setup nuget local source
+        run: |
+          dotnet nuget add source "${{ github.workspace }}\Nuget_Source" -n "Local"
+      - name: Download common library
+        uses: actions/download-artifact@v2
+        with:
+          name: common-library-build-Release
+          path: Nuget_Source
+      - name: Build
+        run: |
+          dotnet build Monogame/MyGame.sln -c Release
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: Monogame-build
+          path: |
+            Monogame/bin/Release/
+          if-no-files-found: error
