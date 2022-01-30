@@ -46,7 +46,7 @@ jobs:
   #
   # Build Godot sample
   #
-  godot-sample-build:    
+  godot-sample-build:
     needs: common-library-build
     runs-on: ubuntu-latest
     env:
@@ -87,7 +87,7 @@ jobs:
   #
   # Build Monogame sample
   #
-  monogame-sample-build:    
+  monogame-sample-build:
     needs: common-library-build
     runs-on: windows-latest
     steps:
@@ -121,7 +121,7 @@ jobs:
   #
   # Build Stride sample
   #
-  stride-sample-build:    
+  stride-sample-build:
     needs: common-library-build
     runs-on: windows-latest
     steps:
@@ -154,3 +154,21 @@ jobs:
           path: |
             Stride/Bin/
           if-no-files-found: error
+
+  #
+  # Build Unity project
+  #
+  unity-build:
+    needs: common-library-build
+    runs-on: ubuntu-latest
+    container:
+      image: unityci/editor:2020.3.26f1-windows-mono-0
+    env:
+      UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+      - name: Activate Unity license
+        run: ./scripts/activate-unity-license.sh
