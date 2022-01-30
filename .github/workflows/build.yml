@@ -189,7 +189,7 @@ jobs:
           path: Unity/Library
           key: Unity-Library-${{ hashFiles('Unity/Assets/**', 'Unity/Packages/**', 'Unity/ProjectSettings/**') }}
           restore-keys: |
-            Library-
+            Unity-Library-
       - name: Build project
         run: |
           unity-editor -quit -logFile /dev/stdout -projectPath Unity -buildWindows64Player build/MyGame.exe
