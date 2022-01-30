@@ -46,7 +46,7 @@ jobs:
   #
   # Build Godot sample
   #
-  godot-sample-build:    
+  godot-sample-build:
     needs: common-library-build
     runs-on: ubuntu-latest
     env:
@@ -87,7 +87,7 @@ jobs:
   #
   # Build Monogame sample
   #
-  monogame-sample-build:    
+  monogame-sample-build:
     needs: common-library-build
     runs-on: windows-latest
     steps:
@@ -121,7 +121,7 @@ jobs:
   #
   # Build Stride sample
   #
-  stride-sample-build:    
+  stride-sample-build:
     needs: common-library-build
     runs-on: windows-latest
     steps:
@@ -154,3 +154,46 @@ jobs:
           path: |
             Stride/Bin/
           if-no-files-found: error
+
+  #
+  # Build Unity project
+  #
+  unity-build:
+    needs: common-library-build
+    runs-on: ubuntu-latest
+    container:
+      image: unityci/editor:2020.3.26f1-windows-mono-0
+    env:
+      UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+      - name: Activate Unity license
+        run: ./scripts/activate-unity-license.sh
+      - name: Download common library
+        uses: actions/download-artifact@v2
+        with:
+          name: common-library-build-Release
+          path: packages
+      - name: Setup dependencies
+        run: |
+          apt-get update
+          apt-get install -y unzip
+          curl -L https://www.nuget.org/api/v2/package/System.Runtime.CompilerServices.Unsafe -o packages/System.Runtime.CompilerServices.Unsafe.nupkg
+          unzip -p packages/System.Runtime.CompilerServices.Unsafe.nupkg lib/netstandard2.0/*.dll > Unity/Assets/Plugins/System.Runtime.CompilerServices.Unsafe.dll
+          unzip -p packages/Fragcolor.Chainblocks.Common.*.nupkg lib/netstandard2.0/*.dll > Unity/Assets/Plugins/Fragcolor.Chainblocks.Common.dll
+      - uses: actions/cache@v2
+        with:
+          path: Unity/Library
+          key: Unity-Library-${{ hashFiles('Unity/Assets/**', 'Unity/Packages/**', 'Unity/ProjectSettings/**') }}
+          restore-keys: |
+            Library-
+      - name: Build project
+        run: |
+          unity-editor -quit -logFile /dev/stdout -projectPath Unity -buildWindows64Player build/MyGame.exe
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Unity-build
+          path: Unity/build/
