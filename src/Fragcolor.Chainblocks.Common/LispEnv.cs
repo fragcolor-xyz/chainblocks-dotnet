@@ -33,9 +33,9 @@ namespace Fragcolor.Chainblocks
       GC.SuppressFinalize(this);
     }
 
-    public byte Eval(string code, IntPtr output)
+    public bool Eval(string code, IntPtr output)
     {
-      return NativeMethods.cbLispEval(_env, code, output);
+      return NativeMethods.cbLispEval(_env, code, output) != 0;
     }
 
     private void Dispose(bool _)
