@@ -32,7 +32,7 @@ jobs:
           dotnet-version: 6.0.x
       - name: Build
         run: |
-          dotnet build src/Chainblocks.sln -c ${{ matrix.build-type }}
+          dotnet build src/Fragcolor.Chainblocks.Common -c ${{ matrix.build-type }}
       - name: Upload artifact
         if: ${{ matrix.build-type == 'Release' }}
         uses: actions/upload-artifact@v2
@@ -42,6 +42,39 @@ jobs:
             src/Fragcolor.Chainblocks.Common/bin/${{ matrix.build-type }}/*.nupkg
             src/Fragcolor.Chainblocks.Common/bin/${{ matrix.build-type }}/*.snupkg
           if-no-files-found: error
+
+  #
+  # Build cbl dll
+  #
+  libcbl-build:
+    uses: ./.github/workflows/cbl-dll.yml
+    with:
+      build-type: Release
+      bitness: 64bits
+
+  #
+  # Test common library
+  #
+  common-library-test:
+    needs: [common-library-build, libcbl-build]
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 6.0.x
+      - name: Download libcbl
+        uses: actions/download-artifact@v2
+        with:
+          name: libcbl-win64-Release
+          path: src/Fragcolor.Chainblocks.Common.Tests
+      - name: Test
+        run: |
+          dotnet test src/Fragcolor.Chainblocks.Common.Tests
 
   #
   # Build Godot sample

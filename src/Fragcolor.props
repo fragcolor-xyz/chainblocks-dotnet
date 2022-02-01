@@ -1,0 +1,13 @@
+<Project>
+  <!-- Default properties -->
+  <PropertyGroup>
+    <Authors>Fragcolor</Authors>
+    <Copyright>Copyright © Fragcolor Pte. Ltd. 2022</Copyright>
+    <AnalysisLevel>latest</AnalysisLevel>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Configurations>Debug;Release</Configurations>
+  </PropertyGroup>
+</Project>
