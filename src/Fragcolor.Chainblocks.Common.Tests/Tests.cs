@@ -1,5 +1,5 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
-/* Copyright © 2022 Fragcolor Pte. Ltd. */
+/* Copyright Â© 2022 Fragcolor Pte. Ltd. */
 
 using System.Threading;
 
@@ -37,6 +37,58 @@ namespace Fragcolor.Chainblocks.Tests
             Native.Core.Unschedule(Node, chain.Value.chain);
 
             Native.Core.Log($"{nameof(Test1)} done.");
+        }
+
+        [Test]
+        public void TableTest()
+        {
+            using var chain = new Variable();
+            var ok = Env.Eval(@$"(Chain ""{nameof(TableTest)}"" :Looped .table (Log))", chain.Ptr);
+            Assert.IsTrue(ok);
+
+            var table = new ExternalVariable(chain.Value.chain, "table");
+            table.Value.table = CBTable.New();
+            table.Value.type = CBType.Table;
+
+            Native.Core.Schedule(Node, chain.Value.chain);
+
+            var float3 = new Variable();
+            float3.Value.float3 = new Float3 { x = 5 };
+            float3.Value.type = CBType.Float3;
+
+            Assert.AreEqual(0, table.Value.table.Size());
+            Tick();
+
+            Assert.IsFalse(table.Value.table.Contains("key1"));
+            ref var elem = ref table.Value.table.At("key1");
+            Assert.IsTrue(elem.IsNone());
+            elem.float3 = float3.Value.float3;
+            elem.type = CBType.Float3;
+            Assert.AreEqual(1, table.Value.table.Size());
+            Assert.IsTrue(table.Value.table.Contains("key1"));
+            Tick();
+
+            elem.float3.z = 42;
+            var iterator = table.Value.table.GetIterator();
+            table.Value.table.Next(ref iterator, out var key, out var value);
+            Assert.AreEqual("key1", key);
+            Assert.AreEqual(42, value.float3.z);
+            Tick();
+
+            table.Value.table.Remove("key1");
+            Assert.AreEqual(0, table.Value.table.Size());
+            Tick();
+
+            Assert.IsFalse(table.Value.table.Contains("key2"));
+            _ = ref table.Value.table.At("key2");
+            Assert.IsTrue(table.Value.table.Contains("key2"));
+            Tick();
+
+            table.Value.table.Clear();
+            Assert.AreEqual(0, table.Value.table.Size());
+            Tick();
+
+            Native.Core.Unschedule(Node, chain.Value.chain);
         }
     }
 }

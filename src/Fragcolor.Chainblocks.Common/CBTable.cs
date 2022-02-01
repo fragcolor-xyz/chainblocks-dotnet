@@ -12,5 +12,14 @@ namespace Fragcolor.Chainblocks
     //! Native struct, don't edit
     internal IntPtr _opaque;
     internal IntPtr _api;
+
+    public static CBTable New()
+    {
+      var tableNewDelegate = Marshal.GetDelegateForFunctionPointer<TableNewDelegate>(Native.Core._tableNew);
+      return tableNewDelegate();
+    }
   }
+
+  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+  internal delegate CBTable TableNewDelegate();
 }
