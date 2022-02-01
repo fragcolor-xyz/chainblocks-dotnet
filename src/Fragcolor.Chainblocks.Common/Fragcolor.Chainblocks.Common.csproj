@@ -5,7 +5,7 @@
     <AssemblyName>Fragcolor.Chainblocks.Common</AssemblyName>
     <AssemblyTitle>Fragcolor.Chainblocks.Common</AssemblyTitle>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <VersionPrefix>0.0.2</VersionPrefix>
+    <VersionPrefix>0.0.3</VersionPrefix>
     <TargetFrameworks>net48;netstandard2.0;net6.0</TargetFrameworks>
     <PackageId>Fragcolor.Chainblocks.Common</PackageId>
     <PackageLicenseExpression>BSD-3-Clause</PackageLicenseExpression>
