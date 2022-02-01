@@ -12,5 +12,14 @@ namespace Fragcolor.Chainblocks
     //! Native struct, don't edit
     internal IntPtr _opaque;
     internal IntPtr _api;
+
+    public static CBSet New()
+    {
+      var setNewDelegate = Marshal.GetDelegateForFunctionPointer<SetNewDelegate>(Native.Core._setNew);
+      return setNewDelegate();
+    }
   }
+
+  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+  internal delegate CBSet SetNewDelegate();
 }

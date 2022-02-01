@@ -40,6 +40,55 @@ namespace Fragcolor.Chainblocks.Tests
         }
 
         [Test]
+        public void SetTest()
+        {
+            using var chain = new Variable();
+            var ok = Env.Eval(@$"(Chain ""{nameof(SetTest)}"" :Looped .set (Log))", chain.Ptr);
+            Assert.IsTrue(ok);
+
+            var set = new ExternalVariable(chain.Value.chain, "set");
+            set.Value.set = CBSet.New();
+            set.Value.type = CBType.Set;
+
+            Native.Core.Schedule(Node, chain.Value.chain);
+
+            var float3 = new Variable();
+            float3.Value.float3 = new Float3 { x = 5 };
+            float3.Value.type = CBType.Float3;
+
+            Assert.AreEqual(0, set.Value.set.Size());
+            Tick();
+
+            Assert.IsTrue(set.Value.set.Include(ref float3.Value));
+            Assert.IsTrue(set.Value.set.Contains(ref float3.Value));
+            Assert.AreEqual(1, set.Value.set.Size());
+            Tick();
+
+            var iterator = set.Value.set.GetIterator();
+            Assert.IsTrue(set.Value.set.Next(ref iterator, out var value));
+            Assert.AreEqual(value.float3, float3.Value.float3);
+            Assert.IsFalse(set.Value.set.Next(ref iterator, out _));
+            Assert.IsTrue(set.Value.set.Exclude(ref float3.Value));
+            Assert.IsFalse(set.Value.set.Contains(ref float3.Value));
+            Assert.AreEqual(0, set.Value.set.Size());
+            Tick();
+
+            var float4 = new Variable();
+            float4.Value.float4 = new Float4 { y = 5 };
+            float4.Value.type = CBType.Float4;
+            Assert.IsTrue(set.Value.set.Include(ref float4.Value));
+            Assert.IsTrue(set.Value.set.Contains(ref float4.Value));
+            Assert.AreEqual(1, set.Value.set.Size());
+            Tick();
+
+            set.Value.set.Clear();
+            Assert.AreEqual(0, set.Value.set.Size());
+            Tick();
+
+            Native.Core.Unschedule(Node, chain.Value.chain);
+        }
+
+        [Test]
         public void TableTest()
         {
             using var chain = new Variable();
