@@ -1,7 +1,6 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="../Fragcolor.props" />
   <PropertyGroup>
-    <Authors>Fragcolor</Authors>
-    <Copyright>Copyright © Fragcolor 2022</Copyright>
     <!--<Description></Description>-->
     <AssemblyName>Fragcolor.Chainblocks.Common</AssemblyName>
     <AssemblyTitle>Fragcolor.Chainblocks.Common</AssemblyTitle>
@@ -20,15 +19,10 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <!-- /end support for sourcelink -->
     <GeneratePackageOnBuild Condition="'$(Configuration)' == 'Release'">true</GeneratePackageOnBuild>
-    <Configurations>Debug;Release</Configurations>
-    <AnalysisLevel>latest</AnalysisLevel>
-    <EnableNETAnalyzers>true</EnableNETAnalyzers>
-    <LangVersion>latest</LangVersion>
-    <Nullable>enable</Nullable>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <RootNamespace>Fragcolor.Chainblocks</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <InternalsVisibleTo Include="$(MSBuildProjectName).Tests" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
