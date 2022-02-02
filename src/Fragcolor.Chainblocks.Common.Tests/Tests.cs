@@ -40,6 +40,53 @@ namespace Fragcolor.Chainblocks.Tests
         }
 
         [Test]
+        public void SeqTest()
+        {
+            using var chain = new Variable();
+            var ok = Env.Eval(@$"(Chain ""{nameof(SeqTest)}"" :Looped .seq (Log))", chain.Ptr);
+            Assert.IsTrue(ok);
+
+            var seq = new ExternalVariable(chain.Value.chain, "seq");
+            seq.Value.type = CBType.Seq;
+
+            Native.Core.Schedule(Node, chain.Value.chain);
+
+            var float3 = new Variable();
+            float3.Value.float3 = new Float3 { x = 5 };
+            float3.Value.type = CBType.Float3;
+
+            Assert.AreEqual(0, seq.Value.seq.Size());
+            Tick();
+
+            seq.Value.seq.Push(ref float3.Value);
+            Assert.AreEqual(1, seq.Value.seq.Size());
+            Tick();
+
+            var float4 = new Variable();
+            float4.Value.float4 = new Float4 { y = 5 };
+            float4.Value.type = CBType.Float4;
+            seq.Value.seq.Insert(1, ref float4.Value);
+            Assert.AreEqual(2, seq.Value.seq.Size());
+            Tick();
+
+            ref var myvar = ref seq.Value.seq.At(1);
+            myvar.float4.z = 42;
+            Tick();
+
+            seq.Value.seq.RemoveAt(0);
+            Assert.AreEqual(1, seq.Value.seq.Size());
+            Tick();
+
+            var popped = seq.Value.seq.Pop();
+            Assert.AreEqual(CBType.Float4, popped.type);
+            Assert.AreEqual(5, popped.float4.y);
+            Assert.AreEqual(0, seq.Value.seq.Size());
+            Tick();
+
+            Native.Core.Unschedule(Node, chain.Value.chain);
+        }
+
+        [Test]
         public void SetTest()
         {
             using var chain = new Variable();
