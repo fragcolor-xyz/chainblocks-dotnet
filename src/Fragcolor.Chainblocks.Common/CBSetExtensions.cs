@@ -1,4 +1,4 @@
-﻿/* SPDX-License-Identifier: BSD-3-Clause */
+/* SPDX-License-Identifier: BSD-3-Clause */
 /* Copyright © 2022 Fragcolor Pte. Ltd. */
 
 using System;
@@ -25,7 +25,7 @@ namespace Fragcolor.Chainblocks
       {
         ref var api = ref Unsafe.AsRef<CBSetInterface>(set._api.ToPointer());
         var containsDelegate = Marshal.GetDelegateForFunctionPointer<SetContainsDelegate>(api._setContains);
-        return containsDelegate(set, value) != 0;
+        return containsDelegate(set, value);
       }
     }
 
@@ -35,7 +35,7 @@ namespace Fragcolor.Chainblocks
       {
         ref var api = ref Unsafe.AsRef<CBSetInterface>(set._api.ToPointer());
         var exludeDelegate = Marshal.GetDelegateForFunctionPointer<SetExcludeDelegate>(api._setExclude);
-        return exludeDelegate(set, value) != 0;
+        return exludeDelegate(set, value);
       }
     }
 
@@ -56,7 +56,7 @@ namespace Fragcolor.Chainblocks
       {
         ref var api = ref Unsafe.AsRef<CBSetInterface>(set._api.ToPointer());
         var nextDelegate = Marshal.GetDelegateForFunctionPointer<SetNextDelegate>(api._setNext);
-        return nextDelegate(set, ref iter, out value) != 0;
+        return nextDelegate(set, ref iter, out value);
       }
     }
 
@@ -66,7 +66,7 @@ namespace Fragcolor.Chainblocks
       {
         ref var api = ref Unsafe.AsRef<CBSetInterface>(set._api.ToPointer());
         var includeDelegate = Marshal.GetDelegateForFunctionPointer<SetIncludeDelegate>(api._setInclude);
-        return includeDelegate(set, var) != 0;
+        return includeDelegate(set, var);
       }
     }
 
@@ -85,19 +85,19 @@ namespace Fragcolor.Chainblocks
   internal delegate void SetClearDelegate(CBSet set);
 
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-  internal delegate byte SetContainsDelegate(CBSet set, CBVar value);
+  internal delegate bool SetContainsDelegate(CBSet set, CBVar value);
 
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-  internal delegate byte SetExcludeDelegate(CBSet set, CBVar value);
+  internal delegate bool SetExcludeDelegate(CBSet set, CBVar value);
 
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
   internal delegate void SetGetIteratorDelegate(CBSet set, out CBSetIterator iter);
 
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-  internal delegate byte SetIncludeDelegate(CBSet set, CBVar value);
+  internal delegate bool SetIncludeDelegate(CBSet set, CBVar value);
 
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-  internal delegate byte SetNextDelegate(CBSet set, ref CBSetIterator iter, out CBVar value);
+  internal delegate bool SetNextDelegate(CBSet set, ref CBSetIterator iter, out CBVar value);
 
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
   internal delegate ulong SetSizeDelegate(CBSet set);

@@ -18,6 +18,7 @@ indent_size = 2
 
 # Code files
 [*.{cs,csx,vb,vbx}]
+charset = utf-8
 indent_size = 2
 insert_final_newline = true
 

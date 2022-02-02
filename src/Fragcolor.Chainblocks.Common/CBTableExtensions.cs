@@ -1,4 +1,4 @@
-﻿/* SPDX-License-Identifier: BSD-3-Clause */
+/* SPDX-License-Identifier: BSD-3-Clause */
 /* Copyright © 2022 Fragcolor Pte. Ltd. */
 
 using System;
@@ -35,7 +35,7 @@ namespace Fragcolor.Chainblocks
       {
         ref var api = ref Unsafe.AsRef<CBTableInterface>(table._api.ToPointer());
         var containsDelegate = Marshal.GetDelegateForFunctionPointer<TableContainsDelegate>(api._tableContains);
-        return containsDelegate(table, key) != 0;
+        return containsDelegate(table, key);
       }
     }
 
@@ -56,7 +56,7 @@ namespace Fragcolor.Chainblocks
       {
         ref var api = ref Unsafe.AsRef<CBTableInterface>(table._api.ToPointer());
         var nextDelegate = Marshal.GetDelegateForFunctionPointer<TableNextDelegate>(api._tableNext);
-        var result = nextDelegate(table, ref iter, out var ptr, out value) != 0;
+        var result = nextDelegate(table, ref iter, out var ptr, out value);
         key = result ? Marshal.PtrToStringAnsi(ptr) : null;
         return result;
       }
@@ -90,13 +90,13 @@ namespace Fragcolor.Chainblocks
   internal delegate void TableClearDelegate(CBTable table);
 
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-  internal delegate byte TableContainsDelegate(CBTable table, string key);
+  internal delegate bool TableContainsDelegate(CBTable table, string key);
 
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
   internal delegate void TableGetIteratorDelegate(CBTable table, out CBTableIterator iter);
 
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-  internal delegate byte TableNextDelegate(CBTable table, ref CBTableIterator iter, out IntPtr key, out CBVar value);
+  internal delegate bool TableNextDelegate(CBTable table, ref CBTableIterator iter, out IntPtr key, out CBVar value);
 
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
   internal delegate void TableRemoveDelegate(CBTable table, string key);

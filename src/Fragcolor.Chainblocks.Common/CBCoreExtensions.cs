@@ -56,7 +56,7 @@ namespace Fragcolor.Chainblocks
       return new Node { _ref = createNodeDelegate() };
     }
 
-    public static byte Tick(this ref CBCore core, Node node)
+    public static bool Tick(this ref CBCore core, Node node)
     {
       var tickDelegate = Marshal.GetDelegateForFunctionPointer<TickDelegate>(core._tick);
       return tickDelegate(node._ref);
@@ -106,7 +106,7 @@ namespace Fragcolor.Chainblocks
   internal delegate IntPtr CreateNodeDelegate();
 
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-  internal delegate byte TickDelegate(IntPtr nodeRef);
+  internal delegate bool TickDelegate(IntPtr nodeRef);
 
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
   internal delegate void ScheduleDelegate(IntPtr nodeRef, IntPtr chainRef);
