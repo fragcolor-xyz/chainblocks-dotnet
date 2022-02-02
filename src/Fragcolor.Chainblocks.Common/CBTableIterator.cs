@@ -1,0 +1,14 @@
+﻿/* SPDX-License-Identifier: BSD-3-Clause */
+/* Copyright © 2022 Fragcolor Pte. Ltd. */
+
+using System.Runtime.InteropServices;
+
+namespace Fragcolor.Chainblocks
+{
+  [StructLayout(LayoutKind.Sequential)]
+  public struct CBTableIterator
+  {
+    [MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)]
+    internal byte[] _raw;
+  }
+}
