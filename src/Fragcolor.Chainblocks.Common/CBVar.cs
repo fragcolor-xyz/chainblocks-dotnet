@@ -1,6 +1,7 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
 /* Copyright © 2022 Fragcolor Pte. Ltd. */
 
+using System;
 using System.Runtime.InteropServices;
 
 namespace Fragcolor.Chainblocks
@@ -9,6 +10,12 @@ namespace Fragcolor.Chainblocks
   public struct CBVar
   {
     //! Native struct, don't edit
+    [FieldOffset(0)]
+    public bool @bool;
+
+    [FieldOffset(0)]
+    public CBObject @object;
+
     [FieldOffset(0)]
     public long @int;
 
@@ -60,11 +67,26 @@ namespace Fragcolor.Chainblocks
     [FieldOffset(0)]
     public Chain chain;
 
+    [FieldOffset(0)]
+    public Block block;
+
+    [FieldOffset(0)]
+    public CBEnum @enum;
+
     [FieldOffset(16)]
     public CBType type;
 
+    [FieldOffset(17)]
+    internal CBType _innerType;
+
     [FieldOffset(18)]
     public ushort flags;
+
+    [FieldOffset(20)]
+    internal uint _refCount;
+
+    [FieldOffset(24)]
+    internal IntPtr _objectInfo;
   }
 
   [StructLayout(LayoutKind.Sequential)]
