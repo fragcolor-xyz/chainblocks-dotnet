@@ -20,6 +20,18 @@ namespace Fragcolor.Chainblocks
       freeDelegate(ptr);
     }
 
+    public static void Log(this ref CBCore core, string message)
+    {
+      var logDelegate = Marshal.GetDelegateForFunctionPointer<LogDelegate>(core._log);
+      logDelegate(message);
+    }
+
+    public static void Log(this ref CBCore core, string message, CBLogLevel level)
+    {
+      var logLevelDelegate = Marshal.GetDelegateForFunctionPointer<LogLevelDelegate>(core._logLevel);
+      logLevelDelegate((int)level, message);
+    }
+
     public static byte Suspend(this ref CBCore core, IntPtr context, double duration)
     {
       var suspendDelegate = Marshal.GetDelegateForFunctionPointer<SuspendDelegate>(core._suspend);
@@ -68,4 +80,40 @@ namespace Fragcolor.Chainblocks
       destroyVarDelegate(varRef);
     }
   }
+
+  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+  internal delegate IntPtr AllocDelegate(uint size);
+
+  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+  internal delegate void FreeDelegate(IntPtr ptr);
+
+  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+  internal delegate void LogDelegate(string message);
+
+  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+  internal delegate void LogLevelDelegate(int level, string message);
+
+  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+  internal delegate byte SuspendDelegate(IntPtr context, double duration);
+
+  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+  internal delegate IntPtr AllocExternalVariableDelegate(IntPtr chain, string name);
+
+  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+  internal delegate void FreeExternalVariableDelegate(IntPtr chain, string name);
+
+  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+  internal delegate IntPtr CreateNodeDelegate();
+
+  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+  internal delegate byte TickDelegate(IntPtr nodeRef);
+
+  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+  internal delegate void ScheduleDelegate(IntPtr nodeRef, IntPtr chainRef);
+
+  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+  internal delegate void DestroyVarDelegate(IntPtr varRef);
+
+  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+  internal delegate CBVar ActivateUnmanagedDelegate(IntPtr context, IntPtr input);
 }

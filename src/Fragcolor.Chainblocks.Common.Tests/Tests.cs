@@ -13,8 +13,11 @@ namespace Fragcolor.Chainblocks.Tests
         [Test]
         public void Test1()
         {
-            var chain = new Variable();
-            Env.Eval(@"(Chain ""test"" :Looped (Msg ""XXX"") .position (Log) (Pause 1.0))", chain.Ptr);
+            Native.Core.Log($"Starting {nameof(Test1)}...");
+
+            using var chain = new Variable();
+            var ok = Env.Eval(@$"(Chain ""{nameof(Test1)}"" :Looped (Msg ""XXX"") .position (Log) (Pause 1.0))", chain.Ptr);
+            Assert.IsTrue(ok);
 
             var float4 = new Float4 { x = 3, y = 4, z = 5, w = 0};
             var position = new ExternalVariable(chain.Value.chain, "position");
@@ -32,6 +35,8 @@ namespace Fragcolor.Chainblocks.Tests
             }
 
             Native.Core.Unschedule(Node, chain.Value.chain);
+
+            Native.Core.Log($"{nameof(Test1)} done.");
         }
     }
 }
