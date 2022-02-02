@@ -20,7 +20,7 @@ namespace Fragcolor.Chainblocks.Tests
             Assert.IsTrue(ok);
 
             var float4 = new Float4 { x = 3, y = 4, z = 5, w = 0};
-            var position = new ExternalVariable(chain.Value.chain, "position");
+            using var position = new ExternalVariable(chain.Value.chain, "position");
             position.Value.float4 = float4;
             position.Value.type = CBType.Float4;
             position.Value.flags = (1 << 2);
@@ -46,12 +46,12 @@ namespace Fragcolor.Chainblocks.Tests
             var ok = Env.Eval(@$"(Chain ""{nameof(SeqTest)}"" :Looped .seq (Log))", chain.Ptr);
             Assert.IsTrue(ok);
 
-            var seq = new ExternalVariable(chain.Value.chain, "seq");
+            using var seq = new ExternalVariable(chain.Value.chain, "seq");
             seq.Value.type = CBType.Seq;
 
             Native.Core.Schedule(Node, chain.Value.chain);
 
-            var float3 = new Variable();
+            using var float3 = new Variable();
             float3.Value.float3 = new Float3 { x = 5 };
             float3.Value.type = CBType.Float3;
 
@@ -62,7 +62,7 @@ namespace Fragcolor.Chainblocks.Tests
             Assert.AreEqual(1, seq.Value.seq.Size());
             Tick();
 
-            var float4 = new Variable();
+            using var float4 = new Variable();
             float4.Value.float4 = new Float4 { y = 5 };
             float4.Value.type = CBType.Float4;
             seq.Value.seq.Insert(1, ref float4.Value);
@@ -93,13 +93,13 @@ namespace Fragcolor.Chainblocks.Tests
             var ok = Env.Eval(@$"(Chain ""{nameof(SetTest)}"" :Looped .set (Log))", chain.Ptr);
             Assert.IsTrue(ok);
 
-            var set = new ExternalVariable(chain.Value.chain, "set");
+            using var set = new ExternalVariable(chain.Value.chain, "set");
             set.Value.set = CBSet.New();
             set.Value.type = CBType.Set;
 
             Native.Core.Schedule(Node, chain.Value.chain);
 
-            var float3 = new Variable();
+            using var float3 = new Variable();
             float3.Value.float3 = new Float3 { x = 5 };
             float3.Value.type = CBType.Float3;
 
@@ -120,7 +120,7 @@ namespace Fragcolor.Chainblocks.Tests
             Assert.AreEqual(0, set.Value.set.Size());
             Tick();
 
-            var float4 = new Variable();
+            using var float4 = new Variable();
             float4.Value.float4 = new Float4 { y = 5 };
             float4.Value.type = CBType.Float4;
             Assert.IsTrue(set.Value.set.Include(ref float4.Value));
@@ -148,7 +148,7 @@ namespace Fragcolor.Chainblocks.Tests
 
             Native.Core.Schedule(Node, chain.Value.chain);
 
-            var float3 = new Variable();
+            using var float3 = new Variable();
             float3.Value.float3 = new Float3 { x = 5 };
             float3.Value.type = CBType.Float3;
 

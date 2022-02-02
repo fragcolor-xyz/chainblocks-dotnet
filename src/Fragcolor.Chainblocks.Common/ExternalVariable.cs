@@ -9,9 +9,10 @@ namespace Fragcolor.Chainblocks
 {
   public sealed class ExternalVariable : IDisposable
   {
-    internal IntPtr _var;
-    internal string _name;
-    internal Chain _chain;
+    private Chain _chain;
+    private readonly string _name;
+    private IntPtr _var;
+
     private int _disposeState;
 
     public ref CBVar Value
@@ -43,11 +44,17 @@ namespace Fragcolor.Chainblocks
       GC.SuppressFinalize(this);
     }
 
-    private void Dispose(bool _)
+    private void Dispose(bool disposing)
     {
       if (Interlocked.CompareExchange(ref _disposeState, 1, 0) != 0) return;
 
-      Native.Core.FreeExternalVariable(_chain, _name);
+      // Finalization order cannot be guaranteed
+      if (disposing)
+      {
+        Native.Core.FreeExternalVariable(_chain, _name);
+      }
+
+      _chain._ref = IntPtr.Zero;
       _var = IntPtr.Zero;
     }
   }
