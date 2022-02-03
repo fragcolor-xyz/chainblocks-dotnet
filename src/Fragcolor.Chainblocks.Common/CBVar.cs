@@ -65,10 +65,10 @@ namespace Fragcolor.Chainblocks
     public CBAudio audio;
 
     [FieldOffset(0)]
-    public Chain chain;
+    public CBChainRef chain;
 
     [FieldOffset(0)]
-    public Block block;
+    public CBlockPtr block;
 
     [FieldOffset(0)]
     public CBEnum @enum;

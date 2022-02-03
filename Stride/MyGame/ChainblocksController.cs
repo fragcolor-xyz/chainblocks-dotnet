@@ -1,4 +1,4 @@
-﻿/* SPDX-License-Identifier: BSD-3-Clause */
+/* SPDX-License-Identifier: BSD-3-Clause */
 /* Copyright © 2022 Fragcolor Pte. Ltd. */
 
 using System;
@@ -14,7 +14,7 @@ namespace MyGame
         private static bool _initialized;
 
         private static LispEnv _env;
-        private static Node _node;
+        private static CBNodeRef _node;
 
         public static LispEnv Env
         {
@@ -27,7 +27,7 @@ namespace MyGame
             private set { _env = value; }
         }
 
-        public static Node Node
+        public static CBNodeRef Node
         {
             get
             {

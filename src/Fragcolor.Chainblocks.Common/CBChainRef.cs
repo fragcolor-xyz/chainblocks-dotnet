@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 namespace Fragcolor.Chainblocks
 {
   [StructLayout(LayoutKind.Sequential)]
-  public struct Chain
+  public struct CBChainRef
   {
     internal IntPtr _ref;
   }

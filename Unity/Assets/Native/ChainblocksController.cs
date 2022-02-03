@@ -9,7 +9,7 @@ public class ChainblocksController : MonoBehaviour
     private static bool _initialized;
 
     private static LispEnv _env;
-    private static Node _node;
+    private static CBNodeRef _node;
 
     public static LispEnv Env
     {
@@ -22,7 +22,7 @@ public class ChainblocksController : MonoBehaviour
         private set { _env = value; }
     }
 
-    public static Node Node
+    public static CBNodeRef Node
     {
         get
         {

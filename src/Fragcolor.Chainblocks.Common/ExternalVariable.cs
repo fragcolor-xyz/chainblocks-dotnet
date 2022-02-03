@@ -9,7 +9,7 @@ namespace Fragcolor.Chainblocks
 {
   public sealed class ExternalVariable : IDisposable
   {
-    private Chain _chain;
+    private CBChainRef _chain;
     private readonly string _name;
     private IntPtr _var;
 
@@ -26,7 +26,7 @@ namespace Fragcolor.Chainblocks
       }
     }
 
-    public ExternalVariable(Chain chain, string name)
+    public ExternalVariable(CBChainRef chain, string name)
     {
       _chain = chain;
       _name = name;

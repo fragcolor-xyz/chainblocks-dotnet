@@ -10,15 +10,15 @@ namespace Fragcolor.Chainblocks.Tests
 #pragma warning disable CS8618
     protected Variable _chain;
     private LispEnv _env;
-    private Node _node;
+    private CBNodeRef _node;
 #pragma warning restore CS8618
     private bool _isScheduled;
 
-    protected ref readonly Chain Chain => ref _chain.Value.chain;
+    protected ref readonly CBChainRef Chain => ref _chain.Value.chain;
 
     protected ref readonly LispEnv Env => ref _env;
 
-    protected ref readonly Node Node => ref _node;
+    protected ref readonly CBNodeRef Node => ref _node;
 
     [OneTimeSetUp]
     protected void BaseOneTimeSetup()

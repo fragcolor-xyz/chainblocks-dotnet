@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 namespace Fragcolor.Chainblocks
 {
   [StructLayout(LayoutKind.Sequential)]
-  public struct Node
+  public struct CBlockPtr
   {
     internal IntPtr _ref;
   }
