@@ -49,7 +49,6 @@ jobs:
   libcbl-build:
     uses: ./.github/workflows/cbl-dll.yml
     with:
-      build-type: Release
       bitness: 64bits
 
   #
@@ -58,6 +57,10 @@ jobs:
   common-library-test:
     needs: [common-library-build, libcbl-build]
     runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        build-type: ["Debug", "Release"]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -70,7 +73,7 @@ jobs:
       - name: Download libcbl
         uses: actions/download-artifact@v2
         with:
-          name: libcbl-win64-Release
+          name: libcbl-win64-${{ matrix.build-type }}
           path: src/Fragcolor.Chainblocks.Common.Tests
       - name: Test
         run: |

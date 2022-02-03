@@ -3,10 +3,6 @@ name: cbl-dll
 on:
   workflow_call:
     inputs:
-      build-type:
-        default: Debug
-        required: false
-        type: string
       bitness:
         default: 64bits
         required: false
@@ -15,6 +11,10 @@ on:
 jobs:
   Windows:
     runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        build-type: ["Debug", "Release"]
     steps:
       - name: Setup
         id: setup
@@ -44,7 +44,7 @@ jobs:
           rustup default stable-${{ steps.setup.outputs.arch }}-pc-windows-gnu
       - uses: Swatinem/rust-cache@v1
         with:
-          key: ${{ inputs.build-type }}
+          key: ${{ matrix.build-type }}
       - name: Set up MSYS2
         uses: msys2/setup-msys2@v2
         with:
@@ -67,11 +67,11 @@ jobs:
         run: |
           mkdir build
           cd build
-          cmake -G Ninja -DCMAKE_BUILD_TYPE=${{ inputs.build-type }} -DUSE_LIBBACKTRACE=0 -DSKIP_RUST_BINDGEN=${{ inputs.bitness == '32bits' }} ..
+          cmake -G Ninja -DCMAKE_BUILD_TYPE=${{ matrix.build-type }} -DUSE_LIBBACKTRACE=0 -DSKIP_RUST_BINDGEN=${{ inputs.bitness == '32bits' }} ..
           ninja cbl-dll
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ steps.setup.outputs.artifact }}-${{ inputs.build-type }}
+          name: ${{ steps.setup.outputs.artifact }}-${{ matrix.build-type }}
           path: build/libcbl.dll
           if-no-files-found: error
