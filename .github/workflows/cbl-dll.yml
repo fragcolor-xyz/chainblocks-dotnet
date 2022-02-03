@@ -15,6 +15,12 @@ jobs:
       fail-fast: false
       matrix:
         build-type: ["Debug", "Release"]
+        include:
+          - build-type: Debug
+            target: RelWithDebInfo
+          - build-type: Release
+            target: Release
+
     steps:
       - name: Setup
         id: setup
@@ -44,7 +50,7 @@ jobs:
           rustup default stable-${{ steps.setup.outputs.arch }}-pc-windows-gnu
       - uses: Swatinem/rust-cache@v1
         with:
-          key: ${{ matrix.build-type }}
+          key: ${{ matrix.target }}
       - name: Set up MSYS2
         uses: msys2/setup-msys2@v2
         with:
@@ -67,7 +73,7 @@ jobs:
         run: |
           mkdir build
           cd build
-          cmake -G Ninja -DCMAKE_BUILD_TYPE=${{ matrix.build-type }} -DUSE_LIBBACKTRACE=0 -DSKIP_RUST_BINDGEN=${{ inputs.bitness == '32bits' }} ..
+          cmake -G Ninja -DCMAKE_BUILD_TYPE=${{ matrix.target }} -DUSE_LIBBACKTRACE=0 -DSKIP_RUST_BINDGEN=${{ inputs.bitness == '32bits' }} ..
           ninja cbl-dll
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
