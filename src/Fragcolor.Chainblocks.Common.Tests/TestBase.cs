@@ -5,28 +5,65 @@ using NUnit.Framework;
 
 namespace Fragcolor.Chainblocks.Tests
 {
-  public abstract class TestBase
+  internal abstract class TestBase
   {
-    public LispEnv Env { get; private set; }
+#pragma warning disable CS8618
+    protected Variable _chain;
+    private LispEnv _env;
+    private Node _node;
+#pragma warning restore CS8618
+    private bool _isScheduled;
 
-    public Node Node { get; private set; }
+    protected ref readonly Chain Chain => ref _chain.Value.chain;
+
+    protected ref readonly LispEnv Env => ref _env;
+
+    protected ref readonly Node Node => ref _node;
 
     [OneTimeSetUp]
-    protected void BaseSetup()
+    protected void BaseOneTimeSetup()
     {
-      Env = new LispEnv();
-      Node = Native.Core.CreateNode();
+      _env = new LispEnv();
+      _node = Native.Core.CreateNode();
     }
 
     [OneTimeTearDown]
-    protected void BaseTearDown()
+    protected void BaseOneTimeTearDown()
     {
       Env.Dispose();
+    }
+
+    [SetUp]
+    protected void BaseSetup()
+    {
+      var name = TestContext.CurrentContext.Test.Name;
+      Native.Core.Log($"Starting {name}...");
+    }
+
+    [TearDown]
+    protected void BaseTearDown()
+    {
+      var name = TestContext.CurrentContext.Test.Name;
+      Native.Core.Log($"{name} done..");
+    }
+
+    protected void ScheduleChain()
+    {
+      if (_isScheduled) return;
+      Native.Core.Schedule(Node, Chain);
+      _isScheduled = true;
     }
 
     protected void Tick()
     {
       Native.Core.Tick(Node);
+    }
+
+    protected void UnscheduleChain()
+    {
+      if (!_isScheduled) return;
+      Native.Core.Unschedule(Node, Chain);
+      _isScheduled = false;
     }
   }
 }
