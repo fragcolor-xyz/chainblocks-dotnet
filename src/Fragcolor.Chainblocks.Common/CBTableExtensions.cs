@@ -90,13 +90,13 @@ namespace Fragcolor.Chainblocks
   internal delegate void TableClearDelegate(CBTable table);
 
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-  internal delegate bool TableContainsDelegate(CBTable table, string key);
+  internal delegate CBBool TableContainsDelegate(CBTable table, string key);
 
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
   internal delegate void TableGetIteratorDelegate(CBTable table, out CBTableIterator iter);
 
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-  internal delegate bool TableNextDelegate(CBTable table, ref CBTableIterator iter, out IntPtr key, out CBVar value);
+  internal delegate CBBool TableNextDelegate(CBTable table, ref CBTableIterator iter, out IntPtr key, out CBVar value);
 
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
   internal delegate void TableRemoveDelegate(CBTable table, string key);

@@ -85,19 +85,19 @@ namespace Fragcolor.Chainblocks
   internal delegate void SetClearDelegate(CBSet set);
 
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-  internal delegate bool SetContainsDelegate(CBSet set, CBVar value);
+  internal delegate CBBool SetContainsDelegate(CBSet set, CBVar value);
 
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-  internal delegate bool SetExcludeDelegate(CBSet set, CBVar value);
+  internal delegate CBBool SetExcludeDelegate(CBSet set, CBVar value);
 
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
   internal delegate void SetGetIteratorDelegate(CBSet set, out CBSetIterator iter);
 
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-  internal delegate bool SetIncludeDelegate(CBSet set, CBVar value);
+  internal delegate CBBool SetIncludeDelegate(CBSet set, CBVar value);
 
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-  internal delegate bool SetNextDelegate(CBSet set, ref CBSetIterator iter, out CBVar value);
+  internal delegate CBBool SetNextDelegate(CBSet set, ref CBSetIterator iter, out CBVar value);
 
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
   internal delegate ulong SetSizeDelegate(CBSet set);

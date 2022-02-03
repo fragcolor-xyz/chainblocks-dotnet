@@ -11,7 +11,7 @@ namespace Fragcolor.Chainblocks
   {
     //! Native struct, don't edit
     [FieldOffset(0)]
-    public bool @bool;
+    public CBBool @bool;
 
     [FieldOffset(0)]
     public CBObject @object;
