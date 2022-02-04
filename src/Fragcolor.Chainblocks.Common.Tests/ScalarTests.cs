@@ -43,17 +43,22 @@ namespace Fragcolor.Chainblocks.Tests
     [Test]
     public void TestBool()
     {
-      InVar.type = CBType.Bool;
-      OutVar.type = CBType.Bool;
+      bool @bool = true;
+      InVar.SetValue(@bool);
+      Assert.AreEqual(CBType.Bool, InVar.type);
+      Assert.AreEqual(@bool, (bool)InVar.@bool);
+      OutVar.SetValue(default(bool));
+      Assert.AreEqual(CBType.Bool, OutVar.type);
+      Assert.AreNotEqual(InVar.@bool, OutVar.@bool);
+      Assert.AreNotEqual(InVar, OutVar);
 
-      InVar.@bool = false;
       ScheduleChain();
 
       Tick();
       Assert.AreEqual(InVar.@bool, OutVar.@bool);
       Assert.AreEqual(InVar, OutVar);
 
-      InVar.@bool = true;
+      InVar.@bool = false;
       Assert.AreNotEqual(InVar, OutVar);
 
       Tick();
@@ -64,10 +69,16 @@ namespace Fragcolor.Chainblocks.Tests
     [Test]
     public void TestInt()
     {
-      InVar.type = CBType.Int;
-      OutVar.type = CBType.Int;
+      var @int = 21;
+      InVar.SetValue(@int);
+      Assert.IsTrue(InVar.IsInteger());
+      Assert.AreEqual(CBType.Int, InVar.type);
+      Assert.AreEqual(@int, InVar.@int);
+      OutVar.SetValue(default(int));
+      Assert.AreEqual(CBType.Int, OutVar.type);
+      Assert.AreNotEqual(InVar.@int, OutVar.@int);
+      Assert.AreNotEqual(InVar, OutVar);
 
-      InVar.@int = 21;
       ScheduleChain();
 
       Tick();
@@ -85,10 +96,16 @@ namespace Fragcolor.Chainblocks.Tests
     [Test]
     public void TestInt2()
     {
-      InVar.type = CBType.Int2;
-      OutVar.type = CBType.Int2;
+      var int2 = new Int2() { x = 1, y = 2 };
+      InVar.SetValue(int2);
+      Assert.IsTrue(InVar.IsInteger());
+      Assert.AreEqual(CBType.Int2, InVar.type);
+      Assert.AreEqual(int2, InVar.int2);
+      OutVar.SetValue(default(Int2));
+      Assert.AreEqual(CBType.Int2, OutVar.type);
+      Assert.AreNotEqual(InVar.int2, OutVar.int2);
+      Assert.AreNotEqual(InVar, OutVar);
 
-      InVar.int2 = new() { x = 1, y = 2 };
       ScheduleChain();
 
       Tick();
@@ -106,10 +123,16 @@ namespace Fragcolor.Chainblocks.Tests
     [Test]
     public void TestInt3()
     {
-      InVar.type = CBType.Int3;
-      OutVar.type = CBType.Int3;
+      var int3 = new Int3() { x = 1, y = 2, z = 3 };
+      InVar.SetValue(int3);
+      Assert.IsTrue(InVar.IsInteger());
+      Assert.AreEqual(CBType.Int3, InVar.type);
+      Assert.AreEqual(int3, InVar.int3);
+      OutVar.SetValue(default(Int3));
+      Assert.AreEqual(CBType.Int3, OutVar.type);
+      Assert.AreNotEqual(InVar.int3, OutVar.int3);
+      Assert.AreNotEqual(InVar, OutVar);
 
-      InVar.int3 = new() { x = 1, y = 2, z = 3 };
       ScheduleChain();
 
       Tick();
@@ -127,10 +150,16 @@ namespace Fragcolor.Chainblocks.Tests
     [Test]
     public void TestInt4()
     {
-      InVar.type = CBType.Int4;
-      OutVar.type = CBType.Int4;
+      var int4 = new Int4() { x = 1, y = 2, z = 3, w = 4 };
+      InVar.SetValue(int4);
+      Assert.IsTrue(InVar.IsInteger());
+      Assert.AreEqual(CBType.Int4, InVar.type);
+      Assert.AreEqual(int4, InVar.int4);
+      OutVar.SetValue(default(Int4));
+      Assert.AreEqual(CBType.Int4, OutVar.type);
+      Assert.AreNotEqual(InVar.int4, OutVar.int4);
+      Assert.AreNotEqual(InVar, OutVar);
 
-      InVar.int4 = new() { x = 1, y = 2, z = 3, w = 4 };
       ScheduleChain();
 
       Tick();
@@ -148,10 +177,7 @@ namespace Fragcolor.Chainblocks.Tests
     [Test]
     public void TestInt8()
     {
-      InVar.type = CBType.Int8;
-      OutVar.type = CBType.Int8;
-
-      InVar.int8 = new()
+      var int8 = new Int8()
       {
         x1 = 1,
         y1 = 2,
@@ -162,6 +188,15 @@ namespace Fragcolor.Chainblocks.Tests
         z2 = 7,
         w2 = 8
       };
+      InVar.SetValue(int8);
+      Assert.IsTrue(InVar.IsInteger());
+      Assert.AreEqual(CBType.Int8, InVar.type);
+      Assert.AreEqual(int8, InVar.int8);
+      OutVar.SetValue(default(Int8));
+      Assert.AreEqual(CBType.Int8, OutVar.type);
+      Assert.AreNotEqual(InVar.int8, OutVar.int8);
+      Assert.AreNotEqual(InVar, OutVar);
+
       ScheduleChain();
 
       Tick();
@@ -180,10 +215,7 @@ namespace Fragcolor.Chainblocks.Tests
     [Test]
     public void TestInt16()
     {
-      InVar.type = CBType.Int16;
-      OutVar.type = CBType.Int16;
-
-      InVar.int16 = new()
+      var int16 = new Int16()
       {
         x1 = 1,
         y1 = 2,
@@ -202,6 +234,15 @@ namespace Fragcolor.Chainblocks.Tests
         z4 = 15,
         w4 = 16,
       };
+      InVar.SetValue(int16);
+      Assert.IsTrue(InVar.IsInteger());
+      Assert.AreEqual(CBType.Int16, InVar.type);
+      Assert.AreEqual(int16, InVar.int16);
+      OutVar.SetValue(default(Int16));
+      Assert.AreEqual(CBType.Int16, OutVar.type);
+      Assert.AreNotEqual(InVar.int16, OutVar.int16);
+      Assert.AreNotEqual(InVar, OutVar);
+
       ScheduleChain();
 
       Tick();
@@ -222,10 +263,16 @@ namespace Fragcolor.Chainblocks.Tests
     [Test]
     public void TestFloat()
     {
-      InVar.type = CBType.Float;
-      OutVar.type = CBType.Float;
+      var @float = Math.PI;
+      InVar.SetValue(@float);
+      Assert.IsTrue(InVar.IsFloat());
+      Assert.AreEqual(CBType.Float, InVar.type);
+      Assert.AreEqual(@float, InVar.@float);
+      OutVar.SetValue(default(double));
+      Assert.AreEqual(CBType.Float, OutVar.type);
+      Assert.AreNotEqual(InVar.@float, OutVar.@float);
+      Assert.AreNotEqual(InVar, OutVar);
 
-      InVar.@float = Math.PI;
       ScheduleChain();
 
       Tick();
@@ -243,10 +290,16 @@ namespace Fragcolor.Chainblocks.Tests
     [Test]
     public void TestFloat2()
     {
-      InVar.type = CBType.Float2;
-      OutVar.type = CBType.Float2;
+      var float2 = new Float2() { x = Math.Acos(0), y = Math.Asin(-1) };
+      InVar.SetValue(float2);
+      Assert.IsTrue(InVar.IsFloat());
+      Assert.AreEqual(CBType.Float2, InVar.type);
+      Assert.AreEqual(float2, InVar.float2);
+      OutVar.SetValue(default(Float2));
+      Assert.AreEqual(CBType.Float2, OutVar.type);
+      Assert.AreNotEqual(InVar.float2, OutVar.float2);
+      Assert.AreNotEqual(InVar, OutVar);
 
-      InVar.float2 = new() { x = Math.Acos(0), y = Math.Asin(-1)};
       ScheduleChain();
 
       Tick();
@@ -264,10 +317,16 @@ namespace Fragcolor.Chainblocks.Tests
     [Test]
     public void TestFloat3()
     {
-      InVar.type = CBType.Float3;
-      OutVar.type = CBType.Float3;
+      var float3 = new Float3() { x = (float)Math.Acos(0), y = (float)Math.Asin(-1) };
+      InVar.SetValue(float3);
+      Assert.IsTrue(InVar.IsFloat());
+      Assert.AreEqual(CBType.Float3, InVar.type);
+      Assert.AreEqual(float3, InVar.float3);
+      OutVar.SetValue(default(Float3));
+      Assert.AreEqual(CBType.Float3, OutVar.type);
+      Assert.AreNotEqual(InVar.float3, OutVar.float3);
+      Assert.AreNotEqual(InVar, OutVar);
 
-      InVar.float3 = new() { x = (float)Math.Acos(0), y = (float)Math.Asin(-1) };
       ScheduleChain();
 
       Tick();
@@ -285,10 +344,16 @@ namespace Fragcolor.Chainblocks.Tests
     [Test]
     public void TestFloat4()
     {
-      InVar.type = CBType.Float4;
-      OutVar.type = CBType.Float4;
+      var float4 = new Float4() { x = (float)Math.Acos(0), y = (float)Math.Asin(-1) };
+      InVar.SetValue(float4);
+      Assert.IsTrue(InVar.IsFloat());
+      Assert.AreEqual(CBType.Float4, InVar.type);
+      Assert.AreEqual(float4, InVar.float4);
+      OutVar.SetValue(default(Float4));
+      Assert.AreEqual(CBType.Float4, OutVar.type);
+      Assert.AreNotEqual(InVar.float4, OutVar.float4);
+      Assert.AreNotEqual(InVar, OutVar);
 
-      InVar.float4 = new() { x = (float)Math.Acos(0), y = (float)Math.Asin(-1) };
       ScheduleChain();
 
       Tick();
@@ -307,10 +372,15 @@ namespace Fragcolor.Chainblocks.Tests
     [Test]
     public void TestColor()
     {
-      InVar.type = CBType.Color;
-      OutVar.type = CBType.Color;
+      var color = new CBColor() { r = 33, g = 33, b = 33, a = 255 };
+      InVar.SetValue(color);
+      Assert.AreEqual(CBType.Color, InVar.type);
+      Assert.AreEqual(color, InVar.color);
+      OutVar.SetValue(default(CBColor));
+      Assert.AreEqual(CBType.Color, OutVar.type);
+      Assert.AreNotEqual(InVar.color, OutVar.color);
+      Assert.AreNotEqual(InVar, OutVar);
 
-      InVar.color = new() { r = 33, g = 33, b = 33, a = 255 };
       ScheduleChain();
 
       Tick();

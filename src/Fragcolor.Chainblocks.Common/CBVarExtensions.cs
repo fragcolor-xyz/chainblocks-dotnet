@@ -40,5 +40,77 @@ namespace Fragcolor.Chainblocks
     {
       return var.type == CBType.None;
     }
+
+    public static void SetValue(this ref CBVar var, bool value)
+    {
+      var.@bool = value;
+      var.type = CBType.Bool;
+    }
+
+    public static void SetValue(this ref CBVar var, int value)
+    {
+      var.@int = value;
+      var.type = CBType.Int;
+    }
+
+    public static void SetValue(this ref CBVar var, Int2 value)
+    {
+      var.int2 = value;
+      var.type = CBType.Int2;
+    }
+
+    public static void SetValue(this ref CBVar var, Int3 value)
+    {
+      var.int3 = value;
+      var.type = CBType.Int3;
+    }
+
+    public static void SetValue(this ref CBVar var, Int4 value)
+    {
+      var.int4 = value;
+      var.type = CBType.Int4;
+    }
+
+    public static void SetValue(this ref CBVar var, Int8 value)
+    {
+      var.int8 = value;
+      var.type = CBType.Int8;
+    }
+
+    public static void SetValue(this ref CBVar var, Int16 value)
+    {
+      var.int16 = value;
+      var.type = CBType.Int16;
+    }
+
+    public static void SetValue(this ref CBVar var, double value)
+    {
+      var.@float = value;
+      var.type = CBType.Float;
+    }
+
+    public static void SetValue(this ref CBVar var, Float2 value)
+    {
+      var.float2 = value;
+      var.type = CBType.Float2;
+    }
+
+    public static void SetValue(this ref CBVar var, Float3 value)
+    {
+      var.float3 = value;
+      var.type = CBType.Float3;
+    }
+
+    public static void SetValue(this ref CBVar var, Float4 value)
+    {
+      var.float4 = value;
+      var.type = CBType.Float4;
+    }
+
+    public static void SetValue(this ref CBVar var, CBColor value)
+    {
+      var.color = value;
+      var.type = CBType.Color;
+    }
   }
 }

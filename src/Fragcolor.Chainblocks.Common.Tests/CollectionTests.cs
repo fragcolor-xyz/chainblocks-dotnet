@@ -1,8 +1,6 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
 /* Copyright © 2022 Fragcolor Pte. Ltd. */
 
-using System.Threading;
-
 using NUnit.Framework;
 
 namespace Fragcolor.Chainblocks.Tests
@@ -42,9 +40,7 @@ namespace Fragcolor.Chainblocks.Tests
 
       ScheduleChain();
 
-      using var float3 = new Variable();
-      float3.Value.float3 = new Float3 { x = 5 };
-      float3.Value.type = CBType.Float3;
+      using var float3 = VariableUtil.NewFloat3(new() { x = 5 });
 
       Assert.AreEqual(0, ColVar.seq.Size());
       Tick();
@@ -53,9 +49,7 @@ namespace Fragcolor.Chainblocks.Tests
       Assert.AreEqual(1, ColVar.seq.Size());
       Tick();
 
-      using var float4 = new Variable();
-      float4.Value.float4 = new Float4 { y = 5 };
-      float4.Value.type = CBType.Float4;
+      using var float4 = VariableUtil.NewFloat4(new() { y = 5 });
       ColVar.seq.Insert(1, ref float4.Value);
       Assert.AreEqual(2, ColVar.seq.Size());
       Tick();
@@ -83,8 +77,8 @@ namespace Fragcolor.Chainblocks.Tests
 
       ScheduleChain();
 
-      using var float3 = new Variable();
-      float3.Value.float3 = new Float3 { x = 5 };
+      using var float3 = VariableUtil.NewFloat3(new() { x = 5 });
+      float3.Value.float3 = new() { x = 5 };
       float3.Value.type = CBType.Float3;
 
       Assert.AreEqual(0, ColVar.set.Size());
@@ -104,9 +98,7 @@ namespace Fragcolor.Chainblocks.Tests
       Assert.AreEqual(0, ColVar.set.Size());
       Tick();
 
-      using var float4 = new Variable();
-      float4.Value.float4 = new Float4 { y = 5 };
-      float4.Value.type = CBType.Float4;
+      using var float4 = VariableUtil.NewFloat4(new() { y = 5 });
       Assert.IsTrue(ColVar.set.Include(ref float4.Value));
       Assert.IsTrue(ColVar.set.Contains(ref float4.Value));
       Assert.AreEqual(1, ColVar.set.Size());
@@ -125,9 +117,7 @@ namespace Fragcolor.Chainblocks.Tests
 
       ScheduleChain();
 
-      using var float3 = new Variable();
-      float3.Value.float3 = new Float3 { x = 5 };
-      float3.Value.type = CBType.Float3;
+      using var float3 = VariableUtil.NewFloat3(new() { x = 5 });
 
       Assert.AreEqual(0, ColVar.table.Size());
       Tick();
