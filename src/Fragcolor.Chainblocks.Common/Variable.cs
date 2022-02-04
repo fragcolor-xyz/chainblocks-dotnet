@@ -40,6 +40,13 @@ namespace Fragcolor.Chainblocks
       Dispose(false);
     }
 
+    public Variable Clone()
+    {
+      var variable = new Variable();
+      Native.Core.CloneVar(ref variable.Value, ref Value);
+      return variable;
+    }
+
     public void Dispose()
     {
       Dispose(true);
