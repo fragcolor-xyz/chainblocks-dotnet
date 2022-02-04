@@ -43,7 +43,7 @@ namespace Fragcolor.Chainblocks.Tests
     [Test]
     public void TestBool()
     {
-      bool @bool = true;
+      var @bool = true;
       InVar.SetValue(@bool);
       Assert.AreEqual(CBType.Bool, InVar.type);
       Assert.AreEqual(@bool, (bool)InVar.@bool);

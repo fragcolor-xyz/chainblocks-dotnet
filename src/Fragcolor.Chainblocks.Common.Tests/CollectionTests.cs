@@ -40,12 +40,12 @@ namespace Fragcolor.Chainblocks.Tests
 
       ScheduleChain();
 
-      using var float3 = VariableUtil.NewFloat3(new() { x = 5 });
+      using var @float = VariableUtil.NewFloat(42);
 
       Assert.AreEqual(0, ColVar.seq.Size());
       Tick();
 
-      ColVar.seq.Push(ref float3.Value);
+      ColVar.seq.Push(ref @float.Value);
       Assert.AreEqual(1, ColVar.seq.Size());
       Tick();
 
@@ -77,30 +77,28 @@ namespace Fragcolor.Chainblocks.Tests
 
       ScheduleChain();
 
-      using var float3 = VariableUtil.NewFloat3(new() { x = 5 });
-      float3.Value.float3 = new() { x = 5 };
-      float3.Value.type = CBType.Float3;
+      using var int3 = VariableUtil.NewInt3(new() { x = 5 });
 
       Assert.AreEqual(0, ColVar.set.Size());
       Tick();
 
-      Assert.IsTrue(ColVar.set.Include(ref float3.Value));
-      Assert.IsTrue(ColVar.set.Contains(ref float3.Value));
+      Assert.IsTrue(ColVar.set.Include(ref int3.Value));
+      Assert.IsTrue(ColVar.set.Contains(ref int3.Value));
       Assert.AreEqual(1, ColVar.set.Size());
       Tick();
 
       var iterator = ColVar.set.GetIterator();
       Assert.IsTrue(ColVar.set.Next(ref iterator, out var value));
-      Assert.AreEqual(value.float3, float3.Value.float3);
+      Assert.AreEqual(value.float3, int3.Value.float3);
       Assert.IsFalse(ColVar.set.Next(ref iterator, out _));
-      Assert.IsTrue(ColVar.set.Exclude(ref float3.Value));
-      Assert.IsFalse(ColVar.set.Contains(ref float3.Value));
+      Assert.IsTrue(ColVar.set.Exclude(ref int3.Value));
+      Assert.IsFalse(ColVar.set.Contains(ref int3.Value));
       Assert.AreEqual(0, ColVar.set.Size());
       Tick();
 
-      using var float4 = VariableUtil.NewFloat4(new() { y = 5 });
-      Assert.IsTrue(ColVar.set.Include(ref float4.Value));
-      Assert.IsTrue(ColVar.set.Contains(ref float4.Value));
+      using var float2 = VariableUtil.NewFloat2(new() { y = 5 });
+      Assert.IsTrue(ColVar.set.Include(ref float2.Value));
+      Assert.IsTrue(ColVar.set.Contains(ref float2.Value));
       Assert.AreEqual(1, ColVar.set.Size());
       Tick();
 
@@ -117,34 +115,34 @@ namespace Fragcolor.Chainblocks.Tests
 
       ScheduleChain();
 
-      using var float3 = VariableUtil.NewFloat3(new() { x = 5 });
+      using var color = VariableUtil.NewColor(new() { r = 255 });
 
       Assert.AreEqual(0, ColVar.table.Size());
       Tick();
 
-      Assert.IsFalse(ColVar.table.Contains("key1"));
-      ref var elem = ref ColVar.table.At("key1");
+      Assert.IsFalse(ColVar.table.Contains("red"));
+      ref var elem = ref ColVar.table.At("red");
       Assert.IsTrue(elem.IsNone());
-      elem.float3 = float3.Value.float3;
+      elem.float3 = color.Value.float3;
       elem.type = CBType.Float3;
       Assert.AreEqual(1, ColVar.table.Size());
-      Assert.IsTrue(ColVar.table.Contains("key1"));
+      Assert.IsTrue(ColVar.table.Contains("red"));
       Tick();
 
       elem.float3.z = 42;
       var iterator = ColVar.table.GetIterator();
       ColVar.table.Next(ref iterator, out var key, out var value);
-      Assert.AreEqual("key1", key);
+      Assert.AreEqual("red", key);
       Assert.AreEqual(42, value.float3.z);
       Tick();
 
-      ColVar.table.Remove("key1");
+      ColVar.table.Remove("red");
       Assert.AreEqual(0, ColVar.table.Size());
       Tick();
 
-      Assert.IsFalse(ColVar.table.Contains("key2"));
-      _ = ref ColVar.table.At("key2");
-      Assert.IsTrue(ColVar.table.Contains("key2"));
+      Assert.IsFalse(ColVar.table.Contains("none"));
+      _ = ref ColVar.table.At("none");
+      Assert.IsTrue(ColVar.table.Contains("none"));
       Tick();
 
       ColVar.table.Clear();
