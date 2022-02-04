@@ -65,7 +65,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          fetch-depth: 1
+          fetch-depth: 2
       - name: Setup dotnet
         uses: actions/setup-dotnet@v1
         with:
@@ -77,7 +77,22 @@ jobs:
           path: src/Fragcolor.Chainblocks.Common.Tests
       - name: Test
         run: |
-          dotnet test src/Fragcolor.Chainblocks.Common.Tests
+          cd src
+          dotnet test -c ${{ matrix.build-type }} /p:CollectCoverage=true /p:CoverletOutput=../coverage/ /p:CoverletOutputFormat=lcov
+      - name: Coverage (Debug)
+        if: ${{ matrix.build-type == 'Debug' }}
+        uses: codecov/codecov-action@v2
+        with:
+          directory: ./src/coverage/
+          files: coverage.*.info
+          fail_ci_if_error: true
+      - name: Upload coverage
+        if: ${{ matrix.build-type == 'Debug' }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: common-library-coverage-${{ matrix.build-type }}
+          path: src/coverage/
+          if-no-files-found: error
 
   #
   # Build Godot sample
