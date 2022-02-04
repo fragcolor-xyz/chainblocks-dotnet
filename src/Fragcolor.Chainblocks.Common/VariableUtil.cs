@@ -54,7 +54,7 @@ namespace Fragcolor.Chainblocks
       return variable;
     }
 
-    public static Variable NewFloat(float value, bool destroy = true)
+    public static Variable NewFloat(double value, bool destroy = true)
     {
       var variable = new Variable(destroy);
       variable.Value.SetValue(value);

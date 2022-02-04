@@ -44,7 +44,7 @@ namespace Fragcolor.Chainblocks.Tests
     protected void BaseTearDown()
     {
       var name = TestContext.CurrentContext.Test.Name;
-      Native.Core.Log($"{name} done..");
+      Native.Core.Log($"{name} done.");
     }
 
     protected void ScheduleChain()
