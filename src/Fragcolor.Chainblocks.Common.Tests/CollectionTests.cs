@@ -1,6 +1,8 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
 /* Copyright © 2022 Fragcolor Pte. Ltd. */
 
+using System;
+
 using NUnit.Framework;
 
 namespace Fragcolor.Chainblocks.Tests
@@ -50,21 +52,24 @@ namespace Fragcolor.Chainblocks.Tests
       Tick();
 
       using var float4 = VariableUtil.NewFloat4(new() { y = 5 });
-      ColVar.seq.Insert(1, ref float4.Value);
+      Assert.Throws(typeof(IndexOutOfRangeException), () => ColVar.seq.Insert(2, ref float4.Value));
+      ColVar.seq.Insert(0, ref float4.Value);
       Assert.AreEqual(2, ColVar.seq.Size());
       Tick();
 
-      ref var myvar = ref ColVar.seq.At(1);
+      ref var myvar = ref ColVar.seq.At(0);
       myvar.float4.z = 42;
       Tick();
 
       ColVar.seq.RemoveAt(0);
+      Assert.Throws(typeof(IndexOutOfRangeException), () => ColVar.seq.RemoveAt(1));
       Assert.AreEqual(1, ColVar.seq.Size());
       Tick();
 
       var popped = ColVar.seq.Pop();
-      Assert.AreEqual(CBType.Float4, popped.type);
-      Assert.AreEqual(5, popped.float4.y);
+      Assert.Throws(typeof(InvalidOperationException), () => ColVar.seq.Pop());
+      Assert.AreEqual(CBType.Float, popped.type);
+      Assert.AreEqual(42, popped.@float);
       Assert.AreEqual(0, ColVar.seq.Size());
       Tick();
     }
@@ -131,7 +136,8 @@ namespace Fragcolor.Chainblocks.Tests
 
       elem.float3.z = 42;
       var iterator = ColVar.table.GetIterator();
-      ColVar.table.Next(ref iterator, out var key, out var value);
+      Assert.IsTrue(ColVar.table.Next(ref iterator, out var key, out var value));
+      Assert.IsFalse(ColVar.table.Next(ref iterator, out _, out _));
       Assert.AreEqual("red", key);
       Assert.AreEqual(42, value.float3.z);
       Tick();

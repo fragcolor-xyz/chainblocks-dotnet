@@ -32,6 +32,7 @@ namespace Fragcolor.Chainblocks
         CBType.Int4 or
         CBType.Int8 or
         CBType.Int16 => true,
+        CBType.Color => true,
         _ => false,
       };
     }

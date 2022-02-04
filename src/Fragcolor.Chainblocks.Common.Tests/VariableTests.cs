@@ -130,6 +130,19 @@ namespace Fragcolor.Chainblocks.Tests
     }
 
     [Test]
+    public void TestCloneExternalVariable()
+    {
+      using var chain = new Variable();
+      Env.Eval(@"(Chain ""empty"" .var (Log))", chain.Ptr);
+      using var var = new ExternalVariable(chain.Value.chain, "var");
+      var.Value.SetValue((Int4)(1, 2, 3, 4));
+      using var clone = var.Clone();
+      Assert.AreEqual(CBType.Int4, clone.Value.type);
+      Assert.AreEqual(var.Value, clone.Value);
+      Assert.AreNotSame(var.Value, clone.Value);
+    }
+
+    [Test]
     public void TestExternalVariableDestructor()
     {
       using var chain = new Variable();
