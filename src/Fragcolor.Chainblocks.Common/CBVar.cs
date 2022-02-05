@@ -56,6 +56,9 @@ namespace Fragcolor.Chainblocks
     public CBSet set;
 
     [FieldOffset(0)]
+    public CBString @string;
+
+    [FieldOffset(0)]
     public CBColor color;
 
     [FieldOffset(0)]
