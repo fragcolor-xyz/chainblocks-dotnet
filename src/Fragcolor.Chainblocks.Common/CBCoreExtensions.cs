@@ -74,12 +74,6 @@ namespace Fragcolor.Chainblocks
       freeExternalVariableDelegate(chainRef, name);
     }
 
-    public static byte Suspend(this ref CBCore core, IntPtr context, double duration)
-    {
-      var suspendDelegate = Marshal.GetDelegateForFunctionPointer<SuspendDelegate>(core._suspend);
-      return suspendDelegate(context, duration);
-    }
-
     public static void CloneVar(this ref CBCore core, ref CBVar target, ref CBVar source)
     {
       var cloneVarDelegate = Marshal.GetDelegateForFunctionPointer<CloneVarDelegate>(core._cloneVar);
@@ -125,9 +119,6 @@ namespace Fragcolor.Chainblocks
 
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
   internal delegate void FreeExternalVariableDelegate(CBChainRef chainRef, string name);
-
-  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-  internal delegate byte SuspendDelegate(IntPtr context, double duration);
 
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
   internal delegate void CloneVarDelegate(ref CBVar target, ref CBVar source);

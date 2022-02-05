@@ -7,7 +7,7 @@ using NUnit.Framework;
 
 namespace Fragcolor.Chainblocks.Tests
 {
-  internal class VariableTests : TestBase
+  internal sealed class VariableTests : TestBase
   {
     [Test]
     public void TestCloneBool()
@@ -147,15 +147,23 @@ namespace Fragcolor.Chainblocks.Tests
     {
       using var chain = new Variable();
       Env.Eval(@"(Chain ""empty"" .var (Log))", chain.Ptr);
-      _ = new ExternalVariable(chain.Value.chain, "var");
+      {
+        _ = new ExternalVariable(chain.Value.chain, "var");
+      }
       // destructor eventualy called when out of scope
+      GC.Collect();
+      GC.WaitForPendingFinalizers();
     }
 
     [Test]
     public void TestVariableDestructor()
     {
-      _ = new Variable();
+      {
+        _ = new Variable();
+      }
       // destructor eventually called when out of scope
+      GC.Collect();
+      GC.WaitForPendingFinalizers();
     }
   }
 }

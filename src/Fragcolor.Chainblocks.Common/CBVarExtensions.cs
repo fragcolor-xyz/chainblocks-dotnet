@@ -7,11 +7,6 @@ namespace Fragcolor.Chainblocks
 {
   public static class CBVarExtensions
   {
-    public static bool IsAny(this ref CBVar var)
-    {
-      return var.type == CBType.Any;
-    }
-
     public static bool IsFloat(this ref CBVar var)
     {
       return var.type switch

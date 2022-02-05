@@ -72,6 +72,12 @@ namespace Fragcolor.Chainblocks.Tests
       Assert.AreEqual(42, popped.@float);
       Assert.AreEqual(0, ColVar.seq.Size());
       Tick();
+
+      Assert.DoesNotThrow(() => ColVar.seq.Insert(0, ref @float.Value));
+      Assert.AreEqual(1, ColVar.seq.Size());
+      Assert.AreEqual(@float.Value, ColVar.seq[0]);
+      Assert.Throws(typeof(IndexOutOfRangeException), () => _ = ColVar.seq[1]);
+      Tick();
     }
 
     [Test]
