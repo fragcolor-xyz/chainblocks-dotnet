@@ -26,11 +26,12 @@ namespace Fragcolor.Chainblocks
       }
     }
 
-    public ExternalVariable(CBChainRef chain, string name)
+    public ExternalVariable(CBChainRef chain, string name, CBType type = CBType.None)
     {
       _chain = chain;
       _name = name;
       _var = Native.Core.AllocExternalVariable(chain, _name);
+      Value.type = type;
     }
 
     ~ExternalVariable()

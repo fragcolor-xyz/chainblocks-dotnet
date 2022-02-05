@@ -128,8 +128,7 @@ namespace Fragcolor.Chainblocks.Tests
       Assert.IsFalse(ColVar.table.Contains("red"));
       ref var elem = ref ColVar.table.At("red");
       Assert.IsTrue(elem.IsNone());
-      elem.float3 = color.Value.float3;
-      elem.type = CBType.Float3;
+      elem.SetValue(color.Value.color);
       Assert.AreEqual(1, ColVar.table.Size());
       Assert.IsTrue(ColVar.table.Contains("red"));
       Tick();

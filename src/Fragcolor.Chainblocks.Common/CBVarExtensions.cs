@@ -1,6 +1,8 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
 /* Copyright © 2022 Fragcolor Pte. Ltd. */
 
+using System.Runtime.InteropServices;
+
 namespace Fragcolor.Chainblocks
 {
   public static class CBVarExtensions
@@ -112,6 +114,24 @@ namespace Fragcolor.Chainblocks
     {
       var.color = value;
       var.type = CBType.Color;
+    }
+
+    public static string? GetString(this ref CBVar var)
+    {
+      if (var.type != CBType.String) return null;
+
+      return Marshal.PtrToStringAnsi(var.@string._str);
+    }
+
+    // TODO: add doc about not destroying the variable, depending on the situation it might leak memory
+    public static void SetString(this ref CBVar var, string? value)
+    {
+      using var tmp = new Variable(false);
+      var ptr = Marshal.StringToHGlobalAnsi(value);
+      tmp.Value.@string = new CBString { _str = ptr };
+      tmp.Value.type = CBType.String;
+      Native.Core.CloneVar(ref var, ref tmp.Value);
+      Marshal.FreeHGlobal(ptr);
     }
   }
 }
