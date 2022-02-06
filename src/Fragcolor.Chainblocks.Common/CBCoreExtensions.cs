@@ -2,6 +2,7 @@
 /* Copyright © 2022 Fragcolor Pte. Ltd. */
 
 using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 namespace Fragcolor.Chainblocks
@@ -35,23 +36,30 @@ namespace Fragcolor.Chainblocks
     public static CBNodeRef CreateNode(this ref CBCore core)
     {
       var createNodeDelegate = Marshal.GetDelegateForFunctionPointer<CreateNodeDelegate>(core._createNode);
-      return createNodeDelegate();
+      var ptr = createNodeDelegate();
+      Debug.Assert(ptr.IsValid());
+      return ptr;
     }
 
     public static void Schedule(this ref CBCore core, CBNodeRef nodeRef, CBChainRef chainRef)
     {
+      Debug.Assert(nodeRef.IsValid());
+      Debug.Assert(chainRef.IsValid());
       var scheduleDelegate = Marshal.GetDelegateForFunctionPointer<ScheduleDelegate>(core._schedule);
       scheduleDelegate(nodeRef, chainRef);
     }
 
     public static void Unschedule(this ref CBCore core, CBNodeRef nodeRef, CBChainRef chainRef)
     {
+      Debug.Assert(nodeRef.IsValid());
+      Debug.Assert(chainRef.IsValid());
       var unscheduleDelegate = Marshal.GetDelegateForFunctionPointer<UnscheduleDelegate>(core._unschedule);
       unscheduleDelegate(nodeRef, chainRef);
     }
 
     public static bool Tick(this ref CBCore core, CBNodeRef nodeRef)
     {
+      Debug.Assert(nodeRef.IsValid());
       var tickDelegate = Marshal.GetDelegateForFunctionPointer<TickDelegate>(core._tick);
       return tickDelegate(nodeRef);
     }
@@ -64,12 +72,14 @@ namespace Fragcolor.Chainblocks
 
     public static IntPtr AllocExternalVariable(this ref CBCore core, CBChainRef chainRef, string name)
     {
+      Debug.Assert(chainRef.IsValid());
       var allocExternalVariableDelegate = Marshal.GetDelegateForFunctionPointer<AllocExternalVariableDelegate>(core._allocExternalVariable);
       return allocExternalVariableDelegate(chainRef, name);
     }
 
     public static void FreeExternalVariable(this ref CBCore core, CBChainRef chainRef, string name)
     {
+      Debug.Assert(chainRef.IsValid());
       var freeExternalVariableDelegate = Marshal.GetDelegateForFunctionPointer<FreeExternalVariableDelegate>(core._freeExternalVariable);
       freeExternalVariableDelegate(chainRef, name);
     }

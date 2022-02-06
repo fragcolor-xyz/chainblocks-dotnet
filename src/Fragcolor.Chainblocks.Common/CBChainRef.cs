@@ -10,5 +10,10 @@ namespace Fragcolor.Chainblocks
   public struct CBChainRef
   {
     internal IntPtr _ref;
+
+    public bool IsValid()
+    {
+      return _ref != IntPtr.Zero;
+    }
   }
 }

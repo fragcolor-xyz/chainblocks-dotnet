@@ -2,6 +2,7 @@
 /* Copyright © 2022 Fragcolor Pte. Ltd. */
 
 using System;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -11,6 +12,7 @@ namespace Fragcolor.Chainblocks
   {
     public static ref CBVar At(this ref CBTable table, string key)
     {
+      Debug.Assert(table.IsValid());
       unsafe
       {
         ref var api = ref Unsafe.AsRef<CBTableInterface>(table._api.ToPointer());
@@ -21,6 +23,7 @@ namespace Fragcolor.Chainblocks
 
     public static void Clear(this ref CBTable table)
     {
+      Debug.Assert(table.IsValid());
       unsafe
       {
         ref var api = ref Unsafe.AsRef<CBTableInterface>(table._api.ToPointer());
@@ -31,6 +34,7 @@ namespace Fragcolor.Chainblocks
 
     public static bool Contains(this ref CBTable table, string key)
     {
+      Debug.Assert(table.IsValid());
       unsafe
       {
         ref var api = ref Unsafe.AsRef<CBTableInterface>(table._api.ToPointer());
@@ -41,6 +45,7 @@ namespace Fragcolor.Chainblocks
 
     public static CBTableIterator GetIterator(this ref CBTable table)
     {
+      Debug.Assert(table.IsValid());
       unsafe
       {
         ref var api = ref Unsafe.AsRef<CBTableInterface>(table._api.ToPointer());
@@ -52,6 +57,7 @@ namespace Fragcolor.Chainblocks
 
     public static bool Next(this ref CBTable table, ref CBTableIterator iter, out string? key, out CBVar value)
     {
+      Debug.Assert(table.IsValid());
       unsafe
       {
         ref var api = ref Unsafe.AsRef<CBTableInterface>(table._api.ToPointer());
@@ -64,6 +70,7 @@ namespace Fragcolor.Chainblocks
 
     public static void Remove(this ref CBTable table, string key)
     {
+      Debug.Assert(table.IsValid());
       unsafe
       {
         ref var api = ref Unsafe.AsRef<CBTableInterface>(table._api.ToPointer());
@@ -74,6 +81,7 @@ namespace Fragcolor.Chainblocks
 
     public static ulong Size(this ref CBTable table)
     {
+      Debug.Assert(table.IsValid());
       unsafe
       {
         ref var api = ref Unsafe.AsRef<CBTableInterface>(table._api.ToPointer());

@@ -18,6 +18,11 @@ namespace Fragcolor.Chainblocks
       var tableNewDelegate = Marshal.GetDelegateForFunctionPointer<TableNewDelegate>(Native.Core._tableNew);
       return tableNewDelegate();
     }
+
+    public bool IsValid()
+    {
+      return _api != IntPtr.Zero;
+    }
   }
 
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]

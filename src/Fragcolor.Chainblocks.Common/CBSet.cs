@@ -18,6 +18,11 @@ namespace Fragcolor.Chainblocks
       var setNewDelegate = Marshal.GetDelegateForFunctionPointer<SetNewDelegate>(Native.Core._setNew);
       return setNewDelegate();
     }
+
+    public bool IsValid()
+    {
+      return _api != IntPtr.Zero;
+    }
   }
 
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]

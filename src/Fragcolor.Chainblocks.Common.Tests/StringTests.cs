@@ -21,6 +21,7 @@ namespace Fragcolor.Chainblocks.Tests
       _chain = new Variable();
       var ok = Env.Eval(@$"(Chain ""{nameof(TestSetString)}"" :Looped .msg (Log) (String.ToUpper) > .result)", _chain.Ptr);
       Assert.IsTrue(ok);
+      Assert.IsTrue(Chain.IsValid());
 
       using var message = new ExternalVariable(Chain, "msg");
       Assert.IsTrue(message.Value.IsNone());
@@ -44,6 +45,7 @@ namespace Fragcolor.Chainblocks.Tests
       _chain = new Variable();
       var ok = Env.Eval(@$"(Chain ""{nameof(TestGetString)}"" ""Hello"" > .msg (Log) (Pause) ""World"" > .msg (Log))", _chain.Ptr);
       Assert.IsTrue(ok);
+      Assert.IsTrue(Chain.IsValid());
 
       using var message = new ExternalVariable(Chain, "msg", CBType.String);
       Assert.AreEqual(CBType.String, message.Value.type);

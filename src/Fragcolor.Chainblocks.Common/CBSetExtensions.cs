@@ -2,6 +2,7 @@
 /* Copyright © 2022 Fragcolor Pte. Ltd. */
 
 using System;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -11,6 +12,7 @@ namespace Fragcolor.Chainblocks
   {
     public static void Clear(this ref CBSet set)
     {
+      Debug.Assert(set.IsValid());
       unsafe
       {
         ref var api = ref Unsafe.AsRef<CBSetInterface>(set._api.ToPointer());
@@ -21,6 +23,7 @@ namespace Fragcolor.Chainblocks
 
     public static bool Contains(this ref CBSet set, ref CBVar value)
     {
+      Debug.Assert(set.IsValid());
       unsafe
       {
         ref var api = ref Unsafe.AsRef<CBSetInterface>(set._api.ToPointer());
@@ -31,6 +34,7 @@ namespace Fragcolor.Chainblocks
 
     public static bool Exclude(this ref CBSet set, ref CBVar value)
     {
+      Debug.Assert(set.IsValid());
       unsafe
       {
         ref var api = ref Unsafe.AsRef<CBSetInterface>(set._api.ToPointer());
@@ -41,6 +45,7 @@ namespace Fragcolor.Chainblocks
 
     public static CBSetIterator GetIterator(this ref CBSet set)
     {
+      Debug.Assert(set.IsValid());
       unsafe
       {
         ref var api = ref Unsafe.AsRef<CBSetInterface>(set._api.ToPointer());
@@ -52,6 +57,7 @@ namespace Fragcolor.Chainblocks
 
     public static bool Next(this ref CBSet set, ref CBSetIterator iter, out CBVar value)
     {
+      Debug.Assert(set.IsValid());
       unsafe
       {
         ref var api = ref Unsafe.AsRef<CBSetInterface>(set._api.ToPointer());
@@ -62,6 +68,7 @@ namespace Fragcolor.Chainblocks
 
     public static bool Include(this ref CBSet set, ref CBVar var)
     {
+      Debug.Assert(set.IsValid());
       unsafe
       {
         ref var api = ref Unsafe.AsRef<CBSetInterface>(set._api.ToPointer());
@@ -72,6 +79,7 @@ namespace Fragcolor.Chainblocks
 
     public static ulong Size(this ref CBSet set)
     {
+      Debug.Assert(set.IsValid());
       unsafe
       {
         ref var api = ref Unsafe.AsRef<CBSetInterface>(set._api.ToPointer());
