@@ -1,4 +1,4 @@
-/* SPDX-License-Identifier: BSD-3-Clause */
+﻿/* SPDX-License-Identifier: BSD-3-Clause */
 /* Copyright © 2022 Fragcolor Pte. Ltd. */
 
 using System;
@@ -190,6 +190,13 @@ namespace Fragcolor.Chainblocks
       sleepDelegate(seconds, runCallbacks);
     }
 
+    public static void RegisterBlock(this ref CBCore core, string fullName, Func<CBlockPtr> constructor)
+    {
+      var registerBlockDelegate = Marshal.GetDelegateForFunctionPointer<RegisterBlockDelegate>(core._registerBlock);
+      var ptr = Marshal.GetFunctionPointerForDelegate(constructor);
+      registerBlockDelegate(fullName, ptr);
+    }
+
     /// <summary>
     /// Allocates an etxernal variable on a chain with the specified name.
     /// </summary>
@@ -299,6 +306,9 @@ namespace Fragcolor.Chainblocks
 
   [UnmanagedFunctionPointer(NativeMethods.CallingConv)]
   internal delegate void SleepDelegate(double seconds, CBBool runCallbacks);
+
+  [UnmanagedFunctionPointer(NativeMethods.CallingConv)]
+  internal delegate void RegisterBlockDelegate(string fullName, IntPtr constructor);
 
   [UnmanagedFunctionPointer(NativeMethods.CallingConv)]
   internal delegate IntPtr AllocExternalVariableDelegate(CBChainRef chainRef, CBString name);
