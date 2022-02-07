@@ -10,17 +10,17 @@ namespace Fragcolor.Chainblocks.Collections
   public static class CBStringsExtensions
   {
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static string At(this ref CBStrings strings, uint index)
+    public static string? At(this ref CBStrings strings, uint index)
     {
       return strings[index];
     }
 
-    public static string Pop(this ref CBStrings strings)
+    public static string? Pop(this ref CBStrings strings)
     {
       if (strings._length == 0) throw new InvalidOperationException();
 
       var popDelegate = Marshal.GetDelegateForFunctionPointer<StringsPopDelegate>(Native.Core._stringsPop);
-      return Marshal.PtrToStringAnsi(popDelegate(ref strings));
+      return (string?)popDelegate(ref strings);
     }
 
     public static void RemoveAt(this ref CBStrings strings, uint index)
@@ -36,5 +36,5 @@ namespace Fragcolor.Chainblocks.Collections
   internal delegate void StringsSlowDeleteDelegate(ref CBStrings strings, uint index);
 
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-  internal delegate IntPtr StringsPopDelegate(ref CBStrings strings);
+  internal delegate CBString StringsPopDelegate(ref CBStrings strings);
 }

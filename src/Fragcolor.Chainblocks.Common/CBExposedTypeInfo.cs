@@ -1,7 +1,6 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
 /* Copyright © 2022 Fragcolor Pte. Ltd. */
 
-using System;
 using System.Runtime.InteropServices;
 
 namespace Fragcolor.Chainblocks
@@ -10,7 +9,7 @@ namespace Fragcolor.Chainblocks
   public struct CBExposedTypeInfo
   {
     //! Native struct, don't edit
-    internal IntPtr _name;
+    internal CBString _name;
     internal CBOptionalString _help;
     internal CBTypeInfo _exposedType;
     internal CBBool _mutable;

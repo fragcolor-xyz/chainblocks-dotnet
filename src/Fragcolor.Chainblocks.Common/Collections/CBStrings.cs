@@ -16,7 +16,7 @@ namespace Fragcolor.Chainblocks.Collections
 
     public uint Count => _length;
 
-    public string this[uint i]
+    public string? this[uint i]
     {
       get
       {
@@ -24,8 +24,8 @@ namespace Fragcolor.Chainblocks.Collections
 
         unsafe
         {
-          var ptr = (IntPtr*)_elements.ToPointer();
-          return Marshal.PtrToStringAnsi(ptr[i]);
+          var ptr = (CBString*)_elements.ToPointer();
+          return (string?)ptr[i];
         }
       }
     }

@@ -2,7 +2,6 @@
 /* Copyright © 2022 Fragcolor Pte. Ltd. */
 
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 
 using Fragcolor.Chainblocks.Collections;
 
@@ -35,9 +34,9 @@ namespace Fragcolor.Chainblocks
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static string Name(this ref CBChainInfo info)
+    public static string? Name(this ref CBChainInfo info)
     {
-      return Marshal.PtrToStringAnsi(info._name);
+      return (string?)info._name;
     }
   }
 }

@@ -40,18 +40,16 @@ namespace Fragcolor.Chainblocks
       return hashDelegate(ref block);
     }
 
-    public static string Help(this ref CBlock block)
+    public static CBOptionalString Help(this ref CBlock block)
     {
       var helpDelegate = Marshal.GetDelegateForFunctionPointer<BlockHelpDelegate>(block._help);
-      var optional = helpDelegate(ref block);
-      return Marshal.PtrToStringAnsi(optional._str);
+      return helpDelegate(ref block);
     }
 
-    public static string InputHelp(this ref CBlock block)
+    public static CBOptionalString InputHelp(this ref CBlock block)
     {
       var helpDelegate = Marshal.GetDelegateForFunctionPointer<BlockHelpDelegate>(block._inputHelp);
-      var optional = helpDelegate(ref block);
-      return Marshal.PtrToStringAnsi(optional._str);
+      return helpDelegate(ref block);
     }
 
     public static CBTypesInfo InputTypes(this ref CBlock block)
@@ -60,18 +58,16 @@ namespace Fragcolor.Chainblocks
       return inputTypesDelegate(ref block);
     }
 
-    public static string Name(this ref CBlock block)
+    public static string? Name(this ref CBlock block)
     {
       var nameDelegate = Marshal.GetDelegateForFunctionPointer<BlockNameDelegate>(block._name);
-      var ptr = nameDelegate(ref block);
-      return Marshal.PtrToStringAnsi(ptr);
+      return (string?)nameDelegate(ref block);
     }
 
-    public static string OutputHelp(this ref CBlock block)
+    public static CBOptionalString OutputHelp(this ref CBlock block)
     {
       var helpDelegate = Marshal.GetDelegateForFunctionPointer<BlockHelpDelegate>(block._outputHelp);
-      var optional = helpDelegate(ref block);
-      return Marshal.PtrToStringAnsi(optional._str);
+      return helpDelegate(ref block);
     }
 
     public static CBTypesInfo OutputTypes(this ref CBlock block)
@@ -120,7 +116,7 @@ namespace Fragcolor.Chainblocks
   internal delegate CBTypesInfo BlockInputOutputTypesDelegate(ref CBlock block);
 
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-  internal delegate IntPtr BlockNameDelegate(ref CBlock block);
+  internal delegate CBString BlockNameDelegate(ref CBlock block);
 
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
   internal delegate CBParametersInfo BlockParametersDelegate(ref CBlock block);

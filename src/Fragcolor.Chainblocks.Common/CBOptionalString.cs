@@ -1,7 +1,6 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
 /* Copyright © 2022 Fragcolor Pte. Ltd. */
 
-using System;
 using System.Runtime.InteropServices;
 
 namespace Fragcolor.Chainblocks
@@ -10,7 +9,12 @@ namespace Fragcolor.Chainblocks
   public struct CBOptionalString
   {
     //! Native struct, don't edit
-    internal IntPtr _str;
+    internal CBString _str;
     internal uint _crc;
+
+    public static explicit operator string?(CBOptionalString str)
+    {
+      return (string?)str._str;
+    }
   }
 }

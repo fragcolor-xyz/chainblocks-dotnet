@@ -11,7 +11,10 @@ namespace Fragcolor.Chainblocks
   {
     //! Native struct, don't edit
     internal IntPtr _str;
-    internal uint _length;
-    internal uint _capacity;
+
+    public static explicit operator string?(CBString str)
+    {
+      return Marshal.PtrToStringAnsi(str._str);
+    }
   }
 }

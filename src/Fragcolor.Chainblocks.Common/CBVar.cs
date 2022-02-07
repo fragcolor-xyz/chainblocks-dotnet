@@ -60,6 +60,12 @@ namespace Fragcolor.Chainblocks
     [FieldOffset(0)]
     public CBString @string;
 
+    [FieldOffset(8)]
+    internal uint _stringLength;
+
+    [FieldOffset(12)]
+    internal uint _stringCapacity;
+
     [FieldOffset(0)]
     public CBColor color;
 

@@ -1,7 +1,6 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
 /* Copyright © 2022 Fragcolor Pte. Ltd. */
 
-using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -63,7 +62,7 @@ namespace Fragcolor.Chainblocks.Collections
         ref var api = ref Unsafe.AsRef<CBTableInterface>(table._api.ToPointer());
         var nextDelegate = Marshal.GetDelegateForFunctionPointer<TableNextDelegate>(api._tableNext);
         var result = nextDelegate(table, ref iter, out var ptr, out value);
-        key = result ? Marshal.PtrToStringAnsi(ptr) : null;
+        key = result ? (string?)ptr : null;
         return result;
       }
     }
@@ -104,7 +103,7 @@ namespace Fragcolor.Chainblocks.Collections
   internal delegate void TableGetIteratorDelegate(CBTable table, out CBTableIterator iter);
 
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-  internal delegate CBBool TableNextDelegate(CBTable table, ref CBTableIterator iter, out IntPtr key, out CBVar value);
+  internal delegate CBBool TableNextDelegate(CBTable table, ref CBTableIterator iter, out CBString key, out CBVar value);
 
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
   internal delegate void TableRemoveDelegate(CBTable table, string key);

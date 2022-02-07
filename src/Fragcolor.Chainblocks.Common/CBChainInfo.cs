@@ -12,7 +12,7 @@ namespace Fragcolor.Chainblocks
   public struct CBChainInfo
   {
     //! Native struct, don't edit
-    internal IntPtr _name;
+    internal CBString _name;
     internal CBBool _looped;
     internal CBBool _unsafe;
     internal CBChainRef _chain;
