@@ -9,6 +9,7 @@ namespace Fragcolor.Chainblocks
   [StructLayout(LayoutKind.Sequential)]
   public struct CBObject
   {
+    //! Native struct, don't edit
     internal IntPtr _obj;
     internal int _vendorId;
     internal int _typeId;

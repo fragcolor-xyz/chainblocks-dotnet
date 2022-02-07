@@ -10,9 +10,12 @@ namespace Fragcolor.Chainblocks.Collections
   [StructLayout(LayoutKind.Sequential)]
   public struct CBExposedTypesInfo
   {
+    //! Native struct, don't edit
     internal IntPtr _elements;
     internal uint _length;
     internal uint _capacity;
+
+    public uint Count => _length;
 
     public ref CBExposedTypeInfo this[uint i]
     {

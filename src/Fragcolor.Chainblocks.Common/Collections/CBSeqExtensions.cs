@@ -50,12 +50,6 @@ namespace Fragcolor.Chainblocks.Collections
       var deleteDelegate = Marshal.GetDelegateForFunctionPointer<SeqSlowDeleteDelegate>(Native.Core._seqSlowDelete);
       deleteDelegate(ref seq, index);
     }
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static uint Size(this ref CBSeq seq)
-    {
-      return seq._length;
-    }
   }
 
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]

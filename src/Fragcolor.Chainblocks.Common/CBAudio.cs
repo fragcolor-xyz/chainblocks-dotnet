@@ -9,9 +9,10 @@ namespace Fragcolor.Chainblocks
   [StructLayout(LayoutKind.Sequential)]
   public struct CBAudio
   {
-    public uint sampleRate;
-    public ushort sampleCount;
-    public ushort channelCount;
-    public IntPtr samples;
+    //! Native struct, don't edit
+    internal uint _sampleRate;
+    internal ushort _sampleCount;
+    internal ushort _channelCount;
+    internal IntPtr _samples;
   }
 }

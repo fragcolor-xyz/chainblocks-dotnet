@@ -9,6 +9,7 @@ namespace Fragcolor.Chainblocks
   [StructLayout(LayoutKind.Sequential)]
   public struct CBExposedTypeInfo
   {
+    //! Native struct, don't edit
     internal IntPtr _name;
     internal CBOptionalString _help;
     internal CBTypeInfo _exposedType;

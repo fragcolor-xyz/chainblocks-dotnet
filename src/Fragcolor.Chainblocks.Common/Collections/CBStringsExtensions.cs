@@ -30,12 +30,6 @@ namespace Fragcolor.Chainblocks.Collections
       var deleteDelegate = Marshal.GetDelegateForFunctionPointer<StringsSlowDeleteDelegate>(Native.Core._stringsSlowDelete);
       deleteDelegate(ref strings, index);
     }
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static uint Size(this ref CBStrings strings)
-    {
-      return strings._length;
-    }
   }
 
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]

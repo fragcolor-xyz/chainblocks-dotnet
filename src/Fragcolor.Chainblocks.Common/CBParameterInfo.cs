@@ -11,6 +11,7 @@ namespace Fragcolor.Chainblocks
   [StructLayout(LayoutKind.Sequential)]
   public struct CBParameterInfo
   {
+    //! Native struct, don't edit
     internal IntPtr _name;
     internal CBOptionalString _help;
     internal CBTypesInfo _types;

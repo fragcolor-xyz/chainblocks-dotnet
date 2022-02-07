@@ -62,12 +62,6 @@ namespace Fragcolor.Chainblocks.Collections
       var deleteDelegate = Marshal.GetDelegateForFunctionPointer<BlocksSlowDeleteDelegate>(Native.Core._blocksSlowDelete);
       deleteDelegate(ref blocks, index);
     }
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static uint Size(this ref CBlocks blocks)
-    {
-      return blocks._length;
-    }
   }
 
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]

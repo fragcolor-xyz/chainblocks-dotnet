@@ -14,6 +14,8 @@ namespace Fragcolor.Chainblocks.Collections
     internal uint _length;
     internal uint _capacity;
 
+    public uint Count => _length;
+
     public string this[uint i]
     {
       get

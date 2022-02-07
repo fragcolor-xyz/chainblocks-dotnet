@@ -50,12 +50,6 @@ namespace Fragcolor.Chainblocks.Collections
       var deleteDelegate = Marshal.GetDelegateForFunctionPointer<ExposedTypesInfoSlowDeleteDelegate>(Native.Core._expTypesSlowDelete);
       deleteDelegate(ref infos, index);
     }
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static uint Size(this ref CBExposedTypesInfo infos)
-    {
-      return infos._length;
-    }
   }
 
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]

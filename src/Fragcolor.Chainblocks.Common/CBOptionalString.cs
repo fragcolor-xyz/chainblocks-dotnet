@@ -9,6 +9,7 @@ namespace Fragcolor.Chainblocks
   [StructLayout(LayoutKind.Sequential)]
   public struct CBOptionalString
   {
+    //! Native struct, don't edit
     internal IntPtr _str;
     internal uint _crc;
   }
