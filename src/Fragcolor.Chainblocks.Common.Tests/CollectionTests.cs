@@ -2,6 +2,7 @@
 /* Copyright © 2022 Fragcolor Pte. Ltd. */
 
 using System;
+using System.Runtime.CompilerServices;
 
 using Fragcolor.Chainblocks.Collections;
 
@@ -36,6 +37,38 @@ namespace Fragcolor.Chainblocks.Tests
       UnscheduleChain();
       _collectionVar.Dispose();
       _chain.Dispose();
+    }
+
+    [Test]
+    public void TestBlocks()
+    {
+      var blocks = default(CBlocks);
+      Assert.AreEqual(0, blocks.Count);
+
+      var whenBlock = Native.Core.CreateBlock("When");
+      Assert.IsTrue(whenBlock.IsValid());
+      blocks.Push(whenBlock);
+      Assert.AreEqual(1, blocks.Count);
+
+      var ptr = blocks.Pop();
+      Assert.AreEqual(whenBlock, ptr);
+      Assert.AreEqual(whenBlock.AsRef(), ptr.AsRef());
+      Assert.AreEqual("When", whenBlock.AsRef().Name());
+      Assert.AreEqual(0, blocks.Count);
+
+      var whenNotBlock = Native.Core.CreateBlock("WhenNot");
+      Assert.IsTrue(whenNotBlock.IsValid());
+      blocks.Insert(0, whenNotBlock);
+      Assert.AreEqual(1, blocks.Count);
+      var elem = blocks.At(0);
+      Assert.AreEqual("WhenNot", elem.Name());
+
+      blocks.RemoveAt(0);
+      Assert.AreEqual(0, blocks.Count);
+      blocks.Push(ref whenBlock.AsRef());
+      blocks.Insert(0, ref whenNotBlock.AsRef());
+      Assert.AreEqual("WhenNot", blocks.At(0).Name());
+      Assert.AreEqual("When", blocks.At(1).Name());
     }
 
     [Test]

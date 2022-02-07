@@ -2,6 +2,7 @@
 /* Copyright © 2022 Fragcolor Pte. Ltd. */
 
 using System;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -26,6 +27,7 @@ namespace Fragcolor.Chainblocks.Collections
         unsafe
         {
           var ptr = (CBlockPtr*)_elements.ToPointer();
+          Debug.Assert(ptr[i].IsValid());
           return ref Unsafe.AsRef(ptr[i]).AsRef();
         }
       }

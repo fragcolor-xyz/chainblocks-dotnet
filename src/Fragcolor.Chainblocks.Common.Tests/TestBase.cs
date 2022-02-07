@@ -30,6 +30,7 @@ namespace Fragcolor.Chainblocks.Tests
     [OneTimeTearDown]
     protected void BaseOneTimeTearDown()
     {
+      Native.Core.DestroyNode(Node);
       Env.Dispose();
     }
 

@@ -78,6 +78,15 @@ namespace Fragcolor.Chainblocks
     [FieldOffset(0)]
     public CBEnum @enum;
 
+    [FieldOffset(0)]
+    public CBArray array;
+
+    [FieldOffset(8)]
+    internal uint _arrayLength;
+
+    [FieldOffset(12)]
+    internal uint _arrayCapacity;
+
     [FieldOffset(16)]
     public CBType type;
 

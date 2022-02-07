@@ -53,6 +53,12 @@ namespace Fragcolor.Chainblocks
       return ptr;
     }
 
+    public static void DestroyNode(this ref CBCore core, CBNodeRef nodeRef)
+    {
+      var createNodeDelegate = Marshal.GetDelegateForFunctionPointer<DestroyNodeDelegate>(core._destroyNode);
+      createNodeDelegate(nodeRef);
+    }
+
     public static void Schedule(this ref CBCore core, CBNodeRef nodeRef, CBChainRef chainRef)
     {
       Debug.Assert(nodeRef.IsValid());
@@ -129,6 +135,9 @@ namespace Fragcolor.Chainblocks
 
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
   internal delegate CBNodeRef CreateNodeDelegate();
+
+  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+  internal delegate void DestroyNodeDelegate(CBNodeRef nodeRef);
 
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
   internal delegate void ScheduleDelegate(CBNodeRef nodeRef, CBChainRef chainRef);
