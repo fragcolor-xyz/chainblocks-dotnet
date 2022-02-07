@@ -2,19 +2,19 @@
 /* Copyright © 2022 Fragcolor Pte. Ltd. */
 
 using System;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace Fragcolor.Chainblocks
+namespace Fragcolor.Chainblocks.Collections
 {
   [StructLayout(LayoutKind.Sequential)]
-  public struct CBParametersInfo
+  public struct CBStrings
   {
+    //! Native struct, don't edit
     internal IntPtr _elements;
     internal uint _length;
     internal uint _capacity;
 
-    public ref CBParameterInfo this[uint i]
+    public string this[uint i]
     {
       get
       {
@@ -22,11 +22,10 @@ namespace Fragcolor.Chainblocks
 
         unsafe
         {
-          var ptr = (CBParameterInfo*)_elements.ToPointer();
-          return ref Unsafe.AsRef(ptr[i]);
+          var ptr = (IntPtr*)_elements.ToPointer();
+          return Marshal.PtrToStringAnsi(ptr[i]);
         }
       }
     }
   }
 }
-

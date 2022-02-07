@@ -3,6 +3,8 @@
 
 using System;
 
+using Fragcolor.Chainblocks.Collections;
+
 using NUnit.Framework;
 
 namespace Fragcolor.Chainblocks.Tests

@@ -4,6 +4,8 @@
 using System;
 using System.Runtime.InteropServices;
 
+using Fragcolor.Chainblocks.Collections;
+
 namespace Fragcolor.Chainblocks
 {
   [StructLayout(LayoutKind.Explicit, Size = 32)]

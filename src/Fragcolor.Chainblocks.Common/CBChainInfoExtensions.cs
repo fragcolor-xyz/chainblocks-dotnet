@@ -4,6 +4,8 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
+using Fragcolor.Chainblocks.Collections;
+
 namespace Fragcolor.Chainblocks
 {
   public static class CBChainInfoExtensions

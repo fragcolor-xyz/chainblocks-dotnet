@@ -5,16 +5,16 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace Fragcolor.Chainblocks
+namespace Fragcolor.Chainblocks.Collections
 {
   [StructLayout(LayoutKind.Sequential)]
-  public struct CBTypesInfo
+  public struct CBSeq
   {
     internal IntPtr _elements;
     internal uint _length;
     internal uint _capacity;
 
-    public ref CBTypeInfo this[uint i]
+    public ref CBVar this[uint i]
     {
       get
       {
@@ -22,7 +22,7 @@ namespace Fragcolor.Chainblocks
 
         unsafe
         {
-          var ptr = (CBTypeInfo*)_elements.ToPointer();
+          var ptr = (CBVar*) _elements.ToPointer();
           return ref Unsafe.AsRef(ptr[i]);
         }
       }
