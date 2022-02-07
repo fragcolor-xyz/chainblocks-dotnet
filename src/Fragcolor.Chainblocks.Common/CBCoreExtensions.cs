@@ -33,6 +33,18 @@ namespace Fragcolor.Chainblocks
       logLevelDelegate((int)level, message);
     }
 
+    public static CBlockPtr CreateBlock(this ref CBCore core, string name)
+    {
+      var createBlockDelegate = Marshal.GetDelegateForFunctionPointer<CreateBlockDelegate>(core._createBlock);
+      return createBlockDelegate(name);
+    }
+
+    public static CBChainInfo GetChainInfo(this ref CBCore core, CBChainRef chainRef)
+    {
+      var getChainInfoDelegate = Marshal.GetDelegateForFunctionPointer<GetChainInfoDelegate>(core._getChainInfo);
+      return getChainInfoDelegate(chainRef);
+    }
+
     public static CBNodeRef CreateNode(this ref CBCore core)
     {
       var createNodeDelegate = Marshal.GetDelegateForFunctionPointer<CreateNodeDelegate>(core._createNode);
@@ -108,6 +120,12 @@ namespace Fragcolor.Chainblocks
 
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
   internal delegate void LogLevelDelegate(int level, string message);
+
+  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+  internal delegate CBlockPtr CreateBlockDelegate(string name);
+
+  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+  internal delegate CBChainInfo GetChainInfoDelegate(CBChainRef chainRef);
 
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
   internal delegate CBNodeRef CreateNodeDelegate();

@@ -25,42 +25,30 @@ namespace Fragcolor.Chainblocks
         return;
       }
 
-      unsafe
-      {
-        var insertDelegate = Marshal.GetDelegateForFunctionPointer<SeqInsertDelegate>(Native.Core._seqInsert);
-        insertDelegate(ref seq, index, ref var);
-      }
+      var insertDelegate = Marshal.GetDelegateForFunctionPointer<SeqInsertDelegate>(Native.Core._seqInsert);
+      insertDelegate(ref seq, index, ref var);
     }
 
     public static CBVar Pop(this ref CBSeq seq)
     {
       if (seq._length == 0) throw new InvalidOperationException();
 
-      unsafe
-      {
-        var popDelegate = Marshal.GetDelegateForFunctionPointer<SeqPopDelegate>(Native.Core._seqPop);
-        return popDelegate(ref seq);
-      }
+      var popDelegate = Marshal.GetDelegateForFunctionPointer<SeqPopDelegate>(Native.Core._seqPop);
+      return popDelegate(ref seq);
     }
 
     public static void Push(this ref CBSeq seq, ref CBVar var)
     {
-      unsafe
-      {
-        var pushDelegate = Marshal.GetDelegateForFunctionPointer<SeqPushDelegate>(Native.Core._seqPush);
-        pushDelegate(ref seq, ref var);
-      }
+      var pushDelegate = Marshal.GetDelegateForFunctionPointer<SeqPushDelegate>(Native.Core._seqPush);
+      pushDelegate(ref seq, ref var);
     }
 
     public static void RemoveAt(this ref CBSeq seq, uint index)
     {
       if (index >= seq._length) throw new IndexOutOfRangeException();
 
-      unsafe
-      {
-        var deleteDelegate = Marshal.GetDelegateForFunctionPointer<SeqSlowDeleteDelegate>(Native.Core._seqSlowDelete);
-        deleteDelegate(ref seq, index);
-      }
+      var deleteDelegate = Marshal.GetDelegateForFunctionPointer<SeqSlowDeleteDelegate>(Native.Core._seqSlowDelete);
+      deleteDelegate(ref seq, index);
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
