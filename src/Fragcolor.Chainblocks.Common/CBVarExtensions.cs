@@ -1,7 +1,9 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
 /* Copyright © 2022 Fragcolor Pte. Ltd. */
 
+using System;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace Fragcolor.Chainblocks
 {
@@ -122,11 +124,17 @@ namespace Fragcolor.Chainblocks
     public static void SetString(this ref CBVar var, string? value)
     {
       using var tmp = new Variable(false);
-      var ptr = Marshal.StringToHGlobalAnsi(value);
-      tmp.Value.@string = new CBString { _str = ptr };
-      tmp.Value.type = CBType.String;
-      Native.Core.CloneVar(ref var, ref tmp.Value);
-      Marshal.FreeHGlobal(ptr);
+      var cbstr = (CBString)value;
+      try
+      {
+        tmp.Value.@string = cbstr;
+        tmp.Value.type = CBType.String;
+        Native.Core.CloneVar(ref var, ref tmp.Value);
+      }
+      finally
+      {
+        cbstr.Dispose();
+      }
     }
   }
 }

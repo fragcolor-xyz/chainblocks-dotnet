@@ -2,6 +2,8 @@
 /* Copyright © 2022 Fragcolor Pte. Ltd. */
 
 using System;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Threading;
 
 namespace Fragcolor.Chainblocks
@@ -35,7 +37,17 @@ namespace Fragcolor.Chainblocks
 
     public bool Eval(string code, IntPtr output)
     {
-      return NativeMethods.cbLispEval(_env, code, output) != 0;
+      if (code is null) throw new ArgumentNullException(nameof(code));
+
+      var cbstr = (CBString)code;
+      try
+      {
+        return NativeMethods.cbLispEval(_env, cbstr, output) != 0;
+      }
+      finally
+      {
+        cbstr.Dispose();
+      }
     }
 
     private void Dispose(bool _)

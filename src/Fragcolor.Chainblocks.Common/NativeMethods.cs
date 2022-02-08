@@ -21,6 +21,6 @@ namespace Fragcolor.Chainblocks
     internal static extern void cbLispDestroy(IntPtr lisp);
 
     [DllImport(Dll, CallingConvention = Conv, CharSet = CharSet.Ansi)]
-    internal static extern byte cbLispEval(IntPtr lisp, string code, IntPtr output);
+    internal static extern byte cbLispEval(IntPtr lisp, CBString code, IntPtr output);
   }
 }

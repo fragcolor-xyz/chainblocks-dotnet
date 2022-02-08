@@ -25,6 +25,8 @@ namespace Fragcolor.Chainblocks.Tests
 
       using var message = new ExternalVariable(Chain, "msg");
       Assert.IsTrue(message.Value.IsNone());
+      Assert.DoesNotThrow(() => message.Value.SetString(null));
+      Assert.IsTrue(string.IsNullOrEmpty(message.Value.GetString()));
       message.Value.SetString("Hello");
       Assert.AreEqual(CBType.String, message.Value.type);
 
@@ -43,7 +45,7 @@ namespace Fragcolor.Chainblocks.Tests
     public void TestGetString()
     {
       _chain = new Variable();
-      var ok = Env.Eval(@$"(Chain ""{nameof(TestGetString)}"" ""Hello"" > .msg (Log) (Pause) ""World"" > .msg (Log))", _chain.Ptr);
+      var ok = Env.Eval(@$"(Chain ""{nameof(TestGetString)}"" ""こんにちは"" > .msg (Log) (Pause) ""世界"" > .msg (Log))", _chain.Ptr);
       Assert.IsTrue(ok);
       Assert.IsTrue(Chain.IsValid());
 
@@ -53,10 +55,10 @@ namespace Fragcolor.Chainblocks.Tests
       ScheduleChain();
 
       Tick();
-      Assert.AreEqual("Hello", message.Value.GetString());
+      Assert.AreEqual("こんにちは", message.Value.GetString());
 
       Tick();
-      Assert.AreEqual("World", message.Value.GetString());
+      Assert.AreEqual("世界", message.Value.GetString());
     }
   }
 }
