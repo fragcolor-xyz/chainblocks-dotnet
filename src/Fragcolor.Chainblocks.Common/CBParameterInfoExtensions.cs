@@ -16,9 +16,9 @@ namespace Fragcolor.Chainblocks
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static CBTypesInfo Types(this ref CBParameterInfo info)
+    public static ref CBTypesInfo Types(this ref CBParameterInfo info)
     {
-      return info._types;
+      return ref info._types;
     }
   }
 }
