@@ -30,7 +30,7 @@ namespace Fragcolor.Chainblocks
 #endif
     }
 
-    // Dangerous API: allocated memory for the string might later leaked if not released
+    // Dangerous API: allocated memory for the string might later leak if not released
     public static explicit operator CBString(string? str)
     {
 #if NETCOREAPP

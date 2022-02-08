@@ -59,6 +59,10 @@ namespace Fragcolor.Chainblocks.Tests
 
       Tick();
       Assert.AreEqual("世界", message.Value.GetString());
+
+      using var var = new Variable();
+      var.Value.SetValue(42);
+      Assert.AreEqual(null, var.Value.GetString());
     }
   }
 }

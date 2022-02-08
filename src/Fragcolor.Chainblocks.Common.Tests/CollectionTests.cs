@@ -51,6 +51,7 @@ namespace Fragcolor.Chainblocks.Tests
       Assert.AreEqual(1, blocks.Count);
 
       var ptr = blocks.Pop();
+      Assert.Throws(typeof(InvalidOperationException), () => blocks.Pop());
       Assert.AreEqual(whenBlock, ptr);
       Assert.AreEqual(whenBlock.AsRef(), ptr.AsRef());
       Assert.AreEqual("When", whenBlock.AsRef().Name());
@@ -58,17 +59,20 @@ namespace Fragcolor.Chainblocks.Tests
 
       var whenNotBlock = Native.Core.CreateBlock("WhenNot");
       Assert.IsTrue(whenNotBlock.IsValid());
+      Assert.Throws(typeof(IndexOutOfRangeException), () => blocks.Insert(1, whenNotBlock));
       blocks.Insert(0, whenNotBlock);
       Assert.AreEqual(1, blocks.Count);
       var elem = blocks.At(0);
       Assert.AreEqual("WhenNot", elem.Name());
 
       blocks.RemoveAt(0);
+      Assert.Throws(typeof(IndexOutOfRangeException), () => blocks.RemoveAt(0));
       Assert.AreEqual(0, blocks.Count);
       blocks.Push(ref whenBlock.AsRef());
       blocks.Insert(0, ref whenNotBlock.AsRef());
       Assert.AreEqual("WhenNot", blocks.At(0).Name());
-      Assert.AreEqual("When", blocks.At(1).Name());
+      Assert.AreEqual("When", blocks[1].Name());
+      Assert.Throws(typeof(IndexOutOfRangeException), () => _ = blocks[2]);
     }
 
     [Test]
@@ -228,6 +232,43 @@ namespace Fragcolor.Chainblocks.Tests
       ColVar.set.Clear();
       Assert.AreEqual(0, ColVar.set.Size());
       Tick();
+    }
+
+    [Test]
+    public void TestStrings()
+    {
+      var strings = default(CBStrings);
+      Assert.AreEqual(0, strings.Count);
+      Tick();
+
+      const string hello = "Привет";
+
+      strings.Push(hello);
+      Assert.AreEqual(1, strings.Count);
+      Tick();
+
+      const string world = "мир";
+      Assert.Throws(typeof(IndexOutOfRangeException), () => strings.Insert(2, world));
+      strings.Insert(0, world);
+      Assert.AreEqual(2, strings.Count);
+      Tick();
+
+      var myString = strings.At(0);
+      Assert.AreEqual(world, myString);
+
+      strings.RemoveAt(0);
+      Assert.Throws(typeof(IndexOutOfRangeException), () => strings.RemoveAt(1));
+      Assert.AreEqual(1, strings.Count);
+
+      var popped = strings.Pop();
+      Assert.Throws(typeof(InvalidOperationException), () => strings.Pop());
+      Assert.AreEqual(hello, popped);
+      Assert.AreEqual(0, strings.Count);
+
+      strings.Insert(0, world);
+      Assert.AreEqual(1, strings.Count);
+      Assert.AreEqual(world, strings[0]);
+      Assert.Throws(typeof(IndexOutOfRangeException), () => _ = strings[1]);
     }
 
     [Test]

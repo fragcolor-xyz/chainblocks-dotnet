@@ -12,6 +12,22 @@ namespace Fragcolor.Chainblocks.Tests
   internal sealed class CoreTests
   {
     [Test]
+    public void TestEval()
+    {
+      using var env = new LispEnv();
+      using var chain = new Variable();
+      Assert.Throws(typeof(ArgumentNullException), () => env.Eval(null!, chain.Ptr));
+      Assert.IsFalse(env.Eval("", chain.Ptr));
+      Assert.IsFalse(env.Eval("", IntPtr.Zero));
+      Assert.IsTrue(env.Eval(@"(println ""Hello"")", IntPtr.Zero));
+      Assert.IsTrue(env.Eval(@"(println ""Hello"")", chain.Ptr));
+      Assert.AreEqual(IntPtr.Zero, chain.Value.chain._ref);
+      Assert.IsTrue(env.Eval(@"(Chain ""Hello"")", IntPtr.Zero));
+      Assert.IsTrue(env.Eval(@"(Chain ""Hello"")", chain.Ptr));
+      Assert.AreNotEqual(IntPtr.Zero, chain.Value.chain._ref);
+    }
+
+    [Test]
     public void TestLispEnv()
     {
       using var env = new LispEnv();

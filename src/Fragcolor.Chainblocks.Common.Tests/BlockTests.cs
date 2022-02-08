@@ -41,6 +41,8 @@ namespace Fragcolor.Chainblocks.Tests
         ref var block = ref blocks[0];
         Assert.AreEqual("Const", block.Name());
         Assert.AreNotEqual(0, block.Hash());
+        var properties = block.Properties();
+        Assert.IsFalse(properties.IsValid());
         var inputs = block.InputTypes();
         Assert.AreEqual(1, inputs.Count);
         Assert.AreEqual(CBType.None, inputs[0].BasicType());
@@ -122,6 +124,8 @@ namespace Fragcolor.Chainblocks.Tests
       info = Native.Core.GetChainInfo(Chain);
       Assert.IsTrue(info.IsRunning());
 
+      Tick();
+
       UnscheduleChain();
       Assert.IsTrue(info.IsRunning());
       info = Native.Core.GetChainInfo(Chain);
@@ -139,6 +143,12 @@ namespace Fragcolor.Chainblocks.Tests
       Assert.AreNotEqual(0, block.Help()._crc);
       Assert.AreNotEqual(0, block.InputHelp()._crc);
       Assert.AreNotEqual(0, block.OutputHelp()._crc);
+#if DEBUG
+      // FIXME: decompress strings so that the messages aren't empty
+      Assert.IsTrue(string.IsNullOrEmpty((string?)block.Help()));
+      Assert.IsTrue(string.IsNullOrEmpty((string?)block.InputHelp()));
+      Assert.IsTrue(string.IsNullOrEmpty((string?)block.OutputHelp()));
+#endif
 
       var properties = block.Properties();
       Assert.IsTrue(properties.IsValid());
@@ -148,6 +158,11 @@ namespace Fragcolor.Chainblocks.Tests
       ref var prop = ref properties.At("experimental");
       Assert.AreEqual(CBType.Bool, prop.type);
       Assert.AreEqual(true, (bool)prop.@bool);
+
+      // FIXME: exposed and required variables require the block to be composed (e.g. executed in a chain)
+      var exposed = block.ExposedVariables();
+
+      var required = block.RequiredVariables();
     }
   }
 }
