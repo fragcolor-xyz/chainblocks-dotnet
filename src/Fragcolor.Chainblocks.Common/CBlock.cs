@@ -10,8 +10,8 @@ namespace Fragcolor.Chainblocks
   public struct CBlock
   {
     //! Native struct, don't edit
-    internal IntPtr _inlineBlockId;
-    internal IntPtr _owned;
+    internal uint _inlineBlockId;
+    internal CBBool _owned;
     internal IntPtr _name;
     internal IntPtr _hash;
     internal IntPtr _help;

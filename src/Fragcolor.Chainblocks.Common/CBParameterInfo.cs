@@ -1,20 +1,18 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
 /* Copyright © 2022 Fragcolor Pte. Ltd. */
 
-using System;
 using System.Runtime.InteropServices;
+
+using Fragcolor.Chainblocks.Collections;
 
 namespace Fragcolor.Chainblocks
 {
   [StructLayout(LayoutKind.Sequential)]
-  public struct CBString
+  public struct CBParameterInfo
   {
     //! Native struct, don't edit
-    internal IntPtr _str;
-
-    public static explicit operator string?(CBString str)
-    {
-      return Marshal.PtrToStringAnsi(str._str);
-    }
+    internal CBString _name;
+    internal CBOptionalString _help;
+    internal CBTypesInfo _types;
   }
 }

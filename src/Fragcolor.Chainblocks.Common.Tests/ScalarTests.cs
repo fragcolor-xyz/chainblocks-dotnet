@@ -26,6 +26,7 @@ namespace Fragcolor.Chainblocks.Tests
       _chain = new Variable();
       var ok = Env.Eval(@$"(Chain ""{name}"" :Looped .input (Log) > .output)", _chain.Ptr);
       Assert.IsTrue(ok);
+      Assert.IsTrue(Chain.IsValid());
 
       _inputVar = new ExternalVariable(Chain, "input");
       _outputVar = new ExternalVariable(Chain, "output");

@@ -5,14 +5,17 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace Fragcolor.Chainblocks
+namespace Fragcolor.Chainblocks.Collections
 {
   [StructLayout(LayoutKind.Sequential)]
   public struct CBSeq
   {
+    //! Native struct, don't edit
     internal IntPtr _elements;
     internal uint _length;
     internal uint _capacity;
+
+    public uint Count => _length;
 
     public ref CBVar this[uint i]
     {

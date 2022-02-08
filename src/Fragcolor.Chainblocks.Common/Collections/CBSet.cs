@@ -4,7 +4,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Fragcolor.Chainblocks
+namespace Fragcolor.Chainblocks.Collections
 {
   [StructLayout(LayoutKind.Sequential)]
   public struct CBSet
@@ -17,6 +17,11 @@ namespace Fragcolor.Chainblocks
     {
       var setNewDelegate = Marshal.GetDelegateForFunctionPointer<SetNewDelegate>(Native.Core._setNew);
       return setNewDelegate();
+    }
+
+    public bool IsValid()
+    {
+      return _api != IntPtr.Zero;
     }
   }
 

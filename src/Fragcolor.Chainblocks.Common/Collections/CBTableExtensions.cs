@@ -1,16 +1,17 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
 /* Copyright © 2022 Fragcolor Pte. Ltd. */
 
-using System;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace Fragcolor.Chainblocks
+namespace Fragcolor.Chainblocks.Collections
 {
   public static class CBTableExtensions
   {
     public static ref CBVar At(this ref CBTable table, string key)
     {
+      Debug.Assert(table.IsValid());
       unsafe
       {
         ref var api = ref Unsafe.AsRef<CBTableInterface>(table._api.ToPointer());
@@ -21,6 +22,7 @@ namespace Fragcolor.Chainblocks
 
     public static void Clear(this ref CBTable table)
     {
+      Debug.Assert(table.IsValid());
       unsafe
       {
         ref var api = ref Unsafe.AsRef<CBTableInterface>(table._api.ToPointer());
@@ -31,6 +33,7 @@ namespace Fragcolor.Chainblocks
 
     public static bool Contains(this ref CBTable table, string key)
     {
+      Debug.Assert(table.IsValid());
       unsafe
       {
         ref var api = ref Unsafe.AsRef<CBTableInterface>(table._api.ToPointer());
@@ -41,6 +44,7 @@ namespace Fragcolor.Chainblocks
 
     public static CBTableIterator GetIterator(this ref CBTable table)
     {
+      Debug.Assert(table.IsValid());
       unsafe
       {
         ref var api = ref Unsafe.AsRef<CBTableInterface>(table._api.ToPointer());
@@ -52,18 +56,20 @@ namespace Fragcolor.Chainblocks
 
     public static bool Next(this ref CBTable table, ref CBTableIterator iter, out string? key, out CBVar value)
     {
+      Debug.Assert(table.IsValid());
       unsafe
       {
         ref var api = ref Unsafe.AsRef<CBTableInterface>(table._api.ToPointer());
         var nextDelegate = Marshal.GetDelegateForFunctionPointer<TableNextDelegate>(api._tableNext);
         var result = nextDelegate(table, ref iter, out var ptr, out value);
-        key = result ? Marshal.PtrToStringAnsi(ptr) : null;
+        key = result ? (string?)ptr : null;
         return result;
       }
     }
 
     public static void Remove(this ref CBTable table, string key)
     {
+      Debug.Assert(table.IsValid());
       unsafe
       {
         ref var api = ref Unsafe.AsRef<CBTableInterface>(table._api.ToPointer());
@@ -74,6 +80,7 @@ namespace Fragcolor.Chainblocks
 
     public static ulong Size(this ref CBTable table)
     {
+      Debug.Assert(table.IsValid());
       unsafe
       {
         ref var api = ref Unsafe.AsRef<CBTableInterface>(table._api.ToPointer());
@@ -96,7 +103,7 @@ namespace Fragcolor.Chainblocks
   internal delegate void TableGetIteratorDelegate(CBTable table, out CBTableIterator iter);
 
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-  internal delegate CBBool TableNextDelegate(CBTable table, ref CBTableIterator iter, out IntPtr key, out CBVar value);
+  internal delegate CBBool TableNextDelegate(CBTable table, ref CBTableIterator iter, out CBString key, out CBVar value);
 
   [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
   internal delegate void TableRemoveDelegate(CBTable table, string key);

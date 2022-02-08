@@ -2,6 +2,9 @@
 /* Copyright © 2022 Fragcolor Pte. Ltd. */
 
 using System;
+using System.Runtime.CompilerServices;
+
+using Fragcolor.Chainblocks.Collections;
 
 using NUnit.Framework;
 
@@ -23,6 +26,7 @@ namespace Fragcolor.Chainblocks.Tests
       _chain = new Variable();
       var ok = Env.Eval(@$"(Chain ""{name}"" :Looped .collection (Log))", _chain.Ptr);
       Assert.IsTrue(ok);
+      Assert.IsTrue(Chain.IsValid());
 
       _collectionVar = new ExternalVariable(Chain, "collection");
     }
@@ -36,6 +40,114 @@ namespace Fragcolor.Chainblocks.Tests
     }
 
     [Test]
+    public void TestBlocks()
+    {
+      var blocks = default(CBlocks);
+      Assert.AreEqual(0, blocks.Count);
+
+      var whenBlock = Native.Core.CreateBlock("When");
+      Assert.IsTrue(whenBlock.IsValid());
+      blocks.Push(whenBlock);
+      Assert.AreEqual(1, blocks.Count);
+
+      var ptr = blocks.Pop();
+      Assert.AreEqual(whenBlock, ptr);
+      Assert.AreEqual(whenBlock.AsRef(), ptr.AsRef());
+      Assert.AreEqual("When", whenBlock.AsRef().Name());
+      Assert.AreEqual(0, blocks.Count);
+
+      var whenNotBlock = Native.Core.CreateBlock("WhenNot");
+      Assert.IsTrue(whenNotBlock.IsValid());
+      blocks.Insert(0, whenNotBlock);
+      Assert.AreEqual(1, blocks.Count);
+      var elem = blocks.At(0);
+      Assert.AreEqual("WhenNot", elem.Name());
+
+      blocks.RemoveAt(0);
+      Assert.AreEqual(0, blocks.Count);
+      blocks.Push(ref whenBlock.AsRef());
+      blocks.Insert(0, ref whenNotBlock.AsRef());
+      Assert.AreEqual("WhenNot", blocks.At(0).Name());
+      Assert.AreEqual("When", blocks.At(1).Name());
+    }
+
+    [Test]
+    public void TestExposedTypeInfos()
+    {
+      var typeInfos = default(CBExposedTypesInfo);
+      Assert.AreEqual(0, typeInfos.Count);
+
+      var boolInfo = default(CBExposedTypeInfo);
+      boolInfo._exposedType = new() { _basicType = CBType.Bool };
+
+      typeInfos.Push(ref boolInfo);
+      Assert.AreEqual(1, typeInfos.Count);
+
+      var floatInfo = default(CBExposedTypeInfo);
+      floatInfo._exposedType = new() { _basicType = CBType.Float };
+      Assert.Throws(typeof(IndexOutOfRangeException), () => typeInfos.Insert(2, ref floatInfo));
+      typeInfos.Insert(0, ref floatInfo);
+      Assert.AreEqual(2, typeInfos.Count);
+
+      ref var myInfo = ref typeInfos.At(0);
+      Assert.AreEqual(CBType.Float, myInfo._exposedType.BasicType());
+
+      typeInfos.RemoveAt(0);
+      Assert.Throws(typeof(IndexOutOfRangeException), () => typeInfos.RemoveAt(1));
+      Assert.AreEqual(1, typeInfos.Count);
+
+      var popped = typeInfos.Pop();
+      Assert.Throws(typeof(InvalidOperationException), () => typeInfos.Pop());
+      Assert.AreEqual(CBType.Bool, popped._exposedType.BasicType());
+      Assert.AreEqual(0, typeInfos.Count);
+
+      Assert.DoesNotThrow(() => typeInfos.Insert(0, ref floatInfo));
+      Assert.AreEqual(1, typeInfos.Count);
+      Assert.AreEqual(floatInfo, typeInfos[0]);
+      Assert.Throws(typeof(IndexOutOfRangeException), () => _ = typeInfos[1]);
+    }
+
+    [Test]
+    public void TestParameterInfos()
+    {
+      var paramInfos = default(CBParametersInfo);
+      Assert.AreEqual(0, paramInfos.Count);
+
+      var boolInfo = new CBTypeInfo() { _basicType = CBType.Bool };
+      var boolParamInfo = default(CBParameterInfo);
+      boolParamInfo.Types().Push(ref boolInfo);
+
+      paramInfos.Push(ref boolParamInfo);
+      Assert.AreEqual(1, paramInfos.Count);
+
+      var floatInfo = new CBTypeInfo() { _basicType = CBType.Float };
+      var floatParamInfo = default(CBParameterInfo);
+      floatParamInfo.Types().Push(ref floatInfo);
+      Assert.Throws(typeof(IndexOutOfRangeException), () => paramInfos.Insert(2, ref floatParamInfo));
+      paramInfos.Insert(0, ref floatParamInfo);
+      Assert.AreEqual(2, paramInfos.Count);
+
+      ref var myInfo = ref paramInfos.At(0);
+      Assert.AreEqual(1, myInfo.Types().Count);
+      Assert.AreEqual(CBType.Float, myInfo.Types()[0].BasicType());
+
+      paramInfos.RemoveAt(0);
+      Assert.Throws(typeof(IndexOutOfRangeException), () => paramInfos.RemoveAt(1));
+      Assert.AreEqual(1, paramInfos.Count);
+
+      var popped = paramInfos.Pop();
+      Assert.Throws(typeof(InvalidOperationException), () => paramInfos.Pop());
+      Assert.AreEqual(1, popped.Types().Count);
+      Assert.AreEqual(CBType.Bool, popped.Types()[0].BasicType());
+      Assert.AreEqual(0, paramInfos.Count);
+
+      Assert.DoesNotThrow(() => paramInfos.Insert(0, ref floatParamInfo));
+      Assert.AreEqual(1, paramInfos.Count);
+      Assert.AreEqual(floatParamInfo, paramInfos[0]);
+      Assert.Throws(typeof(IndexOutOfRangeException), () => _ = paramInfos[1]);
+    }
+
+    [Test]
     public void TestSeq()
     {
       ColVar.type = CBType.Seq;
@@ -44,17 +156,17 @@ namespace Fragcolor.Chainblocks.Tests
 
       using var @float = VariableUtil.NewFloat(42);
 
-      Assert.AreEqual(0, ColVar.seq.Size());
+      Assert.AreEqual(0, ColVar.seq.Count);
       Tick();
 
       ColVar.seq.Push(ref @float.Value);
-      Assert.AreEqual(1, ColVar.seq.Size());
+      Assert.AreEqual(1, ColVar.seq.Count);
       Tick();
 
       using var float4 = VariableUtil.NewFloat4(new() { y = 5 });
       Assert.Throws(typeof(IndexOutOfRangeException), () => ColVar.seq.Insert(2, ref float4.Value));
       ColVar.seq.Insert(0, ref float4.Value);
-      Assert.AreEqual(2, ColVar.seq.Size());
+      Assert.AreEqual(2, ColVar.seq.Count);
       Tick();
 
       ref var myvar = ref ColVar.seq.At(0);
@@ -63,18 +175,18 @@ namespace Fragcolor.Chainblocks.Tests
 
       ColVar.seq.RemoveAt(0);
       Assert.Throws(typeof(IndexOutOfRangeException), () => ColVar.seq.RemoveAt(1));
-      Assert.AreEqual(1, ColVar.seq.Size());
+      Assert.AreEqual(1, ColVar.seq.Count);
       Tick();
 
       var popped = ColVar.seq.Pop();
       Assert.Throws(typeof(InvalidOperationException), () => ColVar.seq.Pop());
       Assert.AreEqual(CBType.Float, popped.type);
       Assert.AreEqual(42, popped.@float);
-      Assert.AreEqual(0, ColVar.seq.Size());
+      Assert.AreEqual(0, ColVar.seq.Count);
       Tick();
 
       Assert.DoesNotThrow(() => ColVar.seq.Insert(0, ref @float.Value));
-      Assert.AreEqual(1, ColVar.seq.Size());
+      Assert.AreEqual(1, ColVar.seq.Count);
       Assert.AreEqual(@float.Value, ColVar.seq[0]);
       Assert.Throws(typeof(IndexOutOfRangeException), () => _ = ColVar.seq[1]);
       Tick();
@@ -159,6 +271,42 @@ namespace Fragcolor.Chainblocks.Tests
       ColVar.table.Clear();
       Assert.AreEqual(0, ColVar.table.Size());
       Tick();
+    }
+
+    [Test]
+    public void TestTypeInfos()
+    {
+      var typeInfos = default(CBTypesInfo);
+      Assert.AreEqual(0, typeInfos.Count);
+
+      var boolInfo = default(CBTypeInfo);
+      boolInfo._basicType = CBType.Bool;
+
+      typeInfos.Push(ref boolInfo);
+      Assert.AreEqual(1, typeInfos.Count);
+
+      var floatInfo = default(CBTypeInfo);
+      floatInfo._basicType = CBType.Float;
+      Assert.Throws(typeof(IndexOutOfRangeException), () => typeInfos.Insert(2, ref floatInfo));
+      typeInfos.Insert(0, ref floatInfo);
+      Assert.AreEqual(2, typeInfos.Count);
+
+      ref var myInfo = ref typeInfos.At(0);
+      Assert.AreEqual(CBType.Float, myInfo.BasicType());
+
+      typeInfos.RemoveAt(0);
+      Assert.Throws(typeof(IndexOutOfRangeException), () => typeInfos.RemoveAt(1));
+      Assert.AreEqual(1, typeInfos.Count);
+
+      var popped = typeInfos.Pop();
+      Assert.Throws(typeof(InvalidOperationException), () => typeInfos.Pop());
+      Assert.AreEqual(CBType.Bool, popped.BasicType());
+      Assert.AreEqual(0, typeInfos.Count);
+
+      Assert.DoesNotThrow(() => typeInfos.Insert(0, ref floatInfo));
+      Assert.AreEqual(1, typeInfos.Count);
+      Assert.AreEqual(floatInfo, typeInfos[0]);
+      Assert.Throws(typeof(IndexOutOfRangeException), () => _ = typeInfos[1]);
     }
   }
 }

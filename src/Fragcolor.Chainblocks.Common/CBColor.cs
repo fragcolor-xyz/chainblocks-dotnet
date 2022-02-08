@@ -8,6 +8,7 @@ namespace Fragcolor.Chainblocks
   [StructLayout(LayoutKind.Sequential)]
   public struct CBColor
   {
+    //! Native struct, don't edit
     public byte r;
     public byte g;
     public byte b;

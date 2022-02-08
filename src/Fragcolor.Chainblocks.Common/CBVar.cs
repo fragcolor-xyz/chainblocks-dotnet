@@ -4,6 +4,8 @@
 using System;
 using System.Runtime.InteropServices;
 
+using Fragcolor.Chainblocks.Collections;
+
 namespace Fragcolor.Chainblocks
 {
   [StructLayout(LayoutKind.Explicit, Size = 32)]
@@ -58,6 +60,12 @@ namespace Fragcolor.Chainblocks
     [FieldOffset(0)]
     public CBString @string;
 
+    [FieldOffset(8)]
+    internal uint _stringLength;
+
+    [FieldOffset(12)]
+    internal uint _stringCapacity;
+
     [FieldOffset(0)]
     public CBColor color;
 
@@ -75,6 +83,15 @@ namespace Fragcolor.Chainblocks
 
     [FieldOffset(0)]
     public CBEnum @enum;
+
+    [FieldOffset(0)]
+    public CBArray array;
+
+    [FieldOffset(8)]
+    internal uint _arrayLength;
+
+    [FieldOffset(12)]
+    internal uint _arrayCapacity;
 
     [FieldOffset(16)]
     public CBType type;

@@ -9,10 +9,11 @@ namespace Fragcolor.Chainblocks
   [StructLayout(LayoutKind.Sequential)]
   public struct CBImage
   {
-    public ushort width;
-    public ushort height;
-    public byte channelCount;
-    public byte flags;
-    public IntPtr data;
+    //! Native struct, don't edit
+    internal ushort _width;
+    internal ushort _height;
+    internal byte _channelCount;
+    internal byte _flags;
+    internal IntPtr _data;
   }
 }

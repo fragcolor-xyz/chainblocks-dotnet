@@ -4,7 +4,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Fragcolor.Chainblocks
+namespace Fragcolor.Chainblocks.Collections
 {
   [StructLayout(LayoutKind.Sequential)]
   public struct CBTable
@@ -17,6 +17,11 @@ namespace Fragcolor.Chainblocks
     {
       var tableNewDelegate = Marshal.GetDelegateForFunctionPointer<TableNewDelegate>(Native.Core._tableNew);
       return tableNewDelegate();
+    }
+
+    public bool IsValid()
+    {
+      return _api != IntPtr.Zero;
     }
   }
 

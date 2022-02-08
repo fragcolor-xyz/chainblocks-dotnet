@@ -8,6 +8,7 @@ namespace Fragcolor.Chainblocks
   [StructLayout(LayoutKind.Sequential)]
   public struct CBBool
   {
+    //! Native struct, don't edit
     internal byte _value;
 
     public static implicit operator bool(CBBool b) => b._value != 0;

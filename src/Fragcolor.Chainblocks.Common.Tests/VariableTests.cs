@@ -2,6 +2,7 @@
 /* Copyright © 2022 Fragcolor Pte. Ltd. */
 
 using System;
+using System.Threading;
 
 using NUnit.Framework;
 
@@ -145,7 +146,7 @@ namespace Fragcolor.Chainblocks.Tests
     [Test]
     public void TestExternalVariableDestructor()
     {
-      using var chain = new Variable();
+      var chain = new Variable();
       Env.Eval(@"(Chain ""empty"" .var (Log))", chain.Ptr);
       {
         _ = new ExternalVariable(chain.Value.chain, "var");

@@ -8,6 +8,7 @@ namespace Fragcolor.Chainblocks
   [StructLayout(LayoutKind.Sequential)]
   public struct CBEnum
   {
+    //! Native struct, don't edit
     internal int _value;
     internal int _vendorId;
     internal int _typeId;

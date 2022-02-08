@@ -115,7 +115,7 @@ namespace Fragcolor.Chainblocks
     {
       if (var.type != CBType.String) return null;
 
-      return Marshal.PtrToStringAnsi(var.@string._str);
+      return (string?)var.@string;
     }
 
     // TODO: add doc about not destroying the variable, depending on the situation it might leak memory

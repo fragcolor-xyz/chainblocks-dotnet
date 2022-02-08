@@ -3,11 +3,12 @@
 
 using System.Runtime.InteropServices;
 
-namespace Fragcolor.Chainblocks
+namespace Fragcolor.Chainblocks.Collections
 {
   [StructLayout(LayoutKind.Sequential)]
   public struct CBSetIterator
   {
+    //! Native struct, don't edit
     [MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)]
     internal byte[] _raw;
   }
