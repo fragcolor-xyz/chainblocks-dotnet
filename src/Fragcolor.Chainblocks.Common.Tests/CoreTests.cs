@@ -8,9 +8,15 @@ using NUnit.Framework;
 
 namespace Fragcolor.Chainblocks.Tests
 {
+  /// <summary>
+  /// Tests for core features of chainblocks.
+  /// </summary>
   [TestFixture]
   internal sealed class CoreTests
   {
+    /// <summary>
+    /// Tests LISP code evaluation.
+    /// </summary>
     [Test]
     public void TestEval()
     {
@@ -27,6 +33,9 @@ namespace Fragcolor.Chainblocks.Tests
       Assert.AreNotEqual(IntPtr.Zero, chain.Value.chain._ref);
     }
 
+    /// <summary>
+    /// Tests initialization of a LISP environment.
+    /// </summary>
     [Test]
     public void TestLispEnv()
     {
@@ -34,6 +43,13 @@ namespace Fragcolor.Chainblocks.Tests
       Assert.AreNotEqual(IntPtr.Zero, env._env);
     }
 
+    /// <summary>
+    /// Tests the destructor of <see cref="LispEnv"/>.
+    /// </summary>
+    /// <remarks>
+    /// This is for completion purpose.
+    /// Consummer code is expected to properly dispose of it so that the finalizer doesn't have to be called.
+    /// </remarks>
     [Test]
     public void TestLispEnvDestructor()
     {
@@ -45,6 +61,9 @@ namespace Fragcolor.Chainblocks.Tests
       GC.WaitForPendingFinalizers();
     }
 
+    /// <summary>
+    /// Tests the sleep feature.
+    /// </summary>
     [Test]
     public void TestSleep()
     {

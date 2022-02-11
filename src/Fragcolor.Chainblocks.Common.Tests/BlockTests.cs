@@ -7,9 +7,15 @@ using NUnit.Framework;
 
 namespace Fragcolor.Chainblocks.Tests
 {
+  /// <summary>
+  /// Tests for blocks and chain introspection.
+  /// </summary>
   [TestFixture]
   internal sealed class BlockTests : TestBase
   {
+    /// <summary>
+    /// Cleans up the chain.
+    /// </summary>
     [TearDown]
     public void TearDown()
     {
@@ -17,6 +23,9 @@ namespace Fragcolor.Chainblocks.Tests
       _chain?.Dispose();
     }
 
+    /// <summary>
+    /// Tests chain introspection.
+    /// </summary>
     [Test]
     public void TestInstrospection()
     {
@@ -132,6 +141,9 @@ namespace Fragcolor.Chainblocks.Tests
       Assert.IsFalse(info.IsRunning());
     }
 
+    /// <summary>
+    /// Tests a block marked as experimental.
+    /// </summary>
     [Test]
     public void TestExperimentalBlock()
     {

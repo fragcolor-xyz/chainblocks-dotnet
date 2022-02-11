@@ -7,6 +7,9 @@ using NUnit.Framework;
 
 namespace Fragcolor.Chainblocks.Tests
 {
+  /// <summary>
+  /// Tests for scalar types in chainblocks.
+  /// </summary>
   [TestFixture]
   internal sealed class ScalarTests : TestBase
   {
@@ -19,6 +22,9 @@ namespace Fragcolor.Chainblocks.Tests
 
     public ref CBVar OutVar => ref _outputVar.Value;
 
+    /// <summary>
+    /// Initializes a chain and two external variables resp. for input and output.
+    /// </summary>
     [SetUp]
     public void Setup()
     {
@@ -32,6 +38,9 @@ namespace Fragcolor.Chainblocks.Tests
       _outputVar = new ExternalVariable(Chain, "output");
     }
 
+    /// <summary>
+    /// Cleans up the chain and the external variables.
+    /// </summary>
     [TearDown]
     public void TearDown()
     {
@@ -41,6 +50,9 @@ namespace Fragcolor.Chainblocks.Tests
       _chain.Dispose();
     }
 
+    /// <summary>
+    /// Tests <see cref="CBType.Bool"/> variables.
+    /// </summary>
     [Test]
     public void TestBool()
     {
@@ -71,6 +83,9 @@ namespace Fragcolor.Chainblocks.Tests
       Assert.AreEqual(InVar, OutVar);
     }
 
+    /// <summary>
+    /// Tests <see cref="CBType.Int"/> variables.
+    /// </summary>
     [Test]
     public void TestInt()
     {
@@ -101,6 +116,9 @@ namespace Fragcolor.Chainblocks.Tests
       Assert.AreEqual(InVar, OutVar);
     }
 
+    /// <summary>
+    /// Tests <see cref="CBType.Int2"/> variables.
+    /// </summary>
     [Test]
     public void TestInt2()
     {
@@ -134,6 +152,9 @@ namespace Fragcolor.Chainblocks.Tests
       Assert.AreEqual(InVar, OutVar);
     }
 
+    /// <summary>
+    /// Tests <see cref="CBType.Int3"/> variables.
+    /// </summary>
     [Test]
     public void TestInt3()
     {
@@ -168,6 +189,9 @@ namespace Fragcolor.Chainblocks.Tests
       Assert.AreEqual(InVar, OutVar);
     }
 
+    /// <summary>
+    /// Tests <see cref="CBType.Int4"/> variables.
+    /// </summary>
     [Test]
     public void TestInt4()
     {
@@ -203,6 +227,9 @@ namespace Fragcolor.Chainblocks.Tests
       Assert.AreEqual(InVar, OutVar);
     }
 
+    /// <summary>
+    /// Tests <see cref="CBType.Int8"/> variables.
+    /// </summary>
     [Test]
     public void TestInt8()
     {
@@ -253,6 +280,9 @@ namespace Fragcolor.Chainblocks.Tests
       Assert.AreEqual(InVar, OutVar);
     }
 
+    /// <summary>
+    /// Tests <see cref="CBType.Int16"/> variables.
+    /// </summary>
     [Test]
     public void TestInt16()
     {
@@ -321,6 +351,9 @@ namespace Fragcolor.Chainblocks.Tests
       Assert.AreEqual(InVar, OutVar);
     }
 
+    /// <summary>
+    /// Tests <see cref="CBType.Float"/> variables.
+    /// </summary>
     [Test]
     public void TestFloat()
     {
@@ -351,6 +384,9 @@ namespace Fragcolor.Chainblocks.Tests
       Assert.AreEqual(InVar, OutVar);
     }
 
+    /// <summary>
+    /// Tests <see cref="CBType.Float2"/> variables.
+    /// </summary>
     [Test]
     public void TestFloat2()
     {
@@ -384,6 +420,9 @@ namespace Fragcolor.Chainblocks.Tests
       Assert.AreEqual(InVar, OutVar);
     }
 
+    /// <summary>
+    /// Tests <see cref="CBType.Float3"/> variables.
+    /// </summary>
     [Test]
     public void TestFloat3()
     {
@@ -418,6 +457,9 @@ namespace Fragcolor.Chainblocks.Tests
       Assert.AreEqual(InVar, OutVar);
     }
 
+    /// <summary>
+    /// Tests <see cref="CBType.Float4"/> variables.
+    /// </summary>
     [Test]
     public void TestFloat4()
     {
@@ -454,6 +496,9 @@ namespace Fragcolor.Chainblocks.Tests
       Assert.AreEqual(InVar, OutVar);
     }
 
+    /// <summary>
+    /// Tests <see cref="CBType.Color"/> variables.
+    /// </summary>
     [Test]
     public void TestColor()
     {

@@ -8,6 +8,9 @@ using NUnit.Framework;
 
 namespace Fragcolor.Chainblocks.Tests
 {
+  /// <summary>
+  /// Tests for colleciton types in chainblocks.
+  /// </summary>
   [TestFixture]
   internal sealed class CollectionTests : TestBase
   {
@@ -17,6 +20,9 @@ namespace Fragcolor.Chainblocks.Tests
 
     public ref CBVar ColVar => ref _collectionVar.Value;
 
+    /// <summary>
+    /// Initializes a chain with an external variable to represent the collection being tested.
+    /// </summary>
     [SetUp]
     public void Setup()
     {
@@ -29,6 +35,9 @@ namespace Fragcolor.Chainblocks.Tests
       _collectionVar = new ExternalVariable(Chain, "collection");
     }
 
+    /// <summary>
+    /// Cleans up the chain and the external variable.
+    /// </summary>
     [TearDown]
     public void TearDown()
     {
@@ -37,6 +46,9 @@ namespace Fragcolor.Chainblocks.Tests
       _chain.Dispose();
     }
 
+    /// <summary>
+    /// Test the <see cref="CBlocks"/> collection type.
+    /// </summary>
     [Test]
     public void TestBlocks()
     {
@@ -73,6 +85,9 @@ namespace Fragcolor.Chainblocks.Tests
       Assert.Throws(typeof(IndexOutOfRangeException), () => _ = blocks[2]);
     }
 
+    /// <summary>
+    /// Test the <see cref="CBExposedTypesInfo"/> collection type.
+    /// </summary>
     [Test]
     public void TestExposedTypeInfos()
     {
@@ -109,6 +124,9 @@ namespace Fragcolor.Chainblocks.Tests
       Assert.Throws(typeof(IndexOutOfRangeException), () => _ = typeInfos[1]);
     }
 
+    /// <summary>
+    /// Test the <see cref="CBParametersInfo"/> collection type.
+    /// </summary>
     [Test]
     public void TestParameterInfos()
     {
@@ -149,6 +167,9 @@ namespace Fragcolor.Chainblocks.Tests
       Assert.Throws(typeof(IndexOutOfRangeException), () => _ = paramInfos[1]);
     }
 
+    /// <summary>
+    /// Test the <see cref="CBSeq"/> collection type.
+    /// </summary>
     [Test]
     public void TestSeq()
     {
@@ -194,6 +215,9 @@ namespace Fragcolor.Chainblocks.Tests
       Tick();
     }
 
+    /// <summary>
+    /// Test the <see cref="CBSet"/> collection type.
+    /// </summary>
     [Test]
     public void TestSet()
     {
@@ -232,6 +256,9 @@ namespace Fragcolor.Chainblocks.Tests
       Tick();
     }
 
+    /// <summary>
+    /// Test the <see cref="CBStrings"/> collection type.
+    /// </summary>
     [Test]
     public void TestStrings()
     {
@@ -269,6 +296,9 @@ namespace Fragcolor.Chainblocks.Tests
       Assert.Throws(typeof(IndexOutOfRangeException), () => _ = strings[1]);
     }
 
+    /// <summary>
+    /// Test the <see cref="CBTable"/> collection type.
+    /// </summary>
     [Test]
     public void TestTable()
     {
@@ -312,6 +342,9 @@ namespace Fragcolor.Chainblocks.Tests
       Tick();
     }
 
+    /// <summary>
+    /// Test the <see cref="CBTypesInfo"/> collection type.
+    /// </summary>
     [Test]
     public void TestTypeInfos()
     {
