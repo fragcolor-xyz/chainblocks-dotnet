@@ -16,7 +16,15 @@ namespace Fragcolor.Chainblocks.Collections
       {
         ref var api = ref Unsafe.AsRef<CBTableInterface>(table._api.ToPointer());
         var atDelegate = Marshal.GetDelegateForFunctionPointer<TableAtDelegate>(api._tableAt);
-        return ref atDelegate(table, key);
+        var cbstr = (CBString)key;
+        try
+        {
+          return ref atDelegate(table, cbstr);
+        }
+        finally
+        {
+          cbstr.Dispose();
+        }
       }
     }
 
@@ -38,7 +46,15 @@ namespace Fragcolor.Chainblocks.Collections
       {
         ref var api = ref Unsafe.AsRef<CBTableInterface>(table._api.ToPointer());
         var containsDelegate = Marshal.GetDelegateForFunctionPointer<TableContainsDelegate>(api._tableContains);
-        return containsDelegate(table, key);
+        var cbstr = (CBString)key;
+        try
+        {
+          return containsDelegate(table, cbstr);
+        }
+        finally
+        {
+          cbstr.Dispose();
+        }
       }
     }
 
@@ -74,7 +90,15 @@ namespace Fragcolor.Chainblocks.Collections
       {
         ref var api = ref Unsafe.AsRef<CBTableInterface>(table._api.ToPointer());
         var removeDelegate = Marshal.GetDelegateForFunctionPointer<TableRemoveDelegate>(api._tableRemove);
-        removeDelegate(table, key);
+        var cbstr = (CBString)key;
+        try
+        {
+          removeDelegate(table, cbstr);
+        }
+        finally
+        {
+          cbstr.Dispose();
+        }
       }
     }
 
@@ -90,24 +114,24 @@ namespace Fragcolor.Chainblocks.Collections
     }
   }
 
-  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-  internal delegate ref CBVar TableAtDelegate(CBTable table, string key);
+  [UnmanagedFunctionPointer(NativeMethods.CallingConv)]
+  internal delegate ref CBVar TableAtDelegate(CBTable table, CBString key);
 
-  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+  [UnmanagedFunctionPointer(NativeMethods.CallingConv)]
   internal delegate void TableClearDelegate(CBTable table);
 
-  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-  internal delegate CBBool TableContainsDelegate(CBTable table, string key);
+  [UnmanagedFunctionPointer(NativeMethods.CallingConv)]
+  internal delegate CBBool TableContainsDelegate(CBTable table, CBString key);
 
-  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+  [UnmanagedFunctionPointer(NativeMethods.CallingConv)]
   internal delegate void TableGetIteratorDelegate(CBTable table, out CBTableIterator iter);
 
-  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+  [UnmanagedFunctionPointer(NativeMethods.CallingConv)]
   internal delegate CBBool TableNextDelegate(CBTable table, ref CBTableIterator iter, out CBString key, out CBVar value);
 
-  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-  internal delegate void TableRemoveDelegate(CBTable table, string key);
+  [UnmanagedFunctionPointer(NativeMethods.CallingConv)]
+  internal delegate void TableRemoveDelegate(CBTable table, CBString key);
 
-  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+  [UnmanagedFunctionPointer(NativeMethods.CallingConv)]
   internal delegate ulong TableSizeDelegate(CBTable table);
 }

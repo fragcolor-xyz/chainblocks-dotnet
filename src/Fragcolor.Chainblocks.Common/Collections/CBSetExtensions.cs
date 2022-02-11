@@ -88,24 +88,24 @@ namespace Fragcolor.Chainblocks.Collections
     }
   }
 
-  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+  [UnmanagedFunctionPointer(NativeMethods.CallingConv)]
   internal delegate void SetClearDelegate(CBSet set);
 
-  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+  [UnmanagedFunctionPointer(NativeMethods.CallingConv)]
   internal delegate CBBool SetContainsDelegate(CBSet set, CBVar value);
 
-  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+  [UnmanagedFunctionPointer(NativeMethods.CallingConv)]
   internal delegate CBBool SetExcludeDelegate(CBSet set, CBVar value);
 
-  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+  [UnmanagedFunctionPointer(NativeMethods.CallingConv)]
   internal delegate void SetGetIteratorDelegate(CBSet set, out CBSetIterator iter);
 
-  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+  [UnmanagedFunctionPointer(NativeMethods.CallingConv)]
   internal delegate CBBool SetIncludeDelegate(CBSet set, CBVar value);
 
-  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+  [UnmanagedFunctionPointer(NativeMethods.CallingConv)]
   internal delegate CBBool SetNextDelegate(CBSet set, ref CBSetIterator iter, out CBVar value);
 
-  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+  [UnmanagedFunctionPointer(NativeMethods.CallingConv)]
   internal delegate ulong SetSizeDelegate(CBSet set);
 }

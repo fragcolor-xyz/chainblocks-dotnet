@@ -52,16 +52,15 @@ namespace Fragcolor.Chainblocks.Collections
     }
   }
 
-  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+  [UnmanagedFunctionPointer(NativeMethods.CallingConv)]
   internal delegate void ParamsInfoSlowDeleteDelegate(ref CBParametersInfo infos, uint index);
 
-  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+  [UnmanagedFunctionPointer(NativeMethods.CallingConv)]
   internal delegate void ParamsInfoInsertDelegate(ref CBParametersInfo infos, uint index, ref CBParameterInfo info);
 
-  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+  [UnmanagedFunctionPointer(NativeMethods.CallingConv)]
   internal delegate CBParameterInfo ParamsInfoPopDelegate(ref CBParametersInfo infos);
 
-  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+  [UnmanagedFunctionPointer(NativeMethods.CallingConv)]
   internal delegate void ParamsInfoPushDelegate(ref CBParametersInfo infos, ref CBParameterInfo info);
 }
-

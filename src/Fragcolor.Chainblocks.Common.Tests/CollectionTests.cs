@@ -2,8 +2,6 @@
 /* Copyright © 2022 Fragcolor Pte. Ltd. */
 
 using System;
-using System.Runtime.CompilerServices;
-
 using Fragcolor.Chainblocks.Collections;
 
 using NUnit.Framework;
@@ -284,28 +282,28 @@ namespace Fragcolor.Chainblocks.Tests
       Assert.AreEqual(0, ColVar.table.Size());
       Tick();
 
-      Assert.IsFalse(ColVar.table.Contains("red"));
-      ref var elem = ref ColVar.table.At("red");
+      Assert.IsFalse(ColVar.table.Contains("赤色"));
+      ref var elem = ref ColVar.table.At("赤色");
       Assert.IsTrue(elem.IsNone());
       elem.SetValue(color.Value.color);
       Assert.AreEqual(1, ColVar.table.Size());
-      Assert.IsTrue(ColVar.table.Contains("red"));
+      Assert.IsTrue(ColVar.table.Contains("赤色"));
       Tick();
 
       elem.float3.z = 42;
       var iterator = ColVar.table.GetIterator();
       Assert.IsTrue(ColVar.table.Next(ref iterator, out var key, out var value));
       Assert.IsFalse(ColVar.table.Next(ref iterator, out _, out _));
-      Assert.AreEqual("red", key);
+      Assert.AreEqual("赤色", key);
       Assert.AreEqual(42, value.float3.z);
       Tick();
 
-      ColVar.table.Remove("red");
+      ColVar.table.Remove("赤色");
       Assert.AreEqual(0, ColVar.table.Size());
       Tick();
 
       Assert.IsFalse(ColVar.table.Contains("none"));
-      _ = ref ColVar.table.At("none");
+      _ = ColVar.table.At("none");
       Assert.IsTrue(ColVar.table.Contains("none"));
       Tick();
 

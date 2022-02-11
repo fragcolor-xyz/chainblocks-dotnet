@@ -19,12 +19,12 @@ namespace Fragcolor.Chainblocks.Collections
       return setNewDelegate();
     }
 
-    public bool IsValid()
+    public readonly bool IsValid()
     {
       return _api != IntPtr.Zero;
     }
   }
 
-  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+  [UnmanagedFunctionPointer(NativeMethods.CallingConv)]
   internal delegate CBSet SetNewDelegate();
 }

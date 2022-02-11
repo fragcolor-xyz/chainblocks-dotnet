@@ -9,18 +9,18 @@ namespace Fragcolor.Chainblocks
   internal static class NativeMethods
   {
     private const string Dll = "libcbl";
-    private const CallingConvention Conv = CallingConvention.Cdecl;
+    internal const CallingConvention CallingConv = CallingConvention.Cdecl;
 
-    [DllImport(Dll, CallingConvention = Conv)]
+    [DllImport(Dll, CallingConvention = CallingConv)]
     internal static extern IntPtr chainblocksInterface(int version);
 
-    [DllImport(Dll, CallingConvention = Conv, CharSet = CharSet.Ansi)]
-    internal static extern IntPtr cbLispCreate(string path);
+    [DllImport(Dll, CallingConvention = CallingConv)]
+    internal static extern IntPtr cbLispCreate(CBString path);
 
-    [DllImport(Dll, CallingConvention = Conv)]
+    [DllImport(Dll, CallingConvention = CallingConv)]
     internal static extern void cbLispDestroy(IntPtr lisp);
 
-    [DllImport(Dll, CallingConvention = Conv, CharSet = CharSet.Ansi)]
-    internal static extern byte cbLispEval(IntPtr lisp, CBString code, IntPtr output);
+    [DllImport(Dll, CallingConvention = CallingConv)]
+    internal static extern CBBool cbLispEval(IntPtr lisp, CBString code, IntPtr output);
   }
 }

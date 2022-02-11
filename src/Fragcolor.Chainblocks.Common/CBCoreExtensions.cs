@@ -24,19 +24,43 @@ namespace Fragcolor.Chainblocks
     public static void Log(this ref CBCore core, string message)
     {
       var logDelegate = Marshal.GetDelegateForFunctionPointer<LogDelegate>(core._log);
-      logDelegate(message);
+      var cbstr = (CBString)message;
+      try
+      {
+        logDelegate(cbstr);
+      }
+      finally
+      {
+        cbstr.Dispose();
+      }
     }
 
     public static void Log(this ref CBCore core, string message, CBLogLevel level)
     {
       var logLevelDelegate = Marshal.GetDelegateForFunctionPointer<LogLevelDelegate>(core._logLevel);
-      logLevelDelegate((int)level, message);
+      var cbstr = (CBString)message;
+      try
+      {
+        logLevelDelegate((int)level, cbstr);
+      }
+      finally
+      {
+        cbstr.Dispose();
+      }
     }
 
     public static CBlockPtr CreateBlock(this ref CBCore core, string name)
     {
       var createBlockDelegate = Marshal.GetDelegateForFunctionPointer<CreateBlockDelegate>(core._createBlock);
-      return createBlockDelegate(name);
+      var cbstr = (CBString)name;
+      try
+      {
+        return createBlockDelegate(cbstr);
+      }
+      finally
+      {
+        cbstr.Dispose();
+      }
     }
 
     public static CBChainInfo GetChainInfo(this ref CBCore core, CBChainRef chainRef)
@@ -92,14 +116,30 @@ namespace Fragcolor.Chainblocks
     {
       Debug.Assert(chainRef.IsValid());
       var allocExternalVariableDelegate = Marshal.GetDelegateForFunctionPointer<AllocExternalVariableDelegate>(core._allocExternalVariable);
-      return allocExternalVariableDelegate(chainRef, name);
+      var cbstr = (CBString)name;
+      try
+      {
+        return allocExternalVariableDelegate(chainRef, cbstr);
+      }
+      finally
+      {
+        cbstr.Dispose();
+      }
     }
 
     public static void FreeExternalVariable(this ref CBCore core, CBChainRef chainRef, string name)
     {
       Debug.Assert(chainRef.IsValid());
       var freeExternalVariableDelegate = Marshal.GetDelegateForFunctionPointer<FreeExternalVariableDelegate>(core._freeExternalVariable);
-      freeExternalVariableDelegate(chainRef, name);
+      var cbstr = (CBString)name;
+      try
+      {
+        freeExternalVariableDelegate(chainRef, cbstr);
+      }
+      finally
+      {
+        cbstr.Dispose();
+      }
     }
 
     public static void CloneVar(this ref CBCore core, ref CBVar target, ref CBVar source)
@@ -115,51 +155,51 @@ namespace Fragcolor.Chainblocks
     }
   }
 
-  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+  [UnmanagedFunctionPointer(NativeMethods.CallingConv)]
   internal delegate IntPtr AllocDelegate(uint size);
 
-  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+  [UnmanagedFunctionPointer(NativeMethods.CallingConv)]
   internal delegate void FreeDelegate(IntPtr ptr);
 
-  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-  internal delegate void LogDelegate(string message);
+  [UnmanagedFunctionPointer(NativeMethods.CallingConv)]
+  internal delegate void LogDelegate(CBString message);
 
-  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-  internal delegate void LogLevelDelegate(int level, string message);
+  [UnmanagedFunctionPointer(NativeMethods.CallingConv)]
+  internal delegate void LogLevelDelegate(int level, CBString message);
 
-  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-  internal delegate CBlockPtr CreateBlockDelegate(string name);
+  [UnmanagedFunctionPointer(NativeMethods.CallingConv)]
+  internal delegate CBlockPtr CreateBlockDelegate(CBString name);
 
-  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+  [UnmanagedFunctionPointer(NativeMethods.CallingConv)]
   internal delegate CBChainInfo GetChainInfoDelegate(CBChainRef chainRef);
 
-  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+  [UnmanagedFunctionPointer(NativeMethods.CallingConv)]
   internal delegate CBNodeRef CreateNodeDelegate();
 
-  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+  [UnmanagedFunctionPointer(NativeMethods.CallingConv)]
   internal delegate void DestroyNodeDelegate(CBNodeRef nodeRef);
 
-  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+  [UnmanagedFunctionPointer(NativeMethods.CallingConv)]
   internal delegate void ScheduleDelegate(CBNodeRef nodeRef, CBChainRef chainRef);
 
-  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+  [UnmanagedFunctionPointer(NativeMethods.CallingConv)]
   internal delegate void UnscheduleDelegate(CBNodeRef nodeRef, CBChainRef chainRef);
 
-  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+  [UnmanagedFunctionPointer(NativeMethods.CallingConv)]
   internal delegate CBBool TickDelegate(CBNodeRef nodeRef);
 
-  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+  [UnmanagedFunctionPointer(NativeMethods.CallingConv)]
   internal delegate void SleepDelegate(double seconds, CBBool runCallbacks);
 
-  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-  internal delegate IntPtr AllocExternalVariableDelegate(CBChainRef chainRef, string name);
+  [UnmanagedFunctionPointer(NativeMethods.CallingConv)]
+  internal delegate IntPtr AllocExternalVariableDelegate(CBChainRef chainRef, CBString name);
 
-  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-  internal delegate void FreeExternalVariableDelegate(CBChainRef chainRef, string name);
+  [UnmanagedFunctionPointer(NativeMethods.CallingConv)]
+  internal delegate void FreeExternalVariableDelegate(CBChainRef chainRef, CBString name);
 
-  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+  [UnmanagedFunctionPointer(NativeMethods.CallingConv)]
   internal delegate void CloneVarDelegate(ref CBVar target, ref CBVar source);
 
-  [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+  [UnmanagedFunctionPointer(NativeMethods.CallingConv)]
   internal delegate void DestroyVarDelegate(IntPtr varRef);
 }

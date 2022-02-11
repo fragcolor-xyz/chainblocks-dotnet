@@ -2,8 +2,6 @@
 /* Copyright © 2022 Fragcolor Pte. Ltd. */
 
 using System;
-using System.Threading;
-
 using NUnit.Framework;
 
 namespace Fragcolor.Chainblocks.Tests
@@ -139,8 +137,13 @@ namespace Fragcolor.Chainblocks.Tests
       var.Value.SetValue((Int4)(1, 2, 3, 4));
       using var clone = var.Clone();
       Assert.AreEqual(CBType.Int4, clone.Value.type);
+      // note: external flag is not duplicated
+      // so we force setting it here in order to compare, and then we restore it
+      var flags = clone.Value.flags;
+      clone.Value.flags = CBVarFlags.External;
       Assert.AreEqual(var.Value, clone.Value);
       Assert.AreNotSame(var.Value, clone.Value);
+      clone.Value.flags = flags;
     }
 
     [Test]

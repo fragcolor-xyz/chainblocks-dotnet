@@ -32,6 +32,7 @@ namespace Fragcolor.Chainblocks
       _name = name;
       _var = Native.Core.AllocExternalVariable(chain, _name);
       Value.type = type;
+      Value.flags = CBVarFlags.External;
     }
 
     ~ExternalVariable()

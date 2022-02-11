@@ -2,8 +2,6 @@
 /* Copyright © 2022 Fragcolor Pte. Ltd. */
 
 using System;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading;
 
 namespace Fragcolor.Chainblocks
@@ -21,7 +19,15 @@ namespace Fragcolor.Chainblocks
 
     public LispEnv(string path)
     {
-      _env = NativeMethods.cbLispCreate(path);
+      var cbstr = (CBString)path;
+      try
+      {
+        _env = NativeMethods.cbLispCreate(cbstr);
+      }
+      finally
+      {
+        cbstr.Dispose();
+      }
     }
 
     ~LispEnv()
@@ -42,7 +48,7 @@ namespace Fragcolor.Chainblocks
       var cbstr = (CBString)code;
       try
       {
-        return NativeMethods.cbLispEval(_env, cbstr, output) != 0;
+        return NativeMethods.cbLispEval(_env, cbstr, output);
       }
       finally
       {

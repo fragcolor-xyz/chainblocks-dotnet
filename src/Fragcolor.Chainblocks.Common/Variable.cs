@@ -24,10 +24,7 @@ namespace Fragcolor.Chainblocks
       }
     }
 
-    public IntPtr Ptr
-    {
-      get { return _mem; }
-    }
+    public IntPtr Ptr => _mem;
 
     public Variable(bool destroy = true)
     {

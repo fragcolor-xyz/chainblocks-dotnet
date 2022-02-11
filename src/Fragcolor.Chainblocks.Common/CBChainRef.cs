@@ -11,7 +11,7 @@ namespace Fragcolor.Chainblocks
   {
     internal IntPtr _ref;
 
-    public bool IsValid()
+    public readonly bool IsValid()
     {
       return _ref != IntPtr.Zero;
     }
