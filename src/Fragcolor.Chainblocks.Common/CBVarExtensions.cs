@@ -3,8 +3,16 @@
 
 namespace Fragcolor.Chainblocks
 {
+  /// <summary>
+  /// Extension methods for <see cref="CBVar"/>.
+  /// </summary>
   public static class CBVarExtensions
   {
+    /// <summary>
+    /// Determines whether the variable base type is a floating point number.
+    /// </summary>
+    /// <param name="var">A reference to the variable.</param>
+    /// <returns><c>true</c> if the base type is a floating point number; otherwise, <c>false</c>.</returns>
     public static bool IsFloat(this ref CBVar var)
     {
       return var.type switch
@@ -17,6 +25,11 @@ namespace Fragcolor.Chainblocks
       };
     }
 
+    /// <summary>
+    /// Determines whether the variable base type is an integer.
+    /// </summary>
+    /// <param name="var">A reference to the variable.</param>
+    /// <returns><c>true</c> if the base type is an integer; otherwise, <c>false</c>.</returns>
     public static bool IsInteger(this ref CBVar var)
     {
       return var.type switch
@@ -32,83 +45,177 @@ namespace Fragcolor.Chainblocks
       };
     }
 
+    /// <summary>
+    /// Determines whether the variable type is <see cref="CBType.None"/>
+    /// </summary>
+    /// <param name="var">A reference to the variable.</param>
+    /// <returns><c>true</c> if the type is <see cref="CBType.None"/>; otherwise, <c>false</c>.</returns>
     public static bool IsNone(this ref CBVar var)
     {
       return var.type == CBType.None;
     }
 
+    /// <summary>
+    /// Sets the variable's value to the provided <paramref name="value"/>.
+    /// Also sets the variable's type accordingly.
+    /// </summary>
+    /// <param name="var">A reference to the variable.</param>
+    /// <param name="value">The value to set.</param>
     public static void SetValue(this ref CBVar var, bool value)
     {
       var.@bool = value;
       var.type = CBType.Bool;
+      // TODO: should we clone the var?
     }
 
+    /// <summary>
+    /// Sets the variable's value to the provided <paramref name="value"/>.
+    /// Also sets the variable's type accordingly.
+    /// </summary>
+    /// <param name="var">A reference to the variable.</param>
+    /// <param name="value">The value to set.</param>
     public static void SetValue(this ref CBVar var, int value)
     {
       var.@int = value;
       var.type = CBType.Int;
+      // TODO: should we clone the var?
     }
 
+    /// <summary>
+    /// Sets the variable's value to the provided <paramref name="value"/>.
+    /// Also sets the variable's type accordingly.
+    /// </summary>
+    /// <param name="var">A reference to the variable.</param>
+    /// <param name="value">The value to set.</param>
     public static void SetValue(this ref CBVar var, Int2 value)
     {
       var.int2 = value;
       var.type = CBType.Int2;
+      // TODO: should we clone the var?
     }
 
+    /// <summary>
+    /// Sets the variable's value to the provided <paramref name="value"/>.
+    /// Also sets the variable's type accordingly.
+    /// </summary>
+    /// <param name="var">A reference to the variable.</param>
+    /// <param name="value">The value to set.</param>
     public static void SetValue(this ref CBVar var, Int3 value)
     {
       var.int3 = value;
       var.type = CBType.Int3;
+      // TODO: should we clone the var?
     }
 
+    /// <summary>
+    /// Sets the variable's value to the provided <paramref name="value"/>.
+    /// Also sets the variable's type accordingly.
+    /// </summary>
+    /// <param name="var">A reference to the variable.</param>
+    /// <param name="value">The value to set.</param>
     public static void SetValue(this ref CBVar var, Int4 value)
     {
       var.int4 = value;
       var.type = CBType.Int4;
+      // TODO: should we clone the var?
     }
 
+    /// <summary>
+    /// Sets the variable's value to the provided <paramref name="value"/>.
+    /// Also sets the variable's type accordingly.
+    /// </summary>
+    /// <param name="var">A reference to the variable.</param>
+    /// <param name="value">The value to set.</param>
     public static void SetValue(this ref CBVar var, Int8 value)
     {
       var.int8 = value;
       var.type = CBType.Int8;
+      // TODO: should we clone the var?
     }
 
+    /// <summary>
+    /// Sets the variable's value to the provided <paramref name="value"/>.
+    /// Also sets the variable's type accordingly.
+    /// </summary>
+    /// <param name="var">A reference to the variable.</param>
+    /// <param name="value">The value to set.</param>
     public static void SetValue(this ref CBVar var, Int16 value)
     {
       var.int16 = value;
       var.type = CBType.Int16;
+      // TODO: should we clone the var?
     }
 
+    /// <summary>
+    /// Sets the variable's value to the provided <paramref name="value"/>.
+    /// Also sets the variable's type accordingly.
+    /// </summary>
+    /// <param name="var">A reference to the variable.</param>
+    /// <param name="value">The value to set.</param>
     public static void SetValue(this ref CBVar var, double value)
     {
       var.@float = value;
       var.type = CBType.Float;
+      // TODO: should we clone the var?
     }
 
+    /// <summary>
+    /// Sets the variable's value to the provided <paramref name="value"/>.
+    /// Also sets the variable's type accordingly.
+    /// </summary>
+    /// <param name="var">A reference to the variable.</param>
+    /// <param name="value">The value to set.</param>
     public static void SetValue(this ref CBVar var, Float2 value)
     {
       var.float2 = value;
       var.type = CBType.Float2;
+      // TODO: should we clone the var?
     }
 
+    /// <summary>
+    /// Sets the variable's value to the provided <paramref name="value"/>.
+    /// Also sets the variable's type accordingly.
+    /// </summary>
+    /// <param name="var">A reference to the variable.</param>
+    /// <param name="value">The value to set.</param>
     public static void SetValue(this ref CBVar var, Float3 value)
     {
       var.float3 = value;
       var.type = CBType.Float3;
+      // TODO: should we clone the var?
     }
 
+    /// <summary>
+    /// Sets the variable's value to the provided <paramref name="value"/>.
+    /// Also sets the variable's type accordingly.
+    /// </summary>
+    /// <param name="var">A reference to the variable.</param>
+    /// <param name="value">The value to set.</param>
     public static void SetValue(this ref CBVar var, Float4 value)
     {
       var.float4 = value;
       var.type = CBType.Float4;
+      // TODO: should we clone the var?
     }
 
+    /// <summary>
+    /// Sets the variable's value to the provided <paramref name="value"/>.
+    /// Also sets the variable's type accordingly.
+    /// </summary>
+    /// <param name="var">A reference to the variable.</param>
+    /// <param name="value">The value to set.</param>
     public static void SetValue(this ref CBVar var, CBColor value)
     {
       var.color = value;
       var.type = CBType.Color;
+      // TODO: should we clone the var?
     }
 
+    /// <summary>
+    /// Gets a <see cref="string"/> corresponding to the variable value, or <c>null</c>.
+    /// </summary>
+    /// <param name="var">A reference to the variable.</param>
+    /// <returns>A <see cref="string"/> representation of the variable of its type is <see cref="CBType.String"/>; otherwise, <c>null</c>. </returns>
     public static string? GetString(this ref CBVar var)
     {
       if (var.type != CBType.String) return null;
@@ -116,9 +223,15 @@ namespace Fragcolor.Chainblocks
       return (string?)var.@string;
     }
 
-    // TODO: add doc about not destroying the variable, depending on the situation it might leak memory
+    /// <summary>
+    /// Sets the variable's value to the provided <see cref="string"/> <paramref name="value"/>. 
+    /// Also sets the variable's type accordingly.
+    /// </summary>
+    /// <param name="var">A reference to the variable.</param>
+    /// <param name="value">The value to set.</param>
     public static void SetString(this ref CBVar var, string? value)
     {
+      // note: destroy = false since we dispose of the string at the end of the method
       using var tmp = new Variable(false);
       var cbstr = (CBString)value;
       try

@@ -6,6 +6,9 @@ using System.Runtime.InteropServices;
 
 namespace Fragcolor.Chainblocks
 {
+  /// <summary>
+  /// Represents an image.
+  /// </summary>
   [StructLayout(LayoutKind.Sequential)]
   public struct CBImage
   {

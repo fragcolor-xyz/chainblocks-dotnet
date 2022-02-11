@@ -5,6 +5,12 @@ using System.Runtime.InteropServices;
 
 namespace Fragcolor.Chainblocks
 {
+  /// <summary>
+  /// Represents type information about an exposed or required variable of a <see cref="CBlock"/>.
+  /// </summary>
+  /// <seealso cref="Collections.CBExposedTypesInfo"/>
+  /// <seealso cref="CBlockExtensions.ExposedVariables(ref CBlock)"/>
+  /// <seealso cref="CBlockExtensions.RequiredVariables(ref CBlock)"/>
   [StructLayout(LayoutKind.Sequential)]
   public struct CBExposedTypeInfo
   {

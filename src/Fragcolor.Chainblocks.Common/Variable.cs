@@ -7,12 +7,21 @@ using System.Threading;
 
 namespace Fragcolor.Chainblocks
 {
+  /// <summary>
+  /// Wraps a <see cref="CBVar"/> as a managed object.
+  /// </summary>
+  /// <remarks>
+  /// Once this instance is not used anymore, <see cref="Dispose()"/> must be called to release its memory.
+  /// </remarks>
   public sealed class Variable : IDisposable
   {
     private IntPtr _mem;
     private readonly bool _destroy;
     private int _disposeState;
 
+    /// <summary>
+    /// Gets a reference to the unmanaged <see cref="CBVar"/>.
+    /// </summary>
     public ref CBVar Value
     {
       get
@@ -24,6 +33,9 @@ namespace Fragcolor.Chainblocks
       }
     }
 
+    /// <summary>
+    /// Gets a pointer to the memory location of the unmanaged <see cref="CBVar"/>.
+    /// </summary>
     public IntPtr Ptr => _mem;
 
     public Variable(bool destroy = true)
@@ -37,6 +49,11 @@ namespace Fragcolor.Chainblocks
       Dispose(false);
     }
 
+    /// <summary>
+    /// Returns a clone of the variable with the same value and type.
+    /// </summary>
+    /// <returns>A clone of the variable with the same value and type.</returns>
+    /// <seealso cref="CBCoreExtensions.CloneVar(ref CBCore, ref CBVar, ref CBVar)"/>
     public Variable Clone()
     {
       var variable = new Variable();
@@ -44,6 +61,9 @@ namespace Fragcolor.Chainblocks
       return variable;
     }
 
+    /// <summary>
+    /// Cleans up the wrapped <see cref="CBVar"/> and releases its memory.
+    /// </summary>
     public void Dispose()
     {
       Dispose(true);

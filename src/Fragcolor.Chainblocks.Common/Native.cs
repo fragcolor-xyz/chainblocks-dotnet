@@ -7,6 +7,9 @@ using System.Threading;
 
 namespace Fragcolor.Chainblocks
 {
+  /// <summary>
+  /// Main entry point to native chainblocks.
+  /// </summary>
   public static class Native
   {
     private static CBCore _core;
@@ -14,6 +17,12 @@ namespace Fragcolor.Chainblocks
 
     private static readonly object _syncLock = new();
 
+    /// <summary>
+    /// Gets the core struct.
+    /// </summary>
+    /// <remarks>
+    /// Before accessing this property, the env must be initialized (see <see cref="LispEnv"/>).
+    /// </remarks>
     public static ref CBCore Core
     {
       get

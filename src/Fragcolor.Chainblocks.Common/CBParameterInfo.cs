@@ -7,6 +7,14 @@ using Fragcolor.Chainblocks.Collections;
 
 namespace Fragcolor.Chainblocks
 {
+  /// <summary>
+  /// Represents information about the parameter of a <seealso cref="CBlock"/>.
+  /// </summary>
+  /// <remarks>
+  /// See <see cref="CBParameterInfoExtensions"/> for available methods on this struct.
+  /// </remarks>
+  /// <seealso cref="CBParametersInfo"/>
+  /// <seealso cref="CBlockExtensions.Parameters(ref CBlock)"/>
   [StructLayout(LayoutKind.Sequential)]
   public struct CBParameterInfo
   {

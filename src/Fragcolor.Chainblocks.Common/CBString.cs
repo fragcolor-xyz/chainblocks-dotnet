@@ -9,6 +9,9 @@ using System.Text;
 
 namespace Fragcolor.Chainblocks
 {
+  /// <summary>
+  /// Represents an unmanaged string.
+  /// </summary>
   [StructLayout(LayoutKind.Sequential)]
   public struct CBString
   {

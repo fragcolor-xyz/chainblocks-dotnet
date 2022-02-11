@@ -6,6 +6,9 @@ using System.Runtime.InteropServices;
 
 namespace Fragcolor.Chainblocks
 {
+  /// <summary>
+  /// Represents a reference to a chain.
+  /// </summary>
   [StructLayout(LayoutKind.Sequential)]
   public struct CBChainRef
   {

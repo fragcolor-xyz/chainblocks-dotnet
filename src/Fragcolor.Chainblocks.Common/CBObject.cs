@@ -6,6 +6,9 @@ using System.Runtime.InteropServices;
 
 namespace Fragcolor.Chainblocks
 {
+  /// <summary>
+  /// Represents an object.
+  /// </summary>
   [StructLayout(LayoutKind.Sequential)]
   public struct CBObject
   {

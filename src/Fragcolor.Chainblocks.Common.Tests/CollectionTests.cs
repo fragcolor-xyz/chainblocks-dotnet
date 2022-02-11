@@ -69,14 +69,15 @@ namespace Fragcolor.Chainblocks.Tests
 
       var whenNotBlock = Native.Core.CreateBlock("WhenNot");
       Assert.IsTrue(whenNotBlock.IsValid());
-      Assert.Throws(typeof(IndexOutOfRangeException), () => blocks.Insert(1, whenNotBlock));
+      Assert.Throws(typeof(ArgumentOutOfRangeException), () => blocks.Insert(1, whenNotBlock));
       blocks.Insert(0, whenNotBlock);
       Assert.AreEqual(1, blocks.Count);
       var elem = blocks.At(0);
+      Assert.Throws(typeof(ArgumentOutOfRangeException), () => blocks.At(1));
       Assert.AreEqual("WhenNot", elem.Name());
 
       blocks.RemoveAt(0);
-      Assert.Throws(typeof(IndexOutOfRangeException), () => blocks.RemoveAt(0));
+      Assert.Throws(typeof(ArgumentOutOfRangeException), () => blocks.RemoveAt(0));
       Assert.AreEqual(0, blocks.Count);
       blocks.Push(ref whenBlock.AsRef());
       blocks.Insert(0, ref whenNotBlock.AsRef());
@@ -102,15 +103,16 @@ namespace Fragcolor.Chainblocks.Tests
 
       var floatInfo = default(CBExposedTypeInfo);
       floatInfo._exposedType = new() { _basicType = CBType.Float };
-      Assert.Throws(typeof(IndexOutOfRangeException), () => typeInfos.Insert(2, ref floatInfo));
+      Assert.Throws(typeof(ArgumentOutOfRangeException), () => typeInfos.Insert(2, ref floatInfo));
       typeInfos.Insert(0, ref floatInfo);
       Assert.AreEqual(2, typeInfos.Count);
 
       ref var myInfo = ref typeInfos.At(0);
+      Assert.Throws(typeof(ArgumentOutOfRangeException), () => typeInfos.At(2));
       Assert.AreEqual(CBType.Float, myInfo._exposedType.BasicType());
 
       typeInfos.RemoveAt(0);
-      Assert.Throws(typeof(IndexOutOfRangeException), () => typeInfos.RemoveAt(1));
+      Assert.Throws(typeof(ArgumentOutOfRangeException), () => typeInfos.RemoveAt(1));
       Assert.AreEqual(1, typeInfos.Count);
 
       var popped = typeInfos.Pop();
@@ -143,16 +145,17 @@ namespace Fragcolor.Chainblocks.Tests
       var floatInfo = new CBTypeInfo() { _basicType = CBType.Float };
       var floatParamInfo = default(CBParameterInfo);
       floatParamInfo.Types().Push(ref floatInfo);
-      Assert.Throws(typeof(IndexOutOfRangeException), () => paramInfos.Insert(2, ref floatParamInfo));
+      Assert.Throws(typeof(ArgumentOutOfRangeException), () => paramInfos.Insert(2, ref floatParamInfo));
       paramInfos.Insert(0, ref floatParamInfo);
       Assert.AreEqual(2, paramInfos.Count);
 
       ref var myInfo = ref paramInfos.At(0);
+      Assert.Throws(typeof(ArgumentOutOfRangeException), () => paramInfos.At(2));
       Assert.AreEqual(1, myInfo.Types().Count);
       Assert.AreEqual(CBType.Float, myInfo.Types()[0].BasicType());
 
       paramInfos.RemoveAt(0);
-      Assert.Throws(typeof(IndexOutOfRangeException), () => paramInfos.RemoveAt(1));
+      Assert.Throws(typeof(ArgumentOutOfRangeException), () => paramInfos.RemoveAt(1));
       Assert.AreEqual(1, paramInfos.Count);
 
       var popped = paramInfos.Pop();
@@ -187,17 +190,18 @@ namespace Fragcolor.Chainblocks.Tests
       Tick();
 
       using var float4 = VariableUtil.NewFloat4(new() { y = 5 });
-      Assert.Throws(typeof(IndexOutOfRangeException), () => ColVar.seq.Insert(2, ref float4.Value));
+      Assert.Throws(typeof(ArgumentOutOfRangeException), () => ColVar.seq.Insert(2, ref float4.Value));
       ColVar.seq.Insert(0, ref float4.Value);
       Assert.AreEqual(2, ColVar.seq.Count);
       Tick();
 
       ref var myvar = ref ColVar.seq.At(0);
+      Assert.Throws(typeof(ArgumentOutOfRangeException), () => ColVar.seq.At(2));
       myvar.float4.z = 42;
       Tick();
 
       ColVar.seq.RemoveAt(0);
-      Assert.Throws(typeof(IndexOutOfRangeException), () => ColVar.seq.RemoveAt(1));
+      Assert.Throws(typeof(ArgumentOutOfRangeException), () => ColVar.seq.RemoveAt(1));
       Assert.AreEqual(1, ColVar.seq.Count);
       Tick();
 
@@ -273,16 +277,17 @@ namespace Fragcolor.Chainblocks.Tests
       Tick();
 
       const string world = "мир";
-      Assert.Throws(typeof(IndexOutOfRangeException), () => strings.Insert(2, world));
+      Assert.Throws(typeof(ArgumentOutOfRangeException), () => strings.Insert(2, world));
       strings.Insert(0, world);
       Assert.AreEqual(2, strings.Count);
       Tick();
 
       var myString = strings.At(0);
+      Assert.Throws(typeof(ArgumentOutOfRangeException), () => strings.At(2));
       Assert.AreEqual(world, myString);
 
       strings.RemoveAt(0);
-      Assert.Throws(typeof(IndexOutOfRangeException), () => strings.RemoveAt(1));
+      Assert.Throws(typeof(ArgumentOutOfRangeException), () => strings.RemoveAt(1));
       Assert.AreEqual(1, strings.Count);
 
       var popped = strings.Pop();
@@ -359,15 +364,16 @@ namespace Fragcolor.Chainblocks.Tests
 
       var floatInfo = default(CBTypeInfo);
       floatInfo._basicType = CBType.Float;
-      Assert.Throws(typeof(IndexOutOfRangeException), () => typeInfos.Insert(2, ref floatInfo));
+      Assert.Throws(typeof(ArgumentOutOfRangeException), () => typeInfos.Insert(2, ref floatInfo));
       typeInfos.Insert(0, ref floatInfo);
       Assert.AreEqual(2, typeInfos.Count);
 
       ref var myInfo = ref typeInfos.At(0);
+      Assert.Throws(typeof(ArgumentOutOfRangeException), () => typeInfos.At(2));
       Assert.AreEqual(CBType.Float, myInfo.BasicType());
 
       typeInfos.RemoveAt(0);
-      Assert.Throws(typeof(IndexOutOfRangeException), () => typeInfos.RemoveAt(1));
+      Assert.Throws(typeof(ArgumentOutOfRangeException), () => typeInfos.RemoveAt(1));
       Assert.AreEqual(1, typeInfos.Count);
 
       var popped = typeInfos.Pop();

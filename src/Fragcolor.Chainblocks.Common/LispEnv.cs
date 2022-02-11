@@ -44,7 +44,7 @@ namespace Fragcolor.Chainblocks
     /// Destructs the instance.
     /// </summary>
     /// <remarks>
-    /// Consumers should call <see cref="Dispose"/> instead to ensure realiable destruction.
+    /// Consumers should call <see cref="Dispose()"/> instead to ensure realiable destruction.
     /// </remarks>
     ~LispEnv()
     {

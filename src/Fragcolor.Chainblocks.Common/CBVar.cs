@@ -8,6 +8,12 @@ using Fragcolor.Chainblocks.Collections;
 
 namespace Fragcolor.Chainblocks
 {
+  /// <summary>
+  /// Represents a variable in chainblocks.
+  /// </summary>
+  /// <remarks>
+  /// See <see cref="CBVarExtensions"/> for available methods on this struct.
+  /// </remarks>
   [StructLayout(LayoutKind.Explicit, Size = 32)]
   public struct CBVar
   {

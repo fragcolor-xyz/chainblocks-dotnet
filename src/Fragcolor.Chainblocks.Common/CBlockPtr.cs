@@ -6,6 +6,11 @@ using System.Runtime.InteropServices;
 
 namespace Fragcolor.Chainblocks
 {
+  /// <summary>
+  /// Represents a pointer to a <see cref="CBlock"/>.
+  /// </summary>
+  /// <seealso cref="CBlockExtensions.AsPointer(ref CBlock)"/>
+  /// <seealso cref="CBlockExtensions.AsRef(CBlockPtr)"/>
   [StructLayout(LayoutKind.Sequential)]
   public struct CBlockPtr
   {

@@ -7,6 +7,9 @@ using System.Runtime.InteropServices;
 
 namespace Fragcolor.Chainblocks.Collections
 {
+  /// <summary>
+  /// Represents a sequence of <see cref="CBVar"/>.
+  /// </summary>
   [StructLayout(LayoutKind.Sequential)]
   public struct CBSeq
   {
@@ -15,8 +18,17 @@ namespace Fragcolor.Chainblocks.Collections
     internal uint _length;
     internal uint _capacity;
 
+    /// <summary>
+    /// The number of elements contained in the sequence.
+    /// </summary>
     public uint Count => _length;
 
+    /// <summary>
+    /// Gets a reference to the <see cref="CBVar"/> at the specified index.
+    /// </summary>
+    /// <param name="i">The element index.</param>
+    /// <returns>A reference to the element at the specified index.</returns>
+    /// <exception cref="IndexOutOfRangeException"><paramref name="i"/> is equal to or greater than <see cref="Count"/>.</exception>
     public ref CBVar this[uint i]
     {
       get

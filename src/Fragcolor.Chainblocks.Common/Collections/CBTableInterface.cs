@@ -6,8 +6,11 @@ using System.Runtime.InteropServices;
 
 namespace Fragcolor.Chainblocks.Collections
 {
+  /// <summary>
+  /// Represents the API for manipulating a <see cref="CBTable"/>.
+  /// </summary>
   [StructLayout(LayoutKind.Sequential)]
-  public struct CBTableInterface
+  internal struct CBTableInterface
   {
     //! Native struct, don't edit
     internal IntPtr _tableGetIterator;
