@@ -2,14 +2,15 @@
 /* Copyright © 2022 Fragcolor Pte. Ltd. */
 
 using System;
-using System.Threading;
-
 using NUnit.Framework;
 
 namespace Fragcolor.Chainblocks.Tests
 {
   internal sealed class VariableTests : TestBase
   {
+    /// <summary>
+    /// Tests cloning a <see cref="CBType.Bool"/> variable.
+    /// </summary>
     [Test]
     public void TestCloneBool()
     {
@@ -20,6 +21,9 @@ namespace Fragcolor.Chainblocks.Tests
       Assert.AreNotSame(var.Value, clone.Value);
     }
 
+    /// <summary>
+    /// Tests cloning a <see cref="CBType.Int"/> variable.
+    /// </summary>
     [Test]
     public void TestCloneInt()
     {
@@ -30,6 +34,9 @@ namespace Fragcolor.Chainblocks.Tests
       Assert.AreNotSame(var.Value, clone.Value);
     }
 
+    /// <summary>
+    /// Tests cloning a <see cref="CBType.Int2"/> variable.
+    /// </summary>
     [Test]
     public void TestCloneInt2()
     {
@@ -40,6 +47,9 @@ namespace Fragcolor.Chainblocks.Tests
       Assert.AreNotSame(var.Value, clone.Value);
     }
 
+    /// <summary>
+    /// Tests cloning a <see cref="CBType.Int3"/> variable.
+    /// </summary>
     [Test]
     public void TestCloneInt3()
     {
@@ -50,6 +60,9 @@ namespace Fragcolor.Chainblocks.Tests
       Assert.AreNotSame(var.Value, clone.Value);
     }
 
+    /// <summary>
+    /// Tests cloning a <see cref="CBType.Int4"/> variable.
+    /// </summary>
     [Test]
     public void TestCloneInt4()
     {
@@ -60,6 +73,9 @@ namespace Fragcolor.Chainblocks.Tests
       Assert.AreNotSame(var.Value, clone.Value);
     }
 
+    /// <summary>
+    /// Tests cloning a <see cref="CBType.Int8"/> variable.
+    /// </summary>
     [Test]
     public void TestCloneInt8()
     {
@@ -70,6 +86,9 @@ namespace Fragcolor.Chainblocks.Tests
       Assert.AreNotSame(var.Value, clone.Value);
     }
 
+    /// <summary>
+    /// Tests cloning a <see cref="CBType.Int16"/> variable.
+    /// </summary>
     [Test]
     public void TestCloneInt16()
     {
@@ -80,6 +99,9 @@ namespace Fragcolor.Chainblocks.Tests
       Assert.AreNotSame(var.Value, clone.Value);
     }
 
+    /// <summary>
+    /// Tests cloning a <see cref="CBType.Float"/> variable.
+    /// </summary>
     [Test]
     public void TestCloneFloat()
     {
@@ -90,6 +112,9 @@ namespace Fragcolor.Chainblocks.Tests
       Assert.AreNotSame(var.Value, clone.Value);
     }
 
+    /// <summary>
+    /// Tests cloning a <see cref="CBType.Float2"/> variable.
+    /// </summary>
     [Test]
     public void TestCloneFloat2()
     {
@@ -100,6 +125,9 @@ namespace Fragcolor.Chainblocks.Tests
       Assert.AreNotSame(var.Value, clone.Value);
     }
 
+    /// <summary>
+    /// Tests cloning a <see cref="CBType.Float3"/> variable.
+    /// </summary>
     [Test]
     public void TestCloneFloat3()
     {
@@ -110,6 +138,9 @@ namespace Fragcolor.Chainblocks.Tests
       Assert.AreNotSame(var.Value, clone.Value);
     }
 
+    /// <summary>
+    /// Tests cloning a <see cref="CBType.Float4"/> variable.
+    /// </summary>
     [Test]
     public void TestCloneFloat4()
     {
@@ -120,6 +151,9 @@ namespace Fragcolor.Chainblocks.Tests
       Assert.AreNotSame(var.Value, clone.Value);
     }
 
+    /// <summary>
+    /// Tests cloning a <see cref="CBType.Color"/> variable.
+    /// </summary>
     [Test]
     public void TestCloneColor()
     {
@@ -130,6 +164,9 @@ namespace Fragcolor.Chainblocks.Tests
       Assert.AreNotSame(var.Value, clone.Value);
     }
 
+    /// <summary>
+    /// Tests cloning an external variable.
+    /// </summary>
     [Test]
     public void TestCloneExternalVariable()
     {
@@ -139,10 +176,22 @@ namespace Fragcolor.Chainblocks.Tests
       var.Value.SetValue((Int4)(1, 2, 3, 4));
       using var clone = var.Clone();
       Assert.AreEqual(CBType.Int4, clone.Value.type);
+      // note: external flag is not duplicated
+      // so we force setting it here in order to compare, and then we restore it
+      var flags = clone.Value.flags;
+      clone.Value.flags = CBVarFlags.External;
       Assert.AreEqual(var.Value, clone.Value);
       Assert.AreNotSame(var.Value, clone.Value);
+      clone.Value.flags = flags;
     }
 
+    /// <summary>
+    /// Tests the destructor of <see cref="ExternalVariable"/>;
+    /// </summary>
+    /// <remarks>
+    /// This is for completion purpose.
+    /// Consummer code is expected to properly dispose of it so that the finalizer doesn't have to be called.
+    /// </remarks>
     [Test]
     public void TestExternalVariableDestructor()
     {
@@ -156,6 +205,13 @@ namespace Fragcolor.Chainblocks.Tests
       GC.WaitForPendingFinalizers();
     }
 
+    /// <summary>
+    /// Tests the destructor of <see cref="Variable"/>;
+    /// </summary>
+    /// <remarks>
+    /// This is for completion purpose.
+    /// Consummer code is expected to properly dispose of it so that the finalizer doesn't have to be called.
+    /// </remarks>
     [Test]
     public void TestVariableDestructor()
     {

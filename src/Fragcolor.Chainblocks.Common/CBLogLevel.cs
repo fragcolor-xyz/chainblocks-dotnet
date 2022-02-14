@@ -3,6 +3,10 @@
 
 namespace Fragcolor.Chainblocks
 {
+  /// <summary>
+  /// Log levels in chainblocks.
+  /// </summary>
+  /// <seealso cref="CBCoreExtensions.Log(ref CBCore,string,CBLogLevel)"/>
   public enum CBLogLevel
   {
     //! Must match log level in chainblocks (currently from spdlog)

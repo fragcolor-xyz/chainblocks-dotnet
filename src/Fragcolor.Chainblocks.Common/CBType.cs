@@ -3,6 +3,9 @@
 
 namespace Fragcolor.Chainblocks
 {
+  /// <summary>
+  /// Enumeration of supported types for <see cref="CBVar"/>.
+  /// </summary>
   public enum CBType : byte
   {
     None,

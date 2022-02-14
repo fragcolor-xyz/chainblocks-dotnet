@@ -6,6 +6,9 @@ using System.Runtime.InteropServices;
 
 namespace Fragcolor.Chainblocks
 {
+  /// <summary>
+  /// Audio struct.
+  /// </summary>
   [StructLayout(LayoutKind.Sequential)]
   public struct CBAudio
   {

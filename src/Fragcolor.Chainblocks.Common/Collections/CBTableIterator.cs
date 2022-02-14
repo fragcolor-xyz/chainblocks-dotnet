@@ -5,6 +5,9 @@ using System.Runtime.InteropServices;
 
 namespace Fragcolor.Chainblocks.Collections
 {
+  /// <summary>
+  /// Represents an iterator inside a <see cref="CBTable"/>.
+  /// </summary>
   [StructLayout(LayoutKind.Sequential)]
   public struct CBTableIterator
   {

@@ -5,6 +5,9 @@ using System.Runtime.InteropServices;
 
 namespace Fragcolor.Chainblocks
 {
+  /// <summary>
+  /// Represents a boolean value.
+  /// </summary>
   [StructLayout(LayoutKind.Sequential)]
   public struct CBBool
   {

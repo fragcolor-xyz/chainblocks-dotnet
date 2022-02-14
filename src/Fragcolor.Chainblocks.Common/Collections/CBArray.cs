@@ -6,6 +6,9 @@ using System.Runtime.InteropServices;
 
 namespace Fragcolor.Chainblocks.Collections
 {
+  /// <summary>
+  /// Represents a pointer to an unmanaged array.
+  /// </summary>
   [StructLayout(LayoutKind.Sequential)]
   public struct CBArray
   {

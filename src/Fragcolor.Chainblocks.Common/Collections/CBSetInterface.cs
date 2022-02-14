@@ -6,8 +6,11 @@ using System.Runtime.InteropServices;
 
 namespace Fragcolor.Chainblocks.Collections
 {
+  /// <summary>
+  /// Represents the API for manipulating a <see cref="CBSet"/>.
+  /// </summary>
   [StructLayout(LayoutKind.Sequential)]
-  public struct CBSetInterface
+  internal struct CBSetInterface
   {
     //! Native struct, don't edit
     internal IntPtr _setGetIterator;

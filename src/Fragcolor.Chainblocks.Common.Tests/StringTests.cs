@@ -5,6 +5,9 @@ using NUnit.Framework;
 
 namespace Fragcolor.Chainblocks.Tests
 {
+  /// <summary>
+  /// Tests for string manipulations.
+  /// </summary>
   [TestFixture]
   internal sealed class StringTests : TestBase
   {
@@ -15,6 +18,9 @@ namespace Fragcolor.Chainblocks.Tests
       _chain.Dispose();
     }
 
+    /// <summary>
+    /// Tests setting string values.
+    /// </summary>
     [Test]
     public void TestSetString()
     {
@@ -41,6 +47,9 @@ namespace Fragcolor.Chainblocks.Tests
       Assert.AreEqual("WORLD", result.Value.GetString());
     }
 
+    /// <summary>
+    /// Tests getting string values.
+    /// </summary>
     [Test]
     public void TestGetString()
     {

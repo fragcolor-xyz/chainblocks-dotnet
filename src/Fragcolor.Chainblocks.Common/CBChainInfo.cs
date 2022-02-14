@@ -8,6 +8,12 @@ using Fragcolor.Chainblocks.Collections;
 
 namespace Fragcolor.Chainblocks
 {
+  /// <summary>
+  /// Represents information about a chain.
+  /// </summary>
+  /// <remarks>
+  /// See <see cref="CBChainInfoExtensions"/> for available methods on this struct.
+  /// </remarks>
   [StructLayout(LayoutKind.Sequential)]
   public struct CBChainInfo
   {

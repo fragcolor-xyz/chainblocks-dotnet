@@ -5,6 +5,9 @@ using System.Runtime.InteropServices;
 
 namespace Fragcolor.Chainblocks
 {
+  /// <summary>
+  /// Represents an enum.
+  /// </summary>
   [StructLayout(LayoutKind.Sequential)]
   public struct CBEnum
   {

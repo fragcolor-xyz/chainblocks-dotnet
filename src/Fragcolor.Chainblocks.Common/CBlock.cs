@@ -6,6 +6,12 @@ using System.Runtime.InteropServices;
 
 namespace Fragcolor.Chainblocks
 {
+  /// <summary>
+  /// Block struct.
+  /// </summary>
+  /// <remarks>
+  /// See <see cref="CBlockExtensions"/> for available methods on this struct.
+  /// </remarks>
   [StructLayout(LayoutKind.Sequential)]
   public struct CBlock
   {

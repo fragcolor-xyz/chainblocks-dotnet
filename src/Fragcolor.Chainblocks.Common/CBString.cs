@@ -3,10 +3,15 @@
 
 using System;
 using System.Runtime.InteropServices;
+#if !NETCOREAPP
 using System.Text;
+#endif
 
 namespace Fragcolor.Chainblocks
 {
+  /// <summary>
+  /// Represents an unmanaged string.
+  /// </summary>
   [StructLayout(LayoutKind.Sequential)]
   public struct CBString
   {
@@ -21,9 +26,9 @@ namespace Fragcolor.Chainblocks
       if (str._str == IntPtr.Zero) return null;
       unsafe
       {
-        byte* ptr = (byte*)str._str;
-        int length = 0;
-        for (byte* i = ptr; *i != 0; i++, length++) ;
+        var ptr = (byte*) str._str;
+        var length = 0;
+        for (var i = ptr; *i != 0; i++, length++) ;
 
         return Encoding.UTF8.GetString(ptr, length);
       }

@@ -6,6 +6,12 @@ using System.Runtime.InteropServices;
 
 namespace Fragcolor.Chainblocks
 {
+  /// <summary>
+  /// Core struct.
+  /// </summary>
+  /// <remarks>
+  /// See <see cref="CBCoreExtensions"/> for available methods on this struct.
+  /// </remarks>
   [StructLayout(LayoutKind.Sequential)]
   public struct CBCore
   {

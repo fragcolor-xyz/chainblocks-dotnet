@@ -6,12 +6,15 @@ using System.Runtime.InteropServices;
 
 namespace Fragcolor.Chainblocks
 {
+  /// <summary>
+  /// Represents a reference to a node.
+  /// </summary>
   [StructLayout(LayoutKind.Sequential)]
   public struct CBNodeRef
   {
     internal IntPtr _ref;
 
-    public bool IsValid()
+    public readonly bool IsValid()
     {
       return _ref != IntPtr.Zero;
     }
