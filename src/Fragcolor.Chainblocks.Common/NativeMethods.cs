@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 namespace Fragcolor.Chainblocks
 {
   /// <summary>
-  /// Native methods defined externally on the libcbl library.
+  /// Native methods defined externally in the libcbl library.
   /// </summary>
   /// <remarks>
   /// Names are case sensitive and must match the exported symbols.
