@@ -2,9 +2,9 @@
   <Import Project="../Fragcolor.props" />
   <PropertyGroup>
     <!--<Description></Description>-->
-    <AssemblyName>Fragcolor.Chainblocks.Common</AssemblyName>
-    <AssemblyTitle>Fragcolor.Chainblocks.Common</AssemblyTitle>
-    <PackageId>Fragcolor.Chainblocks.Common</PackageId>
+    <AssemblyName>Fragcolor.Chainblocks.Claymore</AssemblyName>
+    <AssemblyTitle>Fragcolor.Chainblocks.Claymore</AssemblyTitle>
+    <PackageId>Fragcolor.Chainblocks.Claymore</PackageId>
     <!-- <PackageReleaseNotes></PackageReleaseNotes> -->
     <!-- /begin support for sourcelink -->
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
@@ -12,8 +12,11 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <!-- /end support for sourcelink -->
     <GeneratePackageOnBuild Condition="'$(Configuration)' == 'Release'">true</GeneratePackageOnBuild>
-    <RootNamespace>Fragcolor.Chainblocks</RootNamespace>
+    <RootNamespace>Fragcolor.Chainblocks.Claymore</RootNamespace>
   </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Fragcolor.Chainblocks.Common\Fragcolor.Chainblocks.Common.csproj" />
+  </ItemGroup>
   <ItemGroup>
     <InternalsVisibleTo Include="$(MSBuildProjectName).Tests" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">

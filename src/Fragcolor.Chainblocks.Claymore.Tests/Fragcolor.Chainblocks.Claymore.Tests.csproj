@@ -2,7 +2,7 @@
   <Import Project="../Fragcolor.props" />
   <PropertyGroup>
     <TargetFrameworks>net48;net6.0</TargetFrameworks>
-    <RootNamespace>Fragcolor.Chainblocks.Tests</RootNamespace>
+    <RootNamespace>Fragcolor.Chainblocks.Claymore.Tests</RootNamespace>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
@@ -16,9 +16,12 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Fragcolor.Chainblocks.Common\Fragcolor.Chainblocks.Common.csproj" />
+    <ProjectReference Include="..\Fragcolor.Chainblocks.Claymore\Fragcolor.Chainblocks.Claymore.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\lib\claymore.dll" Link="claymore.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="..\lib\libcbl.dll" Link="libcbl.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

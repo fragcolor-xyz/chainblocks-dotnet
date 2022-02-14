@@ -1,8 +1,18 @@
 <Project>
-  <!-- Default properties -->
+  <!-- Default assembly properties -->
   <PropertyGroup>
     <Authors>Fragcolor</Authors>
     <Copyright>Copyright © Fragcolor Pte. Ltd. 2022</Copyright>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <PackageLicenseExpression>BSD-3-Clause</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/fragcolor-xyz/chainblocks-dotnet</PackageProjectUrl>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageTags>fragcolor chainblocks csharp interop</PackageTags>
+    <TargetFrameworks>net48;netstandard2.0;net6.0</TargetFrameworks>
+    <VersionPrefix>0.0.5</VersionPrefix>
+  </PropertyGroup>
+  <!-- Default build properties -->
+  <PropertyGroup>
     <AnalysisLevel>latest</AnalysisLevel>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <LangVersion>latest</LangVersion>
