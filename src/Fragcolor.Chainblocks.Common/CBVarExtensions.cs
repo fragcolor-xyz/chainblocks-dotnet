@@ -1,6 +1,9 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
 /* Copyright © 2022 Fragcolor Pte. Ltd. */
 
+using System;
+using System.Runtime.InteropServices;
+
 namespace Fragcolor.Chainblocks
 {
   /// <summary>
@@ -209,6 +212,37 @@ namespace Fragcolor.Chainblocks
       var.color = value;
       var.type = CBType.Color;
       // TODO: should we clone the var?
+    }
+
+    public static byte[]? GetBytes(this ref CBVar var)
+    {
+      if (var.type != CBType.Bytes) return null;
+
+      var bytes = new byte[var._arrayLength];
+      Marshal.Copy(var.array._ptr, bytes, 0, bytes.Length);
+      return bytes;
+    }
+
+    public static void SetBytes(this ref CBVar var, byte[] bytes)
+    {
+      if (bytes == null) throw new ArgumentNullException(nameof(bytes));
+
+      // note: destroy = false since we dispose of the allocated array after cloning
+      using var tmp = new Variable(false);
+      var ptr = Marshal.AllocCoTaskMem(bytes.Length);
+      try
+      {
+        tmp.Value.type = CBType.Bytes;
+        tmp.Value._arrayCapacity = (uint)bytes.Length;
+        tmp.Value._arrayLength = (uint)bytes.Length;
+        Marshal.Copy(bytes, 0, ptr, bytes.Length);
+        tmp.Value.array = new() { _ptr = ptr };
+        Native.Core.CloneVar(ref var, ref tmp.Value);
+      }
+      finally
+      {
+        Marshal.FreeCoTaskMem(ptr);
+      }
     }
 
     /// <summary>

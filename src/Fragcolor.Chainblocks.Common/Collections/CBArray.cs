@@ -13,6 +13,6 @@ namespace Fragcolor.Chainblocks.Collections
   public struct CBArray
   {
     //! Native struct, don't edit
-    internal IntPtr _str;
+    internal IntPtr _ptr;
   }
 }
