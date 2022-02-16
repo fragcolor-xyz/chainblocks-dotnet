@@ -156,7 +156,10 @@ namespace Fragcolor.Chainblocks.Tests
       Assert.AreNotEqual(0, block.InputHelp()._crc);
       Assert.AreNotEqual(0, block.OutputHelp()._crc);
 #if DEBUG
-      // FIXME: decompress strings so that the messages aren't empty
+      Assert.IsFalse(string.IsNullOrEmpty((string?)block.Help()));
+      Assert.IsFalse(string.IsNullOrEmpty((string?)block.InputHelp()));
+      Assert.IsFalse(string.IsNullOrEmpty((string?)block.OutputHelp()));
+#else
       Assert.IsTrue(string.IsNullOrEmpty((string?)block.Help()));
       Assert.IsTrue(string.IsNullOrEmpty((string?)block.InputHelp()));
       Assert.IsTrue(string.IsNullOrEmpty((string?)block.OutputHelp()));

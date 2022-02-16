@@ -1,6 +1,7 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
 /* Copyright © 2022 Fragcolor Pte. Ltd. */
 
+using System;
 using NUnit.Framework;
 
 namespace Fragcolor.Chainblocks.Tests
@@ -15,7 +16,19 @@ namespace Fragcolor.Chainblocks.Tests
     public void TearDown()
     {
       UnscheduleChain();
-      _chain.Dispose();
+      _chain?.Dispose();
+    }
+
+    [Test]
+    public void TestDefaultString()
+    {
+      var cbstr = default(CBString);
+      Assert.AreEqual(IntPtr.Zero, cbstr._str);
+      Assert.IsTrue(string.IsNullOrEmpty((string?)cbstr));
+
+      var str = default(string);
+      Assert.IsNull(str);
+      Assert.AreEqual(cbstr, (CBString)str);
     }
 
     /// <summary>
