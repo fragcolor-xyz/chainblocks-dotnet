@@ -11,7 +11,7 @@ namespace Fragcolor.Chainblocks
   /// Wraps a <see cref="CBVar"/> as a managed object.
   /// </summary>
   /// <remarks>
-  /// Once this instance is not used anymore, <see cref="Dispose()"/> must be called to release its memory.
+  /// Once this instance is not used anymore, <see cref="Dispose()"/> must be called to clean up the unmanaged resource.
   /// </remarks>
   public sealed class Variable : IDisposable
   {

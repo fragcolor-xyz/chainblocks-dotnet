@@ -62,6 +62,24 @@ namespace Fragcolor.Chainblocks.Tests
     }
 
     /// <summary>
+    /// Tests the destructor of <see cref="Node"/>.
+    /// </summary>
+    /// <remarks>
+    /// This is for completion purpose.
+    /// Consummer code is expected to properly dispose of it so that the finalizer doesn't have to be called.
+    /// </remarks>
+    [Test]
+    public void TestNodeDestructor()
+    {
+      {
+        _ = new Node();
+      }
+      // destructor eventually called when out of scope
+      GC.Collect();
+      GC.WaitForPendingFinalizers();
+    }
+
+    /// <summary>
     /// Tests the sleep feature.
     /// </summary>
     [Test]

@@ -13,7 +13,7 @@ namespace Fragcolor.Chainblocks.Tests
 #pragma warning disable CS8618
     protected Variable _chain;
     private LispEnv _env;
-    private CBNodeRef _node;
+    private Node _node;
 #pragma warning restore CS8618
     private bool _isScheduled;
 
@@ -40,7 +40,7 @@ namespace Fragcolor.Chainblocks.Tests
     protected void BaseOneTimeSetup()
     {
       _env = new LispEnv();
-      _node = Native.Core.CreateNode();
+      _node = new Node();
     }
 
     /// <summary>
@@ -49,7 +49,7 @@ namespace Fragcolor.Chainblocks.Tests
     [OneTimeTearDown]
     protected void BaseOneTimeTearDown()
     {
-      Native.Core.DestroyNode(_node);
+      _node.Dispose();
       Env.Dispose();
     }
 
@@ -79,7 +79,7 @@ namespace Fragcolor.Chainblocks.Tests
     protected void ScheduleChain()
     {
       if (_isScheduled) return;
-      Native.Core.Schedule(_node, Chain);
+      _node.Schedule(Chain);
       _isScheduled = true;
     }
 
@@ -97,7 +97,7 @@ namespace Fragcolor.Chainblocks.Tests
     protected void UnscheduleChain()
     {
       if (!_isScheduled) return;
-      Native.Core.Unschedule(_node, Chain);
+      _node.Unschedule(Chain);
       _isScheduled = false;
     }
   }
