@@ -13,6 +13,37 @@ env:
 
 jobs:
   #
+  # Build claymore library
+  #
+  claymore-library-build:
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        build-type: ["Debug", "Release"]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 6.0.x
+      - name: Build
+        run: |
+          dotnet build src/Fragcolor.Chainblocks.Claymore -c ${{ matrix.build-type }}
+      - name: Upload artifact
+        if: ${{ matrix.build-type == 'Release' }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: claymore-library-build-${{ matrix.build-type }}
+          path: |
+            src/Fragcolor.Chainblocks.Claymore/bin/${{ matrix.build-type }}/*.nupkg
+            src/Fragcolor.Chainblocks.Claymore/bin/${{ matrix.build-type }}/*.snupkg
+          if-no-files-found: error
+
+  #
   # Build common library
   #
   common-library-build:
@@ -44,10 +75,22 @@ jobs:
           if-no-files-found: error
 
   #
-  # Build cbl dll
+  # Build cbl dll (native)
   #
   libcbl-build:
     uses: ./.github/workflows/cbl-dll.yml
+    secrets:
+      PAT: ${{ secrets.GH_PAT }}
+    with:
+      bitness: 64bits
+
+  #
+  # Build claymore dll (native)
+  #
+  libclaymore-build:
+    uses: ./.github/workflows/claymore.yml
+    secrets:
+      PAT: ${{ secrets.GH_PAT }}
     with:
       bitness: 64bits
 
@@ -55,7 +98,7 @@ jobs:
   # Test common library
   #
   common-library-test:
-    needs: [common-library-build, libcbl-build]
+    needs: [libcbl-build, libclaymore-build]
     runs-on: windows-2019
     strategy:
       fail-fast: false
@@ -91,11 +134,17 @@ jobs:
         with:
           name: libcbl-win64-${{ matrix.build-type }}
           path: src/lib
+      - name: Download libclaymore
+        uses: actions/download-artifact@v2
+        with:
+          name: libclaymore-win64-${{ matrix.build-type }}
+          path: src/lib
       - name: Test
         shell: msys2 {0}
         run: |
           cd src
-          dotnet test -c ${{ matrix.build-type }} -p:CollectCoverage=true -p:CoverletOutput=../coverage/ -p:CoverletOutputFormat=lcov
+          dotnet test -c ${{ matrix.build-type }} -f:net48 -p:CollectCoverage=true -p:CoverletOutput=../coverage/ -p:CoverletOutputFormat=\"json,lcov\" -p:MergeWith=../coverage/coverage.net48.json
+          dotnet test -c ${{ matrix.build-type }} -f:net6.0 -p:CollectCoverage=true -p:CoverletOutput=../coverage/ -p:CoverletOutputFormat=\"json,lcov\" -p:MergeWith=../coverage/coverage.net6.0.json
       - name: Coverage (Debug)
         if: ${{ matrix.build-type == 'Debug' }}
         uses: codecov/codecov-action@v2
@@ -227,7 +276,7 @@ jobs:
   # Build Unity project
   #
   unity-build:
-    needs: common-library-build
+    needs: [common-library-build, claymore-library-build]
     runs-on: ubuntu-latest
     container:
       image: unityci/editor:2020.3.26f1-windows-mono-0
@@ -240,6 +289,11 @@ jobs:
           fetch-depth: 1
       - name: Activate Unity license
         run: ./scripts/activate-unity-license.sh
+      - name: Download claymore library
+        uses: actions/download-artifact@v2
+        with:
+          name: claymore-library-build-Release
+          path: packages
       - name: Download common library
         uses: actions/download-artifact@v2
         with:
@@ -251,6 +305,7 @@ jobs:
           apt-get install -y unzip
           curl -L https://www.nuget.org/api/v2/package/System.Runtime.CompilerServices.Unsafe -o packages/System.Runtime.CompilerServices.Unsafe.nupkg
           unzip -p packages/System.Runtime.CompilerServices.Unsafe.nupkg lib/netstandard2.0/*.dll > Unity/Assets/Plugins/System.Runtime.CompilerServices.Unsafe.dll
+          unzip -p packages/Fragcolor.Chainblocks.Claymore.*.nupkg lib/netstandard2.0/*.dll > Unity/Assets/Plugins/Fragcolor.Chainblocks.Claymore.dll
           unzip -p packages/Fragcolor.Chainblocks.Common.*.nupkg lib/netstandard2.0/*.dll > Unity/Assets/Plugins/Fragcolor.Chainblocks.Common.dll
       - uses: actions/cache@v2
         with:

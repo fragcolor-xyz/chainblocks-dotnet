@@ -7,6 +7,9 @@ on:
         default: 64bits
         required: false
         type: string
+    secrets:
+      PAT:
+        required: true
 
 jobs:
   Windows:
@@ -24,17 +27,17 @@ jobs:
           then
             echo "::set-output name=msystem::MINGW64"
             echo "::set-output name=arch::x86_64"
-            echo "::set-output name=artifact::claymore-win64"
+            echo "::set-output name=artifact::libclaymore-win64"
           else
             echo "::set-output name=msystem::MINGW32"
             echo "::set-output name=arch::i686"
-            echo "::set-output name=artifact::claymore-win32"
+            echo "::set-output name=artifact::libclaymore-win32"
           fi
       - name: Checkout claymore
         uses: actions/checkout@v2
         with:
           repository: fragcolor-xyz/claymore
-          token: ${{ secrets.GH_PAT }}
+          token: ${{ secrets.PAT }}
           fetch-depth: 1
           submodules: recursive
           path: claymore
@@ -42,6 +45,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: fragcolor-xyz/chainblocks
+          token: ${{ secrets.PAT }}
           fetch-depth: 1
           submodules: recursive
           path: chainblocks
