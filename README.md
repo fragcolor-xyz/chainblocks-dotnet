@@ -1,9 +1,17 @@
-# Chainblocks CSharp integration
+# Chainblocks .NET integration
 
 ![CI](https://github.com/fragcolor-xyz/chainblocks-dotnet/workflows/CI/badge.svg)
 [![codecov](https://codecov.io/gh/fragcolor-xyz/chainblocks-dotnet/branch/master/graph/badge.svg?token=Ub3YZq1jfO)](https://codecov.io/gh/fragcolor-xyz/chainblocks-dotnet)
 
 This repository contains libraries and samples to integrate and interoperate with Chainblocks using .NET.
+
+## Unity
+
+The main focus is on a plugin for the Unity engine and editor.
+
+## Other engines
+
+There are other engines and frameworks that use .NET. A few samples are provided for demonstration purpose.
 
 ## License
 
