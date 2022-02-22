@@ -9,7 +9,6 @@ namespace Fragcolor.Chainblocks.Claymore
   /// <summary>
   /// Represents a pointer to a <see cref="PollState"/>.
   /// </summary>
-  /// <seealso cref="PollStateExtensions.AsPointer(ref PollState)"/>
   /// <seealso cref="PollStateExtensions.AsRef(PollStatePtr)"/>
   [StructLayout(LayoutKind.Sequential)]
   public struct PollStatePtr

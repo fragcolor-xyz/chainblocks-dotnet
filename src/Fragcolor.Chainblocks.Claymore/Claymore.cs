@@ -8,118 +8,52 @@ using System.Threading.Tasks;
 
 namespace Fragcolor.Chainblocks.Claymore
 {
- public static class Claymore
+  public static class Claymore
   {
-    private static readonly Lazy<Node> _node = new();
+    private const int DefaultWaitMillis = 10;
 
     /// <summary>
     /// Requests data corresponding to the specified <paramref name="hash"/>.
     /// </summary>
-    /// <param name="hash"></param>
+    /// <param name="hash">The hash of the requested data.</param>
+    /// <param name="waitMillis"></param>
+    /// <param name="node">An optional node to use to schedule the undelying chain.
+    /// It will use a shared one if none are provided.</param>
     /// <returns>A variable containing the requested data.</returns>
-    public static Variable RequestData(string hash)
+    public static Variable RequestData(string hash, int waitMillis = DefaultWaitMillis, Node? node = default)
     {
-      var node = _node.Value;
-      var bytes = new byte[32];
-      HexToBytes(hash, bytes);
-      ref var request = ref NativeMethods.clmrGetDataStart(bytes).AsRef();
-      PollStatePtr pollPtr = default;
-      try
+      using var request = new Request(hash, node);
+      do
       {
-        node.Schedule(request._chain.chain);
-        do
-        {
-          Native.Core.Tick(node);
-          Thread.Sleep(25);
-        } while (!NativeMethods.clmrPoll(request.Chain(), out pollPtr));
+        request.Tick();
+        Thread.Sleep(waitMillis <= 1 ? 1 : waitMillis);
+      } while (!request.IsCompleted);
 
-        var var = new Variable();
-        if (pollPtr.IsValid())
-        {
-          ref var poll = ref pollPtr.AsRef();
-          switch (poll._tag)
-          {
-            case PollStateTag.Failed:
-              // TODO
-              break;
-
-            case PollStateTag.Finished:
-              Native.Core.CloneVar(ref var.Value, ref request._result);
-              break;
-          }
-        }
-        node.Unschedule(request._chain.chain);
-
-        return var;
-      }
-      finally
-      {
-        if (pollPtr.IsValid()) NativeMethods.clmrPollFree(pollPtr);
-        NativeMethods.clmrGetDataFree(request.AsPointer());
-      }
+      return request.GetData();
     }
 
-    public static async Task<Variable> RequestDataAsync(string hash)
+    public static async Task<Variable> RequestDataAsync(string hash, int waitMillis = DefaultWaitMillis, Node? node = default, CancellationToken token = default)
     {
-      var node = _node.Value;
-      var bytes = new byte[32];
-      HexToBytes(hash, bytes);
-      var requestPtr = NativeMethods.clmrGetDataStart(bytes);
-      PollStatePtr pollPtr = default;
+      using var request = new Request(hash, node);
       try
       {
-        node.Schedule(requestPtr.AsRef()._chain.chain);
         do
         {
-          Native.Core.Tick(node);
-          await Task.Delay(25);
-        } while (!NativeMethods.clmrPoll(requestPtr.AsRef().Chain(), out pollPtr));
-
-        var var = new Variable();
-        if (pollPtr.IsValid())
-        {
-          switch (pollPtr.AsRef()._tag)
-          {
-            case PollStateTag.Failed:
-              // TODO
-              break;
-
-            case PollStateTag.Finished:
-              Native.Core.CloneVar(ref var.Value, ref requestPtr.AsRef()._result);
-              break;
-          }
-        }
-        node.Unschedule(requestPtr.AsRef().Chain());
-
-        return var;
+          request.Tick();
+          if (waitMillis <= 1)
+            await Task.Yield();
+          else
+            await Task.Delay(waitMillis, token);
+          if (token.IsCancellationRequested)
+            request.Cancel();
+        } while (!request.IsCompleted);
       }
-      finally
+      catch (OperationCanceledException)
       {
-        if (pollPtr.IsValid()) NativeMethods.clmrPollFree(pollPtr);
-        NativeMethods.clmrGetDataFree(requestPtr);
-      }
-    }
-
-    private static void HexToBytes(string src, IList<byte> bytes)
-    {
-      var offset = 0;
-      if (src[0] == '0' && (src[1] == 'x' || src[1] == 'X')) offset = 2;
-
-      for (var i = 0; offset + i < src.Length && i < bytes.Count * 2; i += 2)
-      {
-        bytes[i / 2] = (byte) (Char2Int(src[offset + i]) * 16 + Char2Int(src[offset + i + 1]));
+        request.Cancel();
       }
 
-      static int Char2Int(char input)
-      {
-        return input switch
-        {
-          >= '0' and <= '9' => input - '0',
-          >= 'A' and <= 'F' => input - 'A' + 10,
-          >= 'a' and <= 'f' => input - 'a' + 10,
-          _ => throw new ArgumentException("Invalid input string"),
-        };
-      }
+      return request.GetData();
     }
   }
 }

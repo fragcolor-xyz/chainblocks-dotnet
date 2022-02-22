@@ -81,7 +81,7 @@ namespace Fragcolor.Chainblocks
     /// Creates a new block with the specified <paramref name="name"/>.
     /// </summary>
     /// <param name="core">A reference to the core struct.</param>
-    /// <param name="name"></param>
+    /// <param name="name">The name of the block to create.</param>
     /// <returns>A pointer to the newly created block; or <c>null</c>, if no such block exists with the specified name.</returns>
     public static CBlockPtr CreateBlock(this ref CBCore core, string name)
     {
@@ -95,6 +95,18 @@ namespace Fragcolor.Chainblocks
       {
         cbstr.Dispose();
       }
+    }
+
+    /// <summary>
+    /// Stops a running chain.
+    /// </summary>
+    /// <param name="core">A reference to the core struct.</param>
+    /// <param name="chainRef">A reference to the chain.</param>
+    /// <returns>A variable with the output of the chain if it had already completed; otherwise, an empty variable.</returns>
+    public static CBVar StopChain(this ref CBCore core, CBChainRef chainRef)
+    {
+      var stopChainDelegate = Marshal.GetDelegateForFunctionPointer<StopChainDelegate>(core._stopChain);
+      return stopChainDelegate(chainRef);
     }
 
     /// <summary>
@@ -278,6 +290,9 @@ namespace Fragcolor.Chainblocks
 
   [UnmanagedFunctionPointer(NativeMethods.CallingConv)]
   internal delegate CBlockPtr CreateBlockDelegate(CBString name);
+
+  [UnmanagedFunctionPointer(NativeMethods.CallingConv)]
+  internal delegate CBVar StopChainDelegate(CBChainRef chainRef);
 
   [UnmanagedFunctionPointer(NativeMethods.CallingConv)]
   internal delegate CBChainInfo GetChainInfoDelegate(CBChainRef chainRef);

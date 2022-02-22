@@ -47,6 +47,12 @@ namespace Fragcolor.Chainblocks
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void Tick()
+    {
+      Native.Core.Tick(_nodeRef);
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Unschedule(CBChainRef chainRef)
     {
       Native.Core.Unschedule(_nodeRef, chainRef);
