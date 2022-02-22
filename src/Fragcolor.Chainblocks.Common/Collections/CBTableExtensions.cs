@@ -1,6 +1,7 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
 /* Copyright © 2022 Fragcolor Pte. Ltd. */
 
+using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -31,7 +32,7 @@ namespace Fragcolor.Chainblocks.Collections
         var cbstr = (CBString)key;
         try
         {
-          return ref atDelegate(table, cbstr);
+          return ref Unsafe.AsRef<CBVar>(atDelegate(table, cbstr).ToPointer());
         }
         finally
         {
@@ -167,7 +168,7 @@ namespace Fragcolor.Chainblocks.Collections
   }
 
   [UnmanagedFunctionPointer(NativeMethods.CallingConv)]
-  internal delegate ref CBVar TableAtDelegate(CBTable table, CBString key);
+  internal delegate IntPtr TableAtDelegate(CBTable table, CBString key);
 
   [UnmanagedFunctionPointer(NativeMethods.CallingConv)]
   internal delegate void TableClearDelegate(CBTable table);
