@@ -53,5 +53,19 @@ namespace Fragcolor.Chainblocks.Claymore.Tests
         Assert.AreEqual(0, table.Size());
       }
     }
+
+    [Test]
+    public void TestUpload()
+    {
+      var bytes = Array.Empty<byte>();
+      Claymore.Upload(bytes, "audio");
+    }
+
+    [Test]
+    public async Task TestUploadAsync()
+    {
+      var bytes = Array.Empty<byte>();
+      await Claymore.UploadAsync(bytes, "audio");
+    }
   }
 }

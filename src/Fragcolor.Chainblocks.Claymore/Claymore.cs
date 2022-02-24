@@ -55,5 +55,37 @@ namespace Fragcolor.Chainblocks.Claymore
 
       return request.GetResult();
     }
+
+    public static void Upload(byte[] bytes, string type, int waitMillis = DefaultWaitMillis, Node? node = default)
+    {
+      using var request = new UploadRequest(bytes, type, node);
+      do
+      {
+        request.Tick();
+        Thread.Sleep(waitMillis <= 1 ? 1 : waitMillis);
+      } while (!request.IsCompleted);
+    }
+
+    public static async Task UploadAsync(byte[] bytes, string type, int waitMillis = DefaultWaitMillis, Node? node = default, CancellationToken token = default)
+    {
+      using var request = new UploadRequest(bytes, type, node);
+      try
+      {
+        do
+        {
+          request.Tick();
+          if (waitMillis <= 1)
+            await Task.Yield();
+          else
+            await Task.Delay(waitMillis, token);
+          if (token.IsCancellationRequested)
+            request.Cancel();
+        } while (!request.IsCompleted);
+      }
+      catch (OperationCanceledException)
+      {
+        request.Cancel();
+      }
+    }
   }
 }

@@ -46,5 +46,11 @@ namespace Fragcolor.Chainblocks.Claymore
     /// <param name="state">A pointer to the state.</param>
     [DllImport(Dll, CallingConvention = Conv)]
     internal static extern void clmrPollFree(ClPollStatePtr state);
+
+    [DllImport(Dll, CallingConvention = Conv)]
+    internal static extern ClUploadRequestPtr clmrUpload(ref CBVar var);
+
+    [DllImport(Dll, CallingConvention = Conv)]
+    internal static extern void clmrUploadFree(ClUploadRequestPtr request);
   }
 }
