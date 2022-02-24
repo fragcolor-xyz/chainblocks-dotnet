@@ -22,29 +22,29 @@ namespace Fragcolor.Chainblocks.Claymore
     /// <param name="fragmentHash"></param>
     /// <returns>A struct that can be used to query progress on the request.</returns>
     [DllImport(Dll, CallingConvention = Conv)]
-    internal static extern GetDataRequestPtr clmrGetDataStart([MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.U1, SizeConst = 32)] byte[] fragmentHash);
+    internal static extern ClGetDataRequestPtr clmrGetDataStart([MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.U1, SizeConst = 32)] byte[] fragmentHash);
 
     /// <summary>
     /// Frees a request previously created with <see cref="clmrGetDataStart(byte[])"/>.
     /// </summary>
     /// <param name="request">A reference to the request.</param>
     [DllImport(Dll, CallingConvention = Conv)]
-    internal static extern void clmrGetDataFree(GetDataRequestPtr request);
+    internal static extern void clmrGetDataFree(ClGetDataRequestPtr request);
 
     /// <summary>
     /// Gets the progress state of a data request.
     /// </summary>
-    /// <param name="chain">A reference to the chain from the <see cref="GetDataRequest"/>.</param>
+    /// <param name="chain">A reference to the chain from the <see cref="ClGetDataRequest"/>.</param>
     /// <param name="state">A pointer to the state.</param>
     /// <returns><c>true</c> if the request has completed (either finished or failed); otherwise, <c>false</c> if it is still running.</returns>
     [DllImport(Dll, CallingConvention = Conv)]
-    internal static extern CBBool clmrPoll(CBChainRef chain, out PollStatePtr state);
+    internal static extern CBBool clmrPoll(CBChainRef chain, out ClPollStatePtr state);
 
     /// <summary>
-    /// Frees the state previously retrieved with <see cref="clmrPoll(CBChainRef, out PollStatePtr)"/>.
+    /// Frees the state previously retrieved with <see cref="clmrPoll(CBChainRef, out ClPollStatePtr)"/>.
     /// </summary>
     /// <param name="state">A pointer to the state.</param>
     [DllImport(Dll, CallingConvention = Conv)]
-    internal static extern void clmrPollFree(PollStatePtr state);
+    internal static extern void clmrPollFree(ClPollStatePtr state);
   }
 }

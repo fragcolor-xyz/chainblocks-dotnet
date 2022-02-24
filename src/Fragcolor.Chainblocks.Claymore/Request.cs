@@ -13,8 +13,8 @@ public class Request : IDisposable
   internal static readonly Lazy<Node> Node = new();
 
   private readonly Node _node;
-  private readonly GetDataRequestPtr _requestPtr;
-  private PollStatePtr _lastPoll;
+  private readonly ClGetDataRequestPtr _requestPtr;
+  private ClPollStatePtr _lastPoll;
 
   private int _completedState;
   private int _disposeState;
@@ -67,11 +67,11 @@ public class Request : IDisposable
     ref var poll = ref _lastPoll.AsRef();
     switch (poll._tag)
     {
-      case PollStateTag.Failed:
+      case ClPollStateTag.Failed:
         // TODO: save the error as string in the variable?
         break;
 
-      case PollStateTag.Finished:
+      case ClPollStateTag.Finished:
         Native.Core.CloneVar(ref variable.Value, ref _requestPtr.AsRef()._result);
         break;
     }

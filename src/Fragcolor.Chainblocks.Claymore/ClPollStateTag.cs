@@ -3,7 +3,7 @@
 
 namespace Fragcolor.Chainblocks.Claymore
 {
-  public enum PollStateTag : byte
+  public enum ClPollStateTag : byte
   {
     Running,
     Failed,

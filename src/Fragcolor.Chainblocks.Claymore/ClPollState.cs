@@ -9,9 +9,9 @@ namespace Fragcolor.Chainblocks.Claymore
   /// Represents the state of a data request.
   /// </summary>
   [StructLayout(LayoutKind.Sequential)]
-  public struct PollState
+  public struct ClPollState
   {
-    internal PollStateTag _tag;
+    internal ClPollStateTag _tag;
     internal CBVar _state;
   }
 }

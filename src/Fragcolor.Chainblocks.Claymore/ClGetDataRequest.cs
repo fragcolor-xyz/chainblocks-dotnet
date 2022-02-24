@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 namespace Fragcolor.Chainblocks.Claymore
 {
   [StructLayout(LayoutKind.Sequential)]
-  public struct GetDataRequest
+  public struct ClGetDataRequest
   {
     internal CBVar _chain;
     internal CBVar _hash;

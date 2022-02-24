@@ -7,21 +7,21 @@ using System.Runtime.CompilerServices;
 namespace Fragcolor.Chainblocks.Claymore
 {
   /// <summary>
-  /// Extension methods for <see cref="PollState"/>.
+  /// Extension methods for <see cref="ClPollState"/>.
   /// </summary>
-  public static class PollStateExtensions
+  public static class ClPollStateExtensions
   {
     /// <summary>
-    /// Reinterprets the <paramref name="ptr"/> as a reference to a <see cref="PollState"/>.
+    /// Reinterprets the <paramref name="ptr"/> as a reference to a <see cref="ClPollState"/>.
     /// </summary>
     /// <param name="ptr">The pointer whose value to reference.</param>
     /// <returns>A reference to the state.</returns>
-    public static ref PollState AsRef(this PollStatePtr ptr)
+    public static ref ClPollState AsRef(this ClPollStatePtr ptr)
     {
       Debug.Assert(ptr.IsValid());
       unsafe
       {
-        return ref Unsafe.AsRef<PollState>(ptr._ptr.ToPointer());
+        return ref Unsafe.AsRef<ClPollState>(ptr._ptr.ToPointer());
       }
     }
   }

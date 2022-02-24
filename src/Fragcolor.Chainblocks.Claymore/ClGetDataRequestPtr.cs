@@ -7,12 +7,12 @@ using System.Runtime.InteropServices;
 namespace Fragcolor.Chainblocks.Claymore
 {
   /// <summary>
-  /// Represents a pointer to a <see cref="GetDataRequest"/>.
+  /// Represents a pointer to a <see cref="ClGetDataRequest"/>.
   /// </summary>
-  /// <seealso cref="GetDataRequestExtensions.AsPointer(ref GetDataRequest)"/>
-  /// <seealso cref="GetDataRequestExtensions.AsRef(GetDataRequestPtr)"/>
+  /// <seealso cref="ClGetDataRequestExtensions.AsPointer(ref ClGetDataRequest)"/>
+  /// <seealso cref="ClGetDataRequestExtensions.AsRef(ClGetDataRequestPtr)"/>
   [StructLayout(LayoutKind.Sequential)]
-  public struct GetDataRequestPtr
+  public struct ClGetDataRequestPtr
   {
     internal IntPtr _ptr;
 

@@ -7,11 +7,11 @@ using System.Runtime.InteropServices;
 namespace Fragcolor.Chainblocks.Claymore
 {
   /// <summary>
-  /// Represents a pointer to a <see cref="PollState"/>.
+  /// Represents a pointer to a <see cref="ClPollState"/>.
   /// </summary>
-  /// <seealso cref="PollStateExtensions.AsRef(PollStatePtr)"/>
+  /// <seealso cref="ClPollStateExtensions.AsRef(ClPollStatePtr)"/>
   [StructLayout(LayoutKind.Sequential)]
-  public struct PollStatePtr
+  public struct ClPollStatePtr
   {
     internal IntPtr _ptr;
 
