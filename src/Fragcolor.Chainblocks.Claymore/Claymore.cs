@@ -22,19 +22,19 @@ namespace Fragcolor.Chainblocks.Claymore
     /// <returns>A variable containing the requested data.</returns>
     public static Variable RequestData(string hash, int waitMillis = DefaultWaitMillis, Node? node = default)
     {
-      using var request = new Request(hash, node);
+      using var request = new GetRequest(hash, node);
       do
       {
         request.Tick();
         Thread.Sleep(waitMillis <= 1 ? 1 : waitMillis);
       } while (!request.IsCompleted);
 
-      return request.GetData();
+      return request.GetResult();
     }
 
     public static async Task<Variable> RequestDataAsync(string hash, int waitMillis = DefaultWaitMillis, Node? node = default, CancellationToken token = default)
     {
-      using var request = new Request(hash, node);
+      using var request = new GetRequest(hash, node);
       try
       {
         do
@@ -53,7 +53,7 @@ namespace Fragcolor.Chainblocks.Claymore
         request.Cancel();
       }
 
-      return request.GetData();
+      return request.GetResult();
     }
   }
 }
