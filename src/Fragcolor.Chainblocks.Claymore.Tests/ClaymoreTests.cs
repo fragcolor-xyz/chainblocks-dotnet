@@ -12,13 +12,14 @@ namespace Fragcolor.Chainblocks.Claymore.Tests
   internal sealed class ClaymoreTests : TestBase
   {
     [Test]
-    public void TestMalformedHash()
+    public void TestHexToBytes()
     {
-      const string hash = "0xazerty";
-      Assert.Throws(typeof(ArgumentException), () =>
-      {
-        using var result = Claymore.RequestData(hash);
-      });
+      Assert.IsEmpty(Util.HexToBytes(""));
+      Assert.IsEmpty(Util.HexToBytes("0x"));
+      Assert.Throws(typeof(ArgumentException), () => Util.HexToBytes("zz"));
+
+      var bytes = Util.HexToBytes("0x0123456789abcdef");
+      Assert.AreEqual(8, bytes.Length);
     }
 
     [Test]
@@ -52,6 +53,17 @@ namespace Fragcolor.Chainblocks.Claymore.Tests
         // TODO: later we should have a proper error message following the timeout
         Assert.AreEqual(0, table.Size());
       }
+    }
+
+    [Test]
+    public void TestRequestDestructor()
+    {
+      {
+        _ = new GetRequest("");
+      }
+      // destructor eventually called when out of scope
+      GC.Collect();
+      GC.WaitForPendingFinalizers();
     }
 
     [Test]
