@@ -59,6 +59,9 @@ namespace Fragcolor.Chainblocks.UnityEditor.GUI
         return;
       }
 
+      var contentRect = new Rect(0, 0, position.width, position.height);
+      TopToolbar(contentRect);
+
       _hash = EditorGUILayout.TextField("Fragment hash", _hash);
       EditorGUI.BeginDisabledGroup(string.IsNullOrEmpty(_hash));
       if (GUILayout.Button(!_requests.ContainsKey(_hash) ? "Get Fragment" : "Cancel"))
@@ -78,6 +81,37 @@ namespace Fragcolor.Chainblocks.UnityEditor.GUI
 
       EditorGUI.EndDisabledGroup();
     }
+
+    private static void TopToolbar(Rect _)
+    {
+      if (Settings == null) return;
+
+      GUILayout.BeginHorizontal(EditorStyles.toolbar);
+
+      var cBuild = new GUIContent("Build");
+      var rBuild = GUILayoutUtility.GetRect(cBuild, EditorStyles.toolbarDropDown);
+      if (EditorGUI.DropdownButton(rBuild, cBuild, FocusType.Passive, EditorStyles.toolbarDropDown))
+      {
+        var menu = new GenericMenu();
+        for (var i = 0; i < Settings.builders!.Count; i++)
+        {
+          var builder = Settings.builders[i];
+          menu.AddItem(new GUIContent(builder.Name), false, OnBuild, i);
+        }
+
+        menu.DropDown(rBuild);
+      }
+
+      GUILayout.EndHorizontal();
+
+      static void OnBuild(object boxed)
+      {
+        var options = BuildPlayerWindow.DefaultBuildMethods.GetBuildPlayerOptions(default);
+        var builder = Settings!.builders![(int) boxed];
+        builder.Build(options);
+      }
+    }
+
     private static void OnUpdate()
     {
       // tick all
