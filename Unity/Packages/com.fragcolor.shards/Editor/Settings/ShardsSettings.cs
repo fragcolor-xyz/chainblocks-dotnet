@@ -9,6 +9,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 
+using Fragcolor.Shards.UnityEditor.Build;
+
 using UnityEditor;
 
 using UnityEngine;
@@ -20,6 +22,9 @@ namespace Fragcolor.Shards.UnityEditor.Settings
   /// </summary>
   internal sealed class ShardsSettings : ScriptableObject
   {
+    [SerializeField]
+    internal List<BuilderBase>? builders = new List<BuilderBase>();
+
     /// <summary>
     /// The list of asset registries.
     /// </summary>
@@ -136,6 +141,11 @@ namespace Fragcolor.Shards.UnityEditor.Settings
     internal string ConfigFolder
     {
       get { return Path.GetDirectoryName(AssetPath); }
+    }
+
+    private string BuilderFolder
+    {
+      get { return ConfigFolder + "/Builders"; }
     }
 
     /// <summary>
@@ -424,12 +434,33 @@ namespace Fragcolor.Shards.UnityEditor.Settings
       return entry;
     }
 
+    private T CreateBuilderAsset<T>()
+      where T : BuilderBase
+    {
+      if (!Directory.Exists(BuilderFolder))
+        Directory.CreateDirectory(BuilderFolder);
+
+      var path = $"{BuilderFolder}/{typeof(T).Name}.asset";
+      if (!File.Exists(path))
+      {
+        AssetDatabase.CreateAsset(CreateInstance<T>(), path);
+      }
+
+      return AssetDatabase.LoadAssetAtPath<T>(path);
+    }
+
     /// <summary>
     /// Ensures the state of this object is consistent.
     /// </summary>
     private void Validate()
     {
-      // TODO: sanity checks
+      if (builders == null || builders.Count == 0)
+      {
+        builders = new List<BuilderBase>
+        {
+          CreateBuilderAsset<DefaultBuilder>()
+        };
+      }
     }
   }
 }
