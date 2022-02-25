@@ -16,13 +16,13 @@ namespace Fragcolor.Shards.UnityEditor.Settings
   internal sealed class ShardsAssetEntry
   {
     [SerializeField]
-    internal string guid;
+    public string guid;
 
     [SerializeField]
-    internal string? hash;
+    public string? hash;
 
     [SerializeField]
-    internal string? localPath;
+    public string? localPath;
 
     //[SerializeField]
     //internal string ipfsUrl;

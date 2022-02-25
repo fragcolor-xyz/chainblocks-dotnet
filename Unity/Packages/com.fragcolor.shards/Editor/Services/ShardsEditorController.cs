@@ -79,7 +79,7 @@ namespace Fragcolor.Shards.UnityEditor.Services
     }
 
     /// <summary>
-    /// Shutdowns the underlying chainblocks environment.
+    /// Shutdowns the underlying shards environment.
     /// </summary>
     internal static void Shutdown()
     {
