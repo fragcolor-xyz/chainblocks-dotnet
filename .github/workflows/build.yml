@@ -306,7 +306,7 @@ jobs:
           curl -L https://www.nuget.org/api/v2/package/System.Runtime.CompilerServices.Unsafe -o packages/System.Runtime.CompilerServices.Unsafe.nupkg
           unzip -p packages/System.Runtime.CompilerServices.Unsafe.nupkg lib/netstandard2.0/*.dll > Unity/Packages/com.fragcolor.chainblocks/Runtime/Plugins/System.Runtime.CompilerServices.Unsafe.dll
           unzip -p packages/Fragcolor.Chainblocks.Common.*.nupkg lib/netstandard2.0/*.dll > Unity/Packages/com.fragcolor.chainblocks/Runtime/Plugins/Fragcolor.Chainblocks.Common.dll
-          unzip -p packages/Fragcolor.Chainblocks.Claymore.*.nupkg lib/netstandard2.0/*.dll > Unity/Assets/Plugins/Fragcolor.Chainblocks.Claymore.dll
+          unzip -p packages/Fragcolor.Chainblocks.Claymore.*.nupkg lib/netstandard2.0/*.dll > Unity/Packages/com.fragcolor.chainblocks/Editor/Plugins/Fragcolor.Chainblocks.Claymore.dll
       - uses: actions/cache@v2
         with:
           path: Unity/Library

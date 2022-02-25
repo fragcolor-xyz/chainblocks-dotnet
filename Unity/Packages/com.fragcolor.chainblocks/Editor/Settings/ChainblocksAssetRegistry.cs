@@ -32,8 +32,7 @@ namespace Fragcolor.Chainblocks.UnityEditor.Settings
 
     void ISerializationCallbackReceiver.OnBeforeSerialize()
     {
-      if (_serializedEntries == null)
-        _serializedEntries = new List<ChainblocksAssetEntry>(_map.Values);
+      _serializedEntries ??= new List<ChainblocksAssetEntry>(_map.Values);
     }
 
     void ISerializationCallbackReceiver.OnAfterDeserialize()

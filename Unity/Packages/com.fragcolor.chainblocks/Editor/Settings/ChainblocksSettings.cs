@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Linq;
 
 using UnityEditor;
 
@@ -24,6 +25,9 @@ namespace Fragcolor.Chainblocks.UnityEditor.Settings
     /// </summary>
     [SerializeField]
     internal List<ChainblocksAssetRegistry> registries = new List<ChainblocksAssetRegistry>();
+
+    [SerializeField]
+    internal string? defaultRegistry;
 
     [InitializeOnLoadMethod]
     private static void RegisterWithAssetPostProcessor()
@@ -75,7 +79,38 @@ namespace Fragcolor.Chainblocks.UnityEditor.Settings
       BatchModification,
     }
 
-    internal ChainblocksAssetRegistry? DefaultRegistry { get; set; }
+    internal ChainblocksAssetRegistry DefaultRegistry
+    {
+      get
+      {
+        ChainblocksAssetRegistry? registry = null;
+        if (!string.IsNullOrEmpty(defaultRegistry))
+        {
+          registry = registries.FirstOrDefault(x => x != null && x.Guid == defaultRegistry);
+        }
+
+        if (registry == null)
+        {
+          registry = registries.FirstOrDefault(x => x != null);
+        }
+
+        if (registry == null)
+        {
+          // create a default registry
+          registry = CreateDefaultRegistry(this);
+        }
+
+        defaultRegistry = registry.Guid;
+
+        return registry;
+      }
+      set
+      {
+        if (value == null || string.IsNullOrEmpty(value.Guid)) return;
+
+        defaultRegistry = value.Guid;
+      }
+    }
 
     /// <summary>
     /// The path of the settings asset.
@@ -161,6 +196,7 @@ namespace Fragcolor.Chainblocks.UnityEditor.Settings
     /// </summary>
     /// <param name="name"></param>
     /// <param name="setAsDefault"></param>
+    /// <param name="postEvent"></param>
     /// <returns>The newly created registry.</returns>
     internal ChainblocksAssetRegistry CreateRegistry(string name, bool setAsDefault, bool postEvent)
     {
@@ -184,8 +220,8 @@ namespace Fragcolor.Chainblocks.UnityEditor.Settings
 
     internal void OnPostProcessAssets((string[] imported, string[] deleted, string[] moved, string[] movedFrom) args)
     {
-      bool relatedAssetChanged = false;
-      bool settingsChanged = false;
+      var relatedAssetChanged = false;
+      var settingsChanged = false;
 
       foreach (var path in args.imported)
       {
@@ -297,7 +333,7 @@ namespace Fragcolor.Chainblocks.UnityEditor.Settings
       {
         if (string.IsNullOrEmpty(path)) return false;
 
-        bool deleteGroup = false;
+        var deleteGroup = false;
         ChainblocksAssetRegistry? toDelete = null;
         foreach (var registry in registries)
         {
@@ -324,8 +360,6 @@ namespace Fragcolor.Chainblocks.UnityEditor.Settings
       {
         if (TryFindAssetEntry(guid, out var entry))
         {
-          if (entry == null) return false;
-
           if (entry.Parent != null)
             entry.Parent.RemoveAssetEntry(entry, postEvent);
 
@@ -383,7 +417,7 @@ namespace Fragcolor.Chainblocks.UnityEditor.Settings
       return settings.CreateRegistry("Default Registry", setAsDefault: true, postEvent: false);
     }
 
-    private ChainblocksAssetEntry CreateAndAddEntryToRegistry(string guid, ChainblocksAssetRegistry parent, bool postEvent)
+    private static ChainblocksAssetEntry CreateAndAddEntryToRegistry(string guid, ChainblocksAssetRegistry parent, bool postEvent)
     {
       var entry = new ChainblocksAssetEntry(guid, parent);
       parent.AddAssetEntry(entry, postEvent);
