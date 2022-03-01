@@ -2,9 +2,11 @@
 /* Copyright © 2022 Fragcolor Pte. Ltd. */
 
 using System;
-using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using ICSharpCode.SharpZipLib.Tar;
 
 namespace Fragcolor.Chainblocks.Claymore
 {
@@ -32,7 +34,8 @@ namespace Fragcolor.Chainblocks.Claymore
       return request.GetResult();
     }
 
-    public static async Task<Variable> RequestDataAsync(string hash, int waitMillis = DefaultWaitMillis, Node? node = default, CancellationToken token = default)
+    public static async Task<Variable> RequestDataAsync(string hash, int waitMillis = DefaultWaitMillis, Node? node = default,
+      CancellationToken token = default)
     {
       using var request = new GetRequest(hash, node);
       try
@@ -86,6 +89,43 @@ namespace Fragcolor.Chainblocks.Claymore
       {
         request.Cancel();
       }
+    }
+
+    public static void UploadPath(string path, int waitMillis = DefaultWaitMillis, Node? node = default)
+    {
+      Upload(GetTarArchiveBytes(path), "archive", waitMillis, node);
+    }
+
+    public static Task UploadPathAsync(string path, int waitMillis = DefaultWaitMillis, Node? node = default, CancellationToken token = default)
+    {
+      return UploadAsync(GetTarArchiveBytes(path), "archive", waitMillis, node, token);
+    }
+
+    internal static byte[] GetTarArchiveBytes(string path)
+    {
+      if (string.IsNullOrEmpty(path)) throw new ArgumentNullException(nameof(path));
+
+      var isDirectory = Directory.Exists(path);
+      if (!isDirectory && !File.Exists(path)) throw new DirectoryNotFoundException();
+
+      using var outStream = new MemoryStream();
+      using var tarArchive = TarArchive.CreateOutputTarArchive(outStream, Encoding.UTF8);
+      tarArchive.RootPath = isDirectory ? path : Path.GetDirectoryName(path) ?? string.Empty;
+      if (isDirectory)
+      {
+        foreach (var filename in Directory.GetFiles(path))
+          tarArchive.WriteEntry(TarEntry.CreateEntryFromFile(filename), false);
+        foreach (var directory in Directory.GetDirectories(path))
+          tarArchive.WriteEntry(TarEntry.CreateEntryFromFile(directory), true);
+      }
+      else
+      {
+        tarArchive.WriteEntry(TarEntry.CreateEntryFromFile(path), false);
+      }
+
+      tarArchive.Close();
+
+      return outStream.ToArray();
     }
   }
 }

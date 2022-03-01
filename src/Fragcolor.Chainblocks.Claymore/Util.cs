@@ -1,8 +1,7 @@
+/* SPDX-License-Identifier: BSD-3-Clause */
+/* Copyright © 2022 Fragcolor Pte. Ltd. */
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Fragcolor.Chainblocks.Claymore
 {

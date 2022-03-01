@@ -9,7 +9,7 @@
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageTags>fragcolor chainblocks csharp interop</PackageTags>
     <TargetFrameworks>net48;netstandard2.0;net6.0</TargetFrameworks>
-    <VersionPrefix>0.0.5</VersionPrefix>
+    <VersionPrefix>0.0.6</VersionPrefix>
   </PropertyGroup>
   <!-- Default build properties -->
   <PropertyGroup>
