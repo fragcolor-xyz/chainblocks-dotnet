@@ -24,7 +24,7 @@ namespace Fragcolor.Chainblocks.UnityEditor.Build
 
     public override string Name => DefaultBuilderName;
 
-    internal override void Build(BuildPlayerOptions options)
+    internal override void Build(ref BuildPlayerOptions options)
     {
       if (Settings == null)
       {
@@ -83,28 +83,28 @@ namespace Fragcolor.Chainblocks.UnityEditor.Build
       }
     }
 
+    internal static void BuildWithOptions(ref BuildPlayerOptions options)
+    {
+      Settings!.builders!.Find(x => x.Name == DefaultBuilderName).Build(ref options);
+    }
+
     [InitializeOnLoadMethod]
     private static void Initialize()
     {
-      BuildPlayerWindow.RegisterBuildPlayerHandler(BuildWithOptions);
+      BuildPlayerWindow.RegisterBuildPlayerHandler(o => BuildWithOptions(ref o));
     }
 
     [MenuItem("Chainblocks/Build/Default")]
     private static void BuildFromMenu()
     {
       var options = BuildPlayerWindow.DefaultBuildMethods.GetBuildPlayerOptions(default);
-      BuildWithOptions(options);
+      BuildWithOptions(ref options);
     }
 
     [MenuItem("Chainblocks/Build/Default", true)]
     private static bool CanBuildFromMenu()
     {
       return Settings != null;
-    }
-
-    private static void BuildWithOptions(BuildPlayerOptions options)
-    {
-      Settings!.builders!.Find(x => x.Name == DefaultBuilderName).Build(options);
     }
   }
 }

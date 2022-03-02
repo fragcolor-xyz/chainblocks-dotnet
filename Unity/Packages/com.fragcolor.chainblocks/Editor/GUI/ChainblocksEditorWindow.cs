@@ -108,7 +108,7 @@ namespace Fragcolor.Chainblocks.UnityEditor.GUI
       {
         var options = BuildPlayerWindow.DefaultBuildMethods.GetBuildPlayerOptions(default);
         var builder = Settings!.builders![(int) boxed];
-        builder.Build(options);
+        builder.Build(ref options);
       }
     }
 

@@ -20,6 +20,6 @@ namespace Fragcolor.Chainblocks.UnityEditor.Build
       get { return ChainblocksSettingsDefaultObject.Settings; }
     }
 
-    internal abstract void Build(BuildPlayerOptions options);
+    internal abstract void Build(ref BuildPlayerOptions options);
   }
 }

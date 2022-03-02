@@ -10,7 +10,7 @@ using System.IO;
 using System.Linq;
 
 using Fragcolor.Chainblocks.UnityEditor.Build;
-
+using Packages.com.fragcolor.chainblocks.Editor.Build;
 using UnityEditor;
 
 using UnityEngine;
@@ -458,7 +458,8 @@ namespace Fragcolor.Chainblocks.UnityEditor.Settings
       {
         builders = new List<BuilderBase>
         {
-          CreateBuilderAsset<DefaultBuilder>()
+          CreateBuilderAsset<DefaultBuilder>(),
+          CreateBuilderAsset<BuildAndUpload>(),
         };
       }
     }
