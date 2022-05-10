@@ -1,4 +1,4 @@
-name: CI
+﻿name: CI
 
 on:
   push:
@@ -16,7 +16,7 @@ jobs:
   # Build common library
   #
   common-library-build:
-    runs-on: windows-latest
+    runs-on: windows-2019
     strategy:
       fail-fast: false
       matrix:
@@ -56,7 +56,7 @@ jobs:
   #
   common-library-test:
     needs: [common-library-build, libcbl-build]
-    runs-on: windows-latest
+    runs-on: windows-2019
     strategy:
       fail-fast: false
       matrix:
@@ -157,7 +157,7 @@ jobs:
   #
   monogame-sample-build:
     needs: common-library-build
-    runs-on: windows-latest
+    runs-on: windows-2019
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -191,7 +191,7 @@ jobs:
   #
   stride-sample-build:
     needs: common-library-build
-    runs-on: windows-latest
+    runs-on: windows-2019
     steps:
       - name: Checkout
         uses: actions/checkout@v2
