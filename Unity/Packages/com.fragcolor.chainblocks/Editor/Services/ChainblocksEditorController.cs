@@ -3,6 +3,7 @@
 
 #nullable enable
 
+using System;
 using System.Threading;
 
 using UnityEditor;
@@ -44,6 +45,8 @@ namespace Fragcolor.Chainblocks.UnityEditor.Services
         return _node!;
       }
     }
+
+    internal static event Action? Update;
 
     internal static void EnsureInitialize()
     {
@@ -96,6 +99,7 @@ namespace Fragcolor.Chainblocks.UnityEditor.Services
     private static void OnUpdate()
     {
       Node.Tick();
+      Update?.Invoke();
     }
   }
 }

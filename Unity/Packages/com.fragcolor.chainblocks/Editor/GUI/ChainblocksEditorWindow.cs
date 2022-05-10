@@ -3,13 +3,16 @@
 
 #nullable enable
 
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
 
 using Fragcolor.Chainblocks.Claymore;
 using Fragcolor.Chainblocks.Collections;
+using Fragcolor.Chainblocks.UnityEditor.Services;
 using Fragcolor.Chainblocks.UnityEditor.Settings;
 
 using UnityEditor;
@@ -47,6 +50,8 @@ namespace Fragcolor.Chainblocks.UnityEditor.GUI
       EditorApplication.update += OnUpdate;
     }
 
+    internal static ChainblocksServer? _store;
+
     private void OnGUI()
     {
       if (Settings == null)
@@ -80,6 +85,21 @@ namespace Fragcolor.Chainblocks.UnityEditor.GUI
       }
 
       EditorGUI.EndDisabledGroup();
+
+      if (GUILayout.Button(_store == null ? "Open browser" : "Close store"))
+      {
+        if (_store == null)
+        {
+          _store = new ChainblocksServer();
+          Process.Start($"http://localhost:{ChainblocksServer.Port}");
+        }
+        else
+        {
+          _store.Dispose();
+          _store = null;
+        }
+
+      }
     }
 
     private static void TopToolbar(Rect _)
@@ -175,6 +195,7 @@ namespace Fragcolor.Chainblocks.UnityEditor.GUI
           }
         }
       }
+
       AssetDatabase.SaveAssetIfDirty(Settings!.DefaultRegistry);
     }
 

@@ -1,0 +1,38 @@
+(do
+  (def headers-self {"Cross-Origin-Opener-Policy" "same-origin"
+                     "Cross-Origin-Embedder-Policy" "require-corp"})
+  (def headers-embed {"X-Frame-Options" ""
+                      "Access-Control-Allow-Origin" "*"})
+  (def headers headers-self)
+  (defloop main
+    (Setup
+     (Sequence .list :Global true :Types Type.String)
+     (Sequence .result :Types Type.String)
+     )
+     .result > .list
+    (Http.Server
+     :Port 7071
+     :Handler
+     (Chain
+      "handler" :Looped
+      (Http.Read) = .request
+      (Take "target") >= .target
+
+      (Regex.Search #"(.*)\?") >= .matches
+      (Count .matches) (When (Is 2) (-> .matches (Take 1) > .target))
+
+      .target ;;(Log "target")
+      (Match
+       ["/" (-> "/Store/index.html" (Http.SendFile headers))
+        "/landingPage" (-> "/Store/index.html" (Http.SendFile headers))
+        "/home-creator-store" (-> "/Store/index.html" (Http.SendFile headers))
+        nil (-> (Regex.Search #"/download/(.*)") > .matches
+                (Count .matches)
+                (If (Is 2)
+                    (-> .matches (Take 1) (Push .list :Global true) ;;.list (Log "list 1")
+                        "ok" (Http.Response 200))
+                    (-> "/Store" (PrependTo .target)
+                        .target (Http.SendFile headers))))])))
+    .list ;;(Log "list 2")
+    .list > .result ;;(Log "result"))
+)
