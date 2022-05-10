@@ -21,7 +21,7 @@ namespace Fragcolor.Chainblocks.UnityEditor.Services
       ChainblocksEditorController.EnsureInitialize();
 
       _chain = new Variable(false);
-      var textAsset = ChainblocksEditorUtility.LoadEditorAssetAtPath<TextAsset>("server.edn.txt");
+      var textAsset = ChainblocksEditorUtility.LoadEditorAssetAtPath<TextAsset>("server.edn");
       if (ChainblocksEditorController.Env.Eval(textAsset.text, _chain.Ptr))
       {
         _list = new ExternalVariable(_chain.Value.chain, "result", CBType.Seq);
