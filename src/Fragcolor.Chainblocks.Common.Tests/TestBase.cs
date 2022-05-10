@@ -88,7 +88,7 @@ namespace Fragcolor.Chainblocks.Tests
     /// </summary>
     protected void Tick()
     {
-      Native.Core.Tick(_node);
+      _node.Tick();
     }
 
     /// <summary>
