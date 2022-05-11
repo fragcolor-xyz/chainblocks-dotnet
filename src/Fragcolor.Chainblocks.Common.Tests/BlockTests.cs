@@ -144,7 +144,7 @@ namespace Fragcolor.Chainblocks.Tests
     /// <summary>
     /// Tests a block marked as experimental.
     /// </summary>
-    [Test]
+    [Test, Ignore("Block isn't available yet, after wgpu refactoring")]
     public void TestExperimentalBlock()
     {
       var blockPtr = Native.Core.CreateBlock("Gizmo.CubeView");
