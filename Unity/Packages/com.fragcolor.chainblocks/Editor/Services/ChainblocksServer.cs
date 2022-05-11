@@ -12,7 +12,9 @@ namespace Fragcolor.Chainblocks.UnityEditor.Services
   internal sealed class ChainblocksServer : IDisposable
   {
     private readonly Variable _chain;
-    private ExternalVariable? _list;
+    private readonly ExternalVariable? _list;
+
+    private readonly bool _evalSuccess;
 
     internal static int Port { get; set; } = 7071;
 
@@ -22,7 +24,7 @@ namespace Fragcolor.Chainblocks.UnityEditor.Services
 
       _chain = new Variable(false);
       var textAsset = ChainblocksEditorUtility.LoadEditorAssetAtPath<TextAsset>("server.edn");
-      if (ChainblocksEditorController.Env.Eval(textAsset.text, _chain.Ptr))
+      if (_evalSuccess = ChainblocksEditorController.Env.Eval(textAsset.text, _chain.Ptr))
       {
         _list = new ExternalVariable(_chain.Value.chain, "result", CBType.Seq);
         ChainblocksEditorController.Node.Schedule(_chain.Value.chain);
@@ -44,7 +46,7 @@ namespace Fragcolor.Chainblocks.UnityEditor.Services
 
     private void Dispose(bool disposing)
     {
-      if (disposing)
+      if (disposing && _evalSuccess)
       {
         ChainblocksEditorController.Update -= OnUpdate;
         Native.Core.Unschedule(ChainblocksEditorController.Node, _chain.Value.chain);
