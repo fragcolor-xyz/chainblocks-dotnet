@@ -1,10 +1,14 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
 /* Copyright © 2022 Fragcolor Pte. Ltd. */
 
+using Fragcolor.Chainblocks.Collections;
+
 namespace Fragcolor.Chainblocks
 {
   public static class VariableUtil
   {
+    // note: order in this file follows CBVar order
+
     /// <summary>
     /// Creates a new variable of type <see cref="CBType.Bool"/> with the provided <paramref name="value"/>.
     /// </summary>
@@ -178,6 +182,32 @@ namespace Fragcolor.Chainblocks
     {
       var variable = new Variable(destroy);
       variable.Value.SetValue(value);
+      return variable;
+    }
+
+    public static Variable NewSequence(CBType innerType = CBType.None, bool destroy = false)
+    {
+      var variable = new Variable(destroy);
+      variable.Value.type = CBType.Seq;
+      variable.Value._innerType = innerType;
+      return variable;
+    }
+
+    public static Variable NewTable(CBType innerType = CBType.None, bool destroy = false)
+    {
+      var variable = new Variable(destroy);
+      variable.Value.table = CBTable.New();
+      variable.Value.type = CBType.Table;
+      variable.Value._innerType = innerType;
+      return variable;
+    }
+
+    public static Variable NewSet(CBType innerType = CBType.None, bool destroy = false)
+    {
+      var variable = new Variable(destroy);
+      variable.Value.set = CBSet.New();
+      variable.Value.type = CBType.Set;
+      variable.Value._innerType = innerType;
       return variable;
     }
 

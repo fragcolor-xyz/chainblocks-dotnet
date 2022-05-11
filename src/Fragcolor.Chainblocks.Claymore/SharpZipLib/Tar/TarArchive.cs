@@ -596,7 +596,7 @@ namespace ICSharpCode.SharpZipLib.Tar
 		/// <param name="destinationDirectory">
 		/// The destination directory into which to extract.
 		/// </param>
-		public void ExtractContents(string destinationDirectory) 
+		public void ExtractContents(string destinationDirectory)
 			=> ExtractContents(destinationDirectory, false);
 
 		/// <summary>

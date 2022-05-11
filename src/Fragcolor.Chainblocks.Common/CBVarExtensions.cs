@@ -258,7 +258,7 @@ namespace Fragcolor.Chainblocks
     }
 
     /// <summary>
-    /// Sets the variable's value to the provided <see cref="string"/> <paramref name="value"/>. 
+    /// Sets the variable's value to the provided <see cref="string"/> <paramref name="value"/>.
     /// Also sets the variable's type accordingly.
     /// </summary>
     /// <param name="var">A reference to the variable.</param>
