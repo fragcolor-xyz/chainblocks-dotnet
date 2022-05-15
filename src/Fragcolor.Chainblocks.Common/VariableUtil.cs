@@ -196,5 +196,12 @@ namespace Fragcolor.Chainblocks
       variable.Value.SetValue(value);
       return variable;
     }
+
+    public static Variable NewString(string? value, bool destroy = false)
+    {
+      var variable = new Variable(destroy);
+      variable.Value.SetString(value);
+      return variable;
+    }
   }
 }
