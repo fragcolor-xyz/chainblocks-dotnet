@@ -53,7 +53,7 @@ namespace Fragcolor.Chainblocks.Claymore.Tests
     }
 
     [Test]
-    public void TestWithAny()
+    public void TestWithAny_Update()
     {
       var name = TestContext.CurrentContext.Test.Name;
       _chain = new Variable();
@@ -72,6 +72,7 @@ namespace Fragcolor.Chainblocks.Claymore.Tests
       Tick();
 
       Assert.IsTrue(external.Value.seq.Count > 0);
+      Assert.IsTrue(external.Value.seq.Count == 2);
       while (external.Value.seq.Count > 0)
       {
         var val = external.Value.seq.Pop();
@@ -81,11 +82,43 @@ namespace Fragcolor.Chainblocks.Claymore.Tests
     }
 
     [Test]
-    public void TestWithSeq()
+    public void TestWithAny_ForEach()
     {
       var name = TestContext.CurrentContext.Test.Name;
       _chain = new Variable();
       var ok = Env.Eval(@$"
+(defloop {name}
+  (Setup
+    [""hello"", ""world""] >= .local)
+  .local
+  (ForEach
+    (-> (Log) (Push .external)))
+)", _chain.Ptr);
+      Assert.IsTrue(ok);
+      Assert.IsTrue(Chain.IsValid());
+
+      var external = new ExternalVariable(Chain, "external", CBType.Any);
+
+      ScheduleChain();
+      Tick();
+
+      Assert.IsTrue(external.Value.seq.Count > 0);
+      Assert.IsTrue(external.Value.seq.Count == 2);
+      while (external.Value.seq.Count > 0)
+      {
+        var val = external.Value.seq.Pop();
+        var type = val.type;
+        var str = val.GetString();
+      }
+    }
+
+    [Test]
+    public void TestWithSeq_Update()
+    {
+      var name = TestContext.CurrentContext.Test.Name;
+      _chain = new Variable();
+      var ok = Env.Eval(@$"
+
 (defloop {name}
   (Setup
     [""hello"", ""world""] >= .local)
@@ -99,6 +132,7 @@ namespace Fragcolor.Chainblocks.Claymore.Tests
       ScheduleChain();
       Tick();
 
+      Assert.IsTrue(external.Value.seq.Count > 0);
       Assert.IsTrue(external.Value.seq.Count == 2);
       while (external.Value.seq.Count > 0)
       {
@@ -109,7 +143,39 @@ namespace Fragcolor.Chainblocks.Claymore.Tests
     }
 
     [Test]
-    public void TestWithSeqAndDummyString()
+    public void TestWithSeq_ForEach()
+    {
+      var name = TestContext.CurrentContext.Test.Name;
+      _chain = new Variable();
+      var ok = Env.Eval(@$"
+
+(defloop {name}
+  (Setup
+    [""hello"", ""world""] >= .local)
+  .local
+  (ForEach
+    (-> (Log) (Push .external)))
+)", _chain.Ptr);
+      Assert.IsTrue(ok);
+      Assert.IsTrue(Chain.IsValid());
+
+      var external = new ExternalVariable(Chain, "external", CBType.Seq);
+
+      ScheduleChain();
+      Tick();
+
+      Assert.IsTrue(external.Value.seq.Count > 0);
+      Assert.IsTrue(external.Value.seq.Count == 2);
+      while (external.Value.seq.Count > 0)
+      {
+        var val = external.Value.seq.Pop();
+        var type = val.type;
+        var str = val.GetString();
+      }
+    }
+
+    [Test]
+    public void TestWithSeqAndDummyString_Update()
     {
       var name = TestContext.CurrentContext.Test.Name;
       _chain = new Variable();
@@ -129,7 +195,41 @@ namespace Fragcolor.Chainblocks.Claymore.Tests
       ScheduleChain();
       Tick();
 
+      Assert.IsTrue(external.Value.seq.Count > 0);
       Assert.IsTrue(external.Value.seq.Count == 2);
+      while (external.Value.seq.Count > 0)
+      {
+        var val = external.Value.seq.Pop();
+        var type = val.type;
+        var str = val.GetString();
+      }
+    }
+
+    [Test]
+    public void TestWithSeqAndDummyString_ForEach()
+    {
+      var name = TestContext.CurrentContext.Test.Name;
+      _chain = new Variable();
+      var ok = Env.Eval(@$"
+(defloop {name}
+  (Setup
+    [""hello"", ""world""] >= .local)
+  .local
+  (ForEach
+    (-> (Log) (Push .external)))
+)", _chain.Ptr);
+      Assert.IsTrue(ok);
+      Assert.IsTrue(Chain.IsValid());
+
+      var external = new ExternalVariable(Chain, "external", CBType.Seq);
+      var dummy = VariableUtil.NewString("dummy");
+      external.Value.seq.Push(ref dummy.Value);
+
+      ScheduleChain();
+      Tick();
+
+      Assert.IsTrue(external.Value.seq.Count > 0);
+      Assert.IsTrue(external.Value.seq.Count == 3);
       while (external.Value.seq.Count > 0)
       {
         var val = external.Value.seq.Pop();
