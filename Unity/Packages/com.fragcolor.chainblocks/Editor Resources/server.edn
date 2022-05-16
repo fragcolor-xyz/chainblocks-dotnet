@@ -6,17 +6,14 @@
   (def headers headers-self)
   (defloop main
     (Setup
-     (Sequence .list :Global true :Types Type.String)
-     (Sequence .result :Types Type.String)
-     )
-     .result > .list
+     (Sequence .list :Global true :Types Type.String))
     (Http.Server
-     :Port 7071
+     :Port 7070
      :Handler
      (Chain
       "handler" :Looped
       (Http.Read) = .request
-      (Take "target") >= .target
+      (Take "target") >= .target (Log "target")
 
       (Regex.Search #"(.*)\?") >= .matches
       (Count .matches) (When (Is 2) (-> .matches (Take 1) > .target))
@@ -29,10 +26,14 @@
         nil (-> (Regex.Search #"/download/(.*)") > .matches
                 (Count .matches)
                 (If (Is 2)
-                    (-> .matches (Take 1) (Push .list :Global true) ;;.list (Log "list 1")
+                    (-> .matches (Take 1) (Push .list :Global true) .list
                         "ok" (Http.Response 200))
                     (-> "/Store" (PrependTo .target)
                         .target (Http.SendFile headers))))])))
-    .list ;;(Log "list 2")
-    .list > .result ;;(Log "result"))
+    (When (-> (Count .list) (IsMore 0))
+          (-> (Clear .result)
+              .list (ForEach (Push .result))
+              .result (Log "result")
+              (Clear .list)))
+    )
 )

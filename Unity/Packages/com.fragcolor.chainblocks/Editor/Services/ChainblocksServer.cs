@@ -16,7 +16,7 @@ namespace Fragcolor.Chainblocks.UnityEditor.Services
 
     private readonly bool _evalSuccess;
 
-    internal static int Port { get; set; } = 7071;
+    internal static int Port { get; set; } = 7070;
 
     internal ChainblocksServer()
     {
