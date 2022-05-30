@@ -3,20 +3,20 @@
 
 using System;
 
-using Fragcolor.Chainblocks;
+using Fragcolor.Shards;
 
 using Microsoft.Xna.Framework;
 
 namespace MyGame
 {
-    internal sealed class ChainblocksController : GameComponent
+    internal sealed class ShardsController : GameComponent
     {
         private static bool _initialized;
 
-        private static LispEnv _env;
-        private static CBNodeRef _node;
+        private static ScriptingEnv _env;
+        private static SHMeshRef _mesh;
 
-        public static LispEnv Env
+        public static ScriptingEnv Env
         {
             get
             {
@@ -27,18 +27,18 @@ namespace MyGame
             private set { _env = value; }
         }
 
-        public static CBNodeRef Node
+        public static SHMeshRef Mesh
         {
             get
             {
                 if (!_initialized)
                     throw new InvalidOperationException();
-                return _node;
+                return _mesh;
             }
-            private set { _node = value; }
+            private set { _mesh = value; }
         }
 
-        public ChainblocksController(Game game) : base(game)
+        public ShardsController(Game game) : base(game)
         {
         }
 
@@ -46,14 +46,14 @@ namespace MyGame
         {
             if (_initialized) return;
 
-            Env = new LispEnv();
-            Node = Native.Core.CreateNode();
+            Env = new ScriptingEnv();
+            Mesh = Native.Core.CreateMesh();
             _initialized = true;
         }
 
         public override void Update(GameTime _)
         {
-            Native.Core.Tick(Node);
+            Native.Core.Tick(Mesh);
         }
     }
 }

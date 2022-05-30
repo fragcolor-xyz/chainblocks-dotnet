@@ -1,11 +1,11 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Scripts/Test1.cs" type="Script" id=1]
-[ext_resource path="res://Scripts/ChainblocksController.cs" type="Script" id=2]
+[ext_resource path="res://Scripts/ShardsController.cs" type="Script" id=2]
 
 [node name="Spatial" type="Spatial"]
 
-[node name="ChainblocksController" type="Node" parent="."]
+[node name="ShardsController" type="Node" parent="."]
 script = ExtResource( 2 )
 
 [node name="Spatial" type="Spatial" parent="."]

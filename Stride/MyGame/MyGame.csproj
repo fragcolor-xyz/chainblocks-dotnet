@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Fragcolor.Chainblocks.Common" Version="0.0.5" />
+    <PackageReference Include="Fragcolor.Shards.Common" Version="0.0.5" />
     <PackageReference Include="Stride.Engine" Version="4.1.0.1459-beta" />
 
     <PackageReference Include="Stride.Video" Version="4.1.0.1459-beta" />
@@ -17,7 +17,7 @@
     <PackageReference Include="Stride.Core.Assets.CompilerApp" Version="4.1.0.1459-beta" IncludeAssets="build;buildTransitive" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="libcbl.dll">
+    <None Update="libshards.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

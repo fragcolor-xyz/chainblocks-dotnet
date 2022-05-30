@@ -2,13 +2,13 @@
 
 ## Required external libraries
 
-### libcbl
+### libshards
 
-Get it from [chainblocks](https://github.com/fragcolor-xyz/chainblocks) repo by building the `cbl-dll` target.
+Get it from [shards](https://github.com/fragcolor-xyz/shards) repo by building the `shards-dll` target.
 
-### Chainblocks.Common
+### Fragcolor.Shards.Common
 
-Compile the project under `src/`  and copy the `Chainblocks.Common.dll` here.
+Compile the project under `src/` and copy the `Fragcolor.Shards.Common.dll` here.
 
 ### System.Runtime.CompilerServices.Unsafe
 
