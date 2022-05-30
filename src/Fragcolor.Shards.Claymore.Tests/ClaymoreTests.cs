@@ -12,16 +12,17 @@ namespace Fragcolor.Shards.Claymore.Tests
   internal sealed class ClaymoreTests : TestBase
   {
     [Test]
-    public void TestMalformedHash()
+    public void TestHexToBytes()
     {
-      const string hash = "0xazerty";
-      Assert.Throws(typeof(ArgumentException), () =>
-      {
-        using var result = Claymore.RequestData(hash);
-      });
+      Assert.IsEmpty(Util.HexToBytes(""));
+      Assert.IsEmpty(Util.HexToBytes("0x"));
+      Assert.Throws(typeof(ArgumentException), () => Util.HexToBytes("zz"));
+
+      var bytes = Util.HexToBytes("0x0123456789abcdef");
+      Assert.AreEqual(8, bytes.Length);
     }
 
-    [Test]
+    [Test, Ignore("Disabled until we can mock the sending side")]
     public void TestRequestData()
     {
       const string hash = "0x0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef";
@@ -35,7 +36,7 @@ namespace Fragcolor.Shards.Claymore.Tests
       Assert.AreEqual(0, table.Size());
     }
 
-    [Test]
+    [Test, Ignore("Disabled until we can mock the sending side")]
     public async Task TestRequestDataAsync()
     {
       const string hash = "0X0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF";
@@ -54,14 +55,25 @@ namespace Fragcolor.Shards.Claymore.Tests
       }
     }
 
-    [Test]
+    [Test, Ignore("Disabled until we can mock the sending side")]
+    public void TestRequestDestructor()
+    {
+      {
+        _ = new GetRequest("");
+      }
+      // destructor eventually called when out of scope
+      GC.Collect();
+      GC.WaitForPendingFinalizers();
+    }
+
+    [Test, Ignore("Disabled until we can mock the receiving side")]
     public void TestUpload()
     {
       var bytes = Array.Empty<byte>();
       Claymore.Upload(bytes, "audio");
     }
 
-    [Test]
+    [Test, Ignore("Disabled until we can mock the receiving side")]
     public async Task TestUploadAsync()
     {
       var bytes = Array.Empty<byte>();
