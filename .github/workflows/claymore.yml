@@ -106,5 +106,5 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: ${{ steps.setup.outputs.artifact }}-${{ matrix.build-type }}
-          path: claymore/target/${{ matrix.build-type }}/claymore.dll
+          path: claymore/target/${{ matrix.build-type }}/claylib.dll
           if-no-files-found: error

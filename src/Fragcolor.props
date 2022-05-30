@@ -5,9 +5,9 @@
     <Copyright>Copyright © Fragcolor Pte. Ltd. 2022</Copyright>
     <NeutralLanguage>en-US</NeutralLanguage>
     <PackageLicenseExpression>BSD-3-Clause</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/fragcolor-xyz/chainblocks-dotnet</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/fragcolor-xyz/sharp-shards</PackageProjectUrl>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <PackageTags>fragcolor chainblocks csharp interop</PackageTags>
+    <PackageTags>fragcolor shards csharp interop</PackageTags>
     <TargetFrameworks>net48;netstandard2.0;net6.0</TargetFrameworks>
     <VersionPrefix>0.0.5</VersionPrefix>
   </PropertyGroup>

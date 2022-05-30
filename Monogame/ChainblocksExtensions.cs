@@ -3,13 +3,13 @@
 
 using System.Runtime.CompilerServices;
 
-using Fragcolor.Chainblocks;
+using Fragcolor.Shards;
 
 using Microsoft.Xna.Framework;
 
 namespace MyGame
 {
-    internal static class ChainblocksExtensions
+    internal static class ShardsExtensions
     {
         public static Float2 ToFloat2(this ref Vector2 vector)
         {

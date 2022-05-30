@@ -39,7 +39,7 @@ Hierarchy:
                         Id: daa55f81-862c-4c8b-a150-784fb8490192
         -   Entity:
                 Id: 9b1d041c-77ba-48f2-8767-1e4743f15369
-                Name: ChainblocksController
+                Name: ShardsController
                 Components:
                     cf43b1cc8ac5c04142e97b0de418fd82: !TransformComponent
                         Id: 5864ec5d-2588-4e32-aaeb-fc6a8ee5fb84
@@ -47,7 +47,7 @@ Hierarchy:
                         Rotation: {X: 0.0, Y: 0.0, Z: -1.1591046E-08, W: 1.0}
                         Scale: {X: 1.0, Y: 1.0, Z: 1.0}
                         Children: {}
-                    3d9c9d5e94672d0688c09af92128e4d8: !MyGame.ChainblocksController,MyGame
+                    3d9c9d5e94672d0688c09af92128e4d8: !MyGame.ShardsController,MyGame
                         Id: af657bb3-00e1-4fe1-bb7f-ad23c90435ac
                         Priority: -1
         -   Entity:

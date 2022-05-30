@@ -241,7 +241,7 @@ GameObject:
   - component: {fileID: 839428905}
   - component: {fileID: 839428904}
   m_Layer: 0
-  m_Name: ChainblocksGame
+  m_Name: ShardsGame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

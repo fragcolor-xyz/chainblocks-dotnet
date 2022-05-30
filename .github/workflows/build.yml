@@ -32,15 +32,15 @@ jobs:
           dotnet-version: 6.0.x
       - name: Build
         run: |
-          dotnet build src/Fragcolor.Chainblocks.Claymore -c ${{ matrix.build-type }}
+          dotnet build src/Fragcolor.Shards.Claymore -c ${{ matrix.build-type }}
       - name: Upload artifact
         if: ${{ matrix.build-type == 'Release' }}
         uses: actions/upload-artifact@v2
         with:
           name: claymore-library-build-${{ matrix.build-type }}
           path: |
-            src/Fragcolor.Chainblocks.Claymore/bin/${{ matrix.build-type }}/*.nupkg
-            src/Fragcolor.Chainblocks.Claymore/bin/${{ matrix.build-type }}/*.snupkg
+            src/Fragcolor.Shards.Claymore/bin/${{ matrix.build-type }}/*.nupkg
+            src/Fragcolor.Shards.Claymore/bin/${{ matrix.build-type }}/*.snupkg
           if-no-files-found: error
 
   #
@@ -63,19 +63,19 @@ jobs:
           dotnet-version: 6.0.x
       - name: Build
         run: |
-          dotnet build src/Fragcolor.Chainblocks.Common -c ${{ matrix.build-type }}
+          dotnet build src/Fragcolor.Shards.Common -c ${{ matrix.build-type }}
       - name: Upload artifact
         if: ${{ matrix.build-type == 'Release' }}
         uses: actions/upload-artifact@v2
         with:
           name: common-library-build-${{ matrix.build-type }}
           path: |
-            src/Fragcolor.Chainblocks.Common/bin/${{ matrix.build-type }}/*.nupkg
-            src/Fragcolor.Chainblocks.Common/bin/${{ matrix.build-type }}/*.snupkg
+            src/Fragcolor.Shards.Common/bin/${{ matrix.build-type }}/*.nupkg
+            src/Fragcolor.Shards.Common/bin/${{ matrix.build-type }}/*.snupkg
           if-no-files-found: error
 
   #
-  # Build cbl dll (native)
+  # Build shards dll (native)
   #
   libcbl-build:
     uses: ./.github/workflows/cbl-dll.yml
@@ -305,8 +305,8 @@ jobs:
           apt-get install -y unzip
           curl -L https://www.nuget.org/api/v2/package/System.Runtime.CompilerServices.Unsafe -o packages/System.Runtime.CompilerServices.Unsafe.nupkg
           unzip -p packages/System.Runtime.CompilerServices.Unsafe.nupkg lib/netstandard2.0/*.dll > Unity/Assets/Plugins/System.Runtime.CompilerServices.Unsafe.dll
-          unzip -p packages/Fragcolor.Chainblocks.Claymore.*.nupkg lib/netstandard2.0/*.dll > Unity/Assets/Plugins/Fragcolor.Chainblocks.Claymore.dll
-          unzip -p packages/Fragcolor.Chainblocks.Common.*.nupkg lib/netstandard2.0/*.dll > Unity/Assets/Plugins/Fragcolor.Chainblocks.Common.dll
+          unzip -p packages/Fragcolor.Shards.Claymore.*.nupkg lib/netstandard2.0/*.dll > Unity/Assets/Plugins/Fragcolor.Shards.Claymore.dll
+          unzip -p packages/Fragcolor.Shards.Common.*.nupkg lib/netstandard2.0/*.dll > Unity/Assets/Plugins/Fragcolor.Shards.Common.dll
       - uses: actions/cache@v2
         with:
           path: Unity/Library
