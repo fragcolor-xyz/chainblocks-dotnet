@@ -12,13 +12,14 @@ namespace Fragcolor.Shards.Claymore.Tests
   internal sealed class ClaymoreTests : TestBase
   {
     [Test]
-    public void TestMalformedHash()
+    public void TestHexToBytes()
     {
-      const string hash = "0xazerty";
-      Assert.Throws(typeof(ArgumentException), () =>
-      {
-        using var result = Claymore.RequestData(hash);
-      });
+      Assert.IsEmpty(Util.HexToBytes(""));
+      Assert.IsEmpty(Util.HexToBytes("0x"));
+      Assert.Throws(typeof(ArgumentException), () => Util.HexToBytes("zz"));
+
+      var bytes = Util.HexToBytes("0x0123456789abcdef");
+      Assert.AreEqual(8, bytes.Length);
     }
 
     [Test]
@@ -55,13 +56,24 @@ namespace Fragcolor.Shards.Claymore.Tests
     }
 
     [Test]
+    public void TestRequestDestructor()
+    {
+      {
+        _ = new GetRequest("");
+      }
+      // destructor eventually called when out of scope
+      GC.Collect();
+      GC.WaitForPendingFinalizers();
+    }
+
+    [Test, Ignore("Disabled until we can mock the receiving side")]
     public void TestUpload()
     {
       var bytes = Array.Empty<byte>();
       Claymore.Upload(bytes, "audio");
     }
 
-    [Test]
+    [Test, Ignore("Disabled until we can mock the receiving side")]
     public async Task TestUploadAsync()
     {
       var bytes = Array.Empty<byte>();
