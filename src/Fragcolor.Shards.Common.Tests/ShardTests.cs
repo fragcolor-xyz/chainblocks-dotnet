@@ -144,7 +144,7 @@ namespace Fragcolor.Shards.Tests
     /// <summary>
     /// Tests a shard marked as experimental.
     /// </summary>
-    [Test]
+    [Test, Ignore("Block isn't available yet, after wgpu refactoring")]
     public void TestExperimentalShard()
     {
       var shardPtr = Native.Core.CreateShard("Gizmo.CubeView");
