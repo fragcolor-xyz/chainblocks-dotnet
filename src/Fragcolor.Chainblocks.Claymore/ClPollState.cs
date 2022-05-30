@@ -1,18 +1,17 @@
 /* SPDX-License-Identifier: BSD-3-Clause */
 /* Copyright © 2022 Fragcolor Pte. Ltd. */
 
-using System;
 using System.Runtime.InteropServices;
 
-namespace Fragcolor.Chainblocks.Collections
+namespace Fragcolor.Chainblocks.Claymore
 {
   /// <summary>
-  /// Represents a pointer to an unmanaged array.
+  /// Represents the state of a data request.
   /// </summary>
   [StructLayout(LayoutKind.Sequential)]
-  public struct CBArray
+  public struct ClPollState
   {
-    //! Native struct, don't edit
-    internal IntPtr _ptr;
+    internal ClPollStateTag _tag;
+    internal CBVar _state;
   }
 }

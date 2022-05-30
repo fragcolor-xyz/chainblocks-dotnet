@@ -1,4 +1,4 @@
-name: claymore
+﻿name: claymore
 
 on:
   workflow_call:
@@ -7,10 +7,13 @@ on:
         default: 64bits
         required: false
         type: string
+    secrets:
+      PAT:
+        required: true
 
 jobs:
   Windows:
-    runs-on: windows-latest
+    runs-on: windows-2019
     strategy:
       fail-fast: false
       matrix:
@@ -24,17 +27,17 @@ jobs:
           then
             echo "::set-output name=msystem::MINGW64"
             echo "::set-output name=arch::x86_64"
-            echo "::set-output name=artifact::claymore-win64"
+            echo "::set-output name=artifact::libclaymore-win64"
           else
             echo "::set-output name=msystem::MINGW32"
             echo "::set-output name=arch::i686"
-            echo "::set-output name=artifact::claymore-win32"
+            echo "::set-output name=artifact::libclaymore-win32"
           fi
       - name: Checkout claymore
         uses: actions/checkout@v2
         with:
           repository: fragcolor-xyz/claymore
-          token: ${{ secrets.GH_PAT }}
+          token: ${{ secrets.PAT }}
           fetch-depth: 1
           submodules: recursive
           path: claymore
@@ -42,6 +45,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: fragcolor-xyz/chainblocks
+          token: ${{ secrets.PAT }}
           fetch-depth: 1
           submodules: recursive
           path: chainblocks
@@ -50,10 +54,19 @@ jobs:
           RUSTUP_USE_CURL: 1
         run: |
           rustup update
-          rustup default stable-${{ steps.setup.outputs.arch }}-pc-windows-gnu
-      - uses: Swatinem/rust-cache@v1
-        with:
-          key: ${{ matrix.build-type }}
+          rustup toolchain install nightly
+          rustup +nightly target add ${{ steps.setup.outputs.arch }}-pc-windows-gnu
+          rustup default nightly-${{ steps.setup.outputs.arch }}-pc-windows-gnu
+      - name: Set up 32-bits
+        env:
+          RUSTUP_USE_CURL: 1
+        if: ${{ inputs.bitness == '32bits' }}
+        shell: bash
+        run: |
+          # Native libClang required for rust bindgen
+          # choco exit with code 1 after successful install
+          choco install -y --force llvm || exit 0
+          echo "LIBCLANG_PATH=C:\Program Files\LLVM\lib" >> $GITHUB_ENV
       - name: Set up MSYS2
         uses: msys2/setup-msys2@v2
         with:
@@ -64,11 +77,15 @@ jobs:
             base-devel
             mingw-w64-${{ steps.setup.outputs.arch }}-toolchain
             mingw-w64-${{ steps.setup.outputs.arch }}-cmake
-            mingw-w64-${{ steps.setup.outputs.arch }}-boost
             mingw-w64-${{ steps.setup.outputs.arch }}-ninja
             mingw-w64-${{ steps.setup.outputs.arch }}-clang
             mingw-w64-${{ steps.setup.outputs.arch }}-lld
             wget
+      - name: Bootstrap
+        shell: msys2 {0}
+        run: |
+          cd chainblocks
+          ./bootstrap
       - name: Build (Release)
         if: ${{ matrix.build-type == 'Release' }}
         env:

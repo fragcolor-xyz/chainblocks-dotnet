@@ -5,12 +5,18 @@ VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fragcolor.Chainblocks.Common", "Fragcolor.Chainblocks.Common\Fragcolor.Chainblocks.Common.csproj", "{C61E6865-D4B4-4651-BA5B-4A6580FF93E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fragcolor.Chainblocks.Common.Tests", "Fragcolor.Chainblocks.Common.Tests\Fragcolor.Chainblocks.Common.Tests.csproj", "{2A89EB4B-174E-412D-9956-CA31A45C4E46}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fragcolor.Chainblocks.Common.Tests", "Fragcolor.Chainblocks.Common.Tests\Fragcolor.Chainblocks.Common.Tests.csproj", "{2A89EB4B-174E-412D-9956-CA31A45C4E46}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BE8C68BB-7A2B-47EE-AEA4-FD72195B9217}"
 	ProjectSection(SolutionItems) = preProject
 		Fragcolor.props = Fragcolor.props
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fragcolor.Chainblocks.Claymore", "Fragcolor.Chainblocks.Claymore\Fragcolor.Chainblocks.Claymore.csproj", "{DE08A59E-4A2B-4B73-AD81-F834F6C0DBB5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fragcolor.Chainblocks.Claymore.Tests", "Fragcolor.Chainblocks.Claymore.Tests\Fragcolor.Chainblocks.Claymore.Tests.csproj", "{D1B07DA5-F2D7-4D18-B433-E455F5B32E9F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{22E83667-6074-49B9-93C9-696E5CA87A7F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,9 +32,21 @@ Global
 		{2A89EB4B-174E-412D-9956-CA31A45C4E46}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2A89EB4B-174E-412D-9956-CA31A45C4E46}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2A89EB4B-174E-412D-9956-CA31A45C4E46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE08A59E-4A2B-4B73-AD81-F834F6C0DBB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE08A59E-4A2B-4B73-AD81-F834F6C0DBB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE08A59E-4A2B-4B73-AD81-F834F6C0DBB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE08A59E-4A2B-4B73-AD81-F834F6C0DBB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1B07DA5-F2D7-4D18-B433-E455F5B32E9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1B07DA5-F2D7-4D18-B433-E455F5B32E9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1B07DA5-F2D7-4D18-B433-E455F5B32E9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1B07DA5-F2D7-4D18-B433-E455F5B32E9F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2A89EB4B-174E-412D-9956-CA31A45C4E46} = {22E83667-6074-49B9-93C9-696E5CA87A7F}
+		{D1B07DA5-F2D7-4D18-B433-E455F5B32E9F} = {22E83667-6074-49B9-93C9-696E5CA87A7F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F6CFD21C-517B-4AAC-BC90-99923A826A42}
