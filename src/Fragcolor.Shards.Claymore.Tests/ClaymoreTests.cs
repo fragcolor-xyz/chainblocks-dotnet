@@ -22,7 +22,7 @@ namespace Fragcolor.Shards.Claymore.Tests
       Assert.AreEqual(8, bytes.Length);
     }
 
-    [Test]
+    [Test, Ignore("Disabled until we can mock the sending side")]
     public void TestRequestData()
     {
       const string hash = "0x0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef";
@@ -36,7 +36,7 @@ namespace Fragcolor.Shards.Claymore.Tests
       Assert.AreEqual(0, table.Size());
     }
 
-    [Test]
+    [Test, Ignore("Disabled until we can mock the sending side")]
     public async Task TestRequestDataAsync()
     {
       const string hash = "0X0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF";
