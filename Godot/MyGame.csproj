@@ -3,10 +3,10 @@
     <TargetFramework>net472</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Fragcolor.Chainblocks.Common" Version="0.0.5" />
+    <PackageReference Include="Fragcolor.Shards.Common" Version="0.0.5" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="libcbl.dll">
+    <None Update="libshards.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

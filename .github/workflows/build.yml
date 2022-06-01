@@ -32,22 +32,22 @@ jobs:
           dotnet-version: 6.0.x
       - name: Build
         run: |
-          dotnet build src/Fragcolor.Chainblocks.Claymore -c ${{ matrix.build-type }}
+          dotnet build src/Fragcolor.Shards.Claymore -c ${{ matrix.build-type }}
       - name: Upload artifact
         if: ${{ matrix.build-type == 'Release' }}
         uses: actions/upload-artifact@v2
         with:
-          name: claymore-library-build-${{ matrix.build-type }}
+          name: claymore-library-build ${{ matrix.build-type }}
           path: |
-            src/Fragcolor.Chainblocks.Claymore/bin/${{ matrix.build-type }}/*.nupkg
-            src/Fragcolor.Chainblocks.Claymore/bin/${{ matrix.build-type }}/*.snupkg
+            src/Fragcolor.Shards.Claymore/bin/${{ matrix.build-type }}/*.nupkg
+            src/Fragcolor.Shards.Claymore/bin/${{ matrix.build-type }}/*.snupkg
           if-no-files-found: error
 
   #
   # Build common library
   #
   common-library-build:
-    runs-on: windows-2019
+    runs-on: windows-latest
     strategy:
       fail-fast: false
       matrix:
@@ -63,34 +63,41 @@ jobs:
           dotnet-version: 6.0.x
       - name: Build
         run: |
-          dotnet build src/Fragcolor.Chainblocks.Common -c ${{ matrix.build-type }}
+          dotnet build src/Fragcolor.Shards.Common -c ${{ matrix.build-type }}
       - name: Upload artifact
         if: ${{ matrix.build-type == 'Release' }}
         uses: actions/upload-artifact@v2
         with:
-          name: common-library-build-${{ matrix.build-type }}
+          name: common-library-build ${{ matrix.build-type }}
           path: |
-            src/Fragcolor.Chainblocks.Common/bin/${{ matrix.build-type }}/*.nupkg
-            src/Fragcolor.Chainblocks.Common/bin/${{ matrix.build-type }}/*.snupkg
+            src/Fragcolor.Shards.Common/bin/${{ matrix.build-type }}/*.nupkg
+            src/Fragcolor.Shards.Common/bin/${{ matrix.build-type }}/*.snupkg
           if-no-files-found: error
 
   #
-  # Build cbl dll (native)
+  # Build shards dll (native)
   #
-  libcbl-build:
-    uses: ./.github/workflows/cbl-dll.yml
-    secrets:
-      PAT: ${{ secrets.GH_PAT }}
+  libshards-build-Debug:
+    uses: fragcolor-xyz/shards/.github/workflows/build-windows.yml@devel
+    secrets: inherit
     with:
       bitness: 64bits
+      build-type: Debug
+      binary-type: Library
+  libshards-build-Release:
+    uses: fragcolor-xyz/shards/.github/workflows/build-windows.yml@devel
+    secrets: inherit
+    with:
+      bitness: 64bits
+      build-type: Release
+      binary-type: Library
 
   #
   # Build claymore dll (native)
   #
   libclaymore-build:
     uses: ./.github/workflows/claymore.yml
-    secrets:
-      PAT: ${{ secrets.GH_PAT }}
+    secrets: inherit
     with:
       bitness: 64bits
 
@@ -98,8 +105,8 @@ jobs:
   # Test common library
   #
   common-library-test:
-    needs: [libcbl-build, libclaymore-build]
-    runs-on: windows-2019
+    needs: [libshards-build-Debug, libshards-build-Release, libclaymore-build]
+    runs-on: windows-latest
     strategy:
       fail-fast: false
       matrix:
@@ -129,17 +136,19 @@ jobs:
           path-type: inherit
           install: >-
             mingw-w64-x86_64-boost
-      - name: Download libcbl
+      - name: Download libshards
         uses: actions/download-artifact@v2
         with:
-          name: libcbl-win64-${{ matrix.build-type }}
+          name: libshards-win64 ${{ matrix.build-type }}
           path: src/lib
       - name: Download libclaymore
         uses: actions/download-artifact@v2
         with:
-          name: libclaymore-win64-${{ matrix.build-type }}
+          name: libclaymore-win64 ${{ matrix.build-type }}
           path: src/lib
       - name: Test
+        env:
+          RUST_BACKTRACE: 1
         shell: msys2 {0}
         run: |
           cd src
@@ -156,7 +165,7 @@ jobs:
         if: ${{ matrix.build-type == 'Debug' }}
         uses: actions/upload-artifact@v2
         with:
-          name: common-library-coverage-${{ matrix.build-type }}
+          name: common-library-coverage ${{ matrix.build-type }}
           path: src/coverage/
           if-no-files-found: error
 
@@ -188,7 +197,7 @@ jobs:
       - name: Download common library
         uses: actions/download-artifact@v2
         with:
-          name: common-library-build-Release
+          name: common-library-build Release
           path: Nuget_Source
       - name: Build
         run: |
@@ -206,7 +215,7 @@ jobs:
   #
   monogame-sample-build:
     needs: common-library-build
-    runs-on: windows-2019
+    runs-on: windows-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -215,14 +224,16 @@ jobs:
       - name: Setup dotnet
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: 3.1.x
+          dotnet-version: |
+            3.1.x
+            6.0.x
       - name: Setup nuget local source
         run: |
           dotnet nuget add source "${{ github.workspace }}\Nuget_Source" -n "Local"
       - name: Download common library
         uses: actions/download-artifact@v2
         with:
-          name: common-library-build-Release
+          name: common-library-build Release
           path: Nuget_Source
       - name: Build
         run: |
@@ -240,7 +251,7 @@ jobs:
   #
   stride-sample-build:
     needs: common-library-build
-    runs-on: windows-2019
+    runs-on: windows-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -259,7 +270,7 @@ jobs:
       - name: Download common library
         uses: actions/download-artifact@v2
         with:
-          name: common-library-build-Release
+          name: common-library-build Release
           path: Nuget_Source
       - name: Build
         run: |
@@ -292,12 +303,12 @@ jobs:
       - name: Download claymore library
         uses: actions/download-artifact@v2
         with:
-          name: claymore-library-build-Release
+          name: claymore-library-build Release
           path: packages
       - name: Download common library
         uses: actions/download-artifact@v2
         with:
-          name: common-library-build-Release
+          name: common-library-build Release
           path: packages
       - name: Setup dependencies
         run: |
@@ -305,8 +316,8 @@ jobs:
           apt-get install -y unzip
           curl -L https://www.nuget.org/api/v2/package/System.Runtime.CompilerServices.Unsafe -o packages/System.Runtime.CompilerServices.Unsafe.nupkg
           unzip -p packages/System.Runtime.CompilerServices.Unsafe.nupkg lib/netstandard2.0/*.dll > Unity/Assets/Plugins/System.Runtime.CompilerServices.Unsafe.dll
-          unzip -p packages/Fragcolor.Chainblocks.Claymore.*.nupkg lib/netstandard2.0/*.dll > Unity/Assets/Plugins/Fragcolor.Chainblocks.Claymore.dll
-          unzip -p packages/Fragcolor.Chainblocks.Common.*.nupkg lib/netstandard2.0/*.dll > Unity/Assets/Plugins/Fragcolor.Chainblocks.Common.dll
+          unzip -p packages/Fragcolor.Shards.Claymore.*.nupkg lib/netstandard2.0/*.dll > Unity/Assets/Plugins/Fragcolor.Shards.Claymore.dll
+          unzip -p packages/Fragcolor.Shards.Common.*.nupkg lib/netstandard2.0/*.dll > Unity/Assets/Plugins/Fragcolor.Shards.Common.dll
       - uses: actions/cache@v2
         with:
           path: Unity/Library

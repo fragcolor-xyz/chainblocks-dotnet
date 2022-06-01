@@ -1,9 +1,9 @@
-# Chainblocks .NET integration
+# Shards .NET integration
 
-![CI](https://github.com/fragcolor-xyz/chainblocks-dotnet/workflows/CI/badge.svg)
-[![codecov](https://codecov.io/gh/fragcolor-xyz/chainblocks-dotnet/branch/master/graph/badge.svg?token=Ub3YZq1jfO)](https://codecov.io/gh/fragcolor-xyz/chainblocks-dotnet)
+![CI](https://github.com/fragcolor-xyz/sharp-shards/workflows/CI/badge.svg)
+[![codecov](https://codecov.io/gh/fragcolor-xyz/sharp-shards/branch/master/graph/badge.svg?token=Ub3YZq1jfO)](https://codecov.io/gh/fragcolor-xyz/sharp-shards)
 
-This repository contains libraries and samples to integrate and interoperate with Chainblocks using .NET.
+This repository contains libraries and samples to integrate and interoperate with Shards using .NET.
 
 ## Unity
 

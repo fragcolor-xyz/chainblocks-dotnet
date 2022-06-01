@@ -3,7 +3,7 @@
 
 using System.Threading.Tasks;
 
-using Fragcolor.Chainblocks;
+using Fragcolor.Shards;
 
 using Stride.Core.Mathematics;
 using Stride.Engine;
@@ -14,12 +14,12 @@ namespace MyGame
     {
         private ExternalVariable _position;
 
-        private Variable _chain;
+        private Variable _wire;
 
         public override void Cancel()
         {
             Log.Debug("Cancel");
-            Native.Core.Unschedule(ChainblocksController.Node, _chain.Value.chain);
+            Native.Core.Unschedule(ShardsController.Mesh, _wire.Value.wire);
             base.Cancel(); // note: dispose the collected objects in reverse order
         }
 
@@ -27,16 +27,16 @@ namespace MyGame
         {
             Log.Debug("Start");
 
-            _chain = new Variable();
-            ChainblocksController.Env.Eval("(Chain \"test\" :Looped (Msg \"XXX\") .position (Log) (Pause 1.0))", _chain.Ptr);
+            _wire = new Variable();
+            ShardsController.Env.Eval("(Wire \"test\" :Looped (Msg \"XXX\") .position (Log) (Pause 1.0))", _wire.Ptr);
 
             var position = new Vector3(3, 4, 5);
-            _position = new ExternalVariable(_chain.Value.chain, "position", CBType.Float3);
+            _position = new ExternalVariable(_wire.Value.wire, "position", SHType.Float3);
             _position.Value.float3 = position.ToFloat3();
 
-            Collector.Add(_chain);
+            Collector.Add(_wire);
             Collector.Add(_position);
-            Native.Core.Schedule(ChainblocksController.Node, _chain.Value.chain);
+            Native.Core.Schedule(ShardsController.Mesh, _wire.Value.wire);
 
             while (Game.IsRunning)
             {

@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="../Fragcolor.props" />
+  <PropertyGroup>
+    <!--<Description></Description>-->
+    <AssemblyName>Fragcolor.Shards.Claymore</AssemblyName>
+    <AssemblyTitle>Fragcolor.Shards.Claymore</AssemblyTitle>
+    <PackageId>Fragcolor.Shards.Claymore</PackageId>
+    <!-- <PackageReleaseNotes></PackageReleaseNotes> -->
+    <!-- /begin support for sourcelink -->
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <!-- /end support for sourcelink -->
+    <GeneratePackageOnBuild Condition="'$(Configuration)' == 'Release'">true</GeneratePackageOnBuild>
+    <RootNamespace>Fragcolor.Shards.Claymore</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Fragcolor.Shards.Common\Fragcolor.Shards.Common.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="$(MSBuildProjectName).Tests" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.0.0" />
+  </ItemGroup>
+</Project>

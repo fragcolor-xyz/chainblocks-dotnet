@@ -24,7 +24,7 @@ namespace MyGame
 
         protected override void Initialize()
         {
-            Components.Add(new ChainblocksController(this));
+            Components.Add(new ShardsController(this));
 
             base.Initialize();
 

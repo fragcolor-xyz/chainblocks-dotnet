@@ -7,9 +7,6 @@ on:
         default: 64bits
         required: false
         type: string
-    secrets:
-      PAT:
-        required: true
 
 jobs:
   Windows:
@@ -37,18 +34,16 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: fragcolor-xyz/claymore
-          token: ${{ secrets.PAT }}
           fetch-depth: 1
           submodules: recursive
           path: claymore
-      - name: Checkout chainblocks
+      - name: Checkout shards
         uses: actions/checkout@v2
         with:
-          repository: fragcolor-xyz/chainblocks
-          token: ${{ secrets.PAT }}
+          repository: fragcolor-xyz/shards
           fetch-depth: 1
           submodules: recursive
-          path: chainblocks
+          path: shards
       - name: Set up rust
         env:
           RUSTUP_USE_CURL: 1
@@ -84,7 +79,7 @@ jobs:
       - name: Bootstrap
         shell: msys2 {0}
         run: |
-          cd chainblocks
+          cd shards
           ./bootstrap
       - name: Build (Release)
         if: ${{ matrix.build-type == 'Release' }}
@@ -93,7 +88,7 @@ jobs:
         shell: msys2 {0}
         run: |
           cd claymore
-          cargo build --release -p claymore
+          cargo build --release -p claylib
       - name: Build (Debug)
         if: ${{ matrix.build-type == 'Debug' }}
         env:
@@ -101,10 +96,10 @@ jobs:
         shell: msys2 {0}
         run: |
           cd claymore
-          cargo build -p claymore
+          cargo build -p claylib
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ steps.setup.outputs.artifact }}-${{ matrix.build-type }}
-          path: claymore/target/${{ matrix.build-type }}/claymore.dll
+          name: ${{ steps.setup.outputs.artifact }} ${{ matrix.build-type }}
+          path: claymore/target/${{ matrix.build-type }}/claylib.dll
           if-no-files-found: error
