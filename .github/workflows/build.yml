@@ -315,9 +315,9 @@ jobs:
           apt-get update
           apt-get install -y unzip
           curl -L https://www.nuget.org/api/v2/package/System.Runtime.CompilerServices.Unsafe -o packages/System.Runtime.CompilerServices.Unsafe.nupkg
-          unzip -p packages/System.Runtime.CompilerServices.Unsafe.nupkg lib/netstandard2.0/*.dll > Unity/Assets/Plugins/System.Runtime.CompilerServices.Unsafe.dll
-          unzip -p packages/Fragcolor.Shards.Claymore.*.nupkg lib/netstandard2.0/*.dll > Unity/Assets/Plugins/Fragcolor.Shards.Claymore.dll
-          unzip -p packages/Fragcolor.Shards.Common.*.nupkg lib/netstandard2.0/*.dll > Unity/Assets/Plugins/Fragcolor.Shards.Common.dll
+          unzip -p packages/System.Runtime.CompilerServices.Unsafe.nupkg lib/netstandard2.0/*.dll > Unity/Packages/com.fragcolor.shards/Runtime/Plugins/System.Runtime.CompilerServices.Unsafe.dll
+          unzip -p packages/Fragcolor.Shards.Common.*.nupkg lib/netstandard2.0/*.dll > Unity/Packages/com.fragcolor.shards/Runtime/Plugins/Fragcolor.Shards.Common.dll
+          unzip -p packages/Fragcolor.Shards.Claymore.*.nupkg lib/netstandard2.0/*.dll > Unity/Packages/com.fragcolor.shards/Editor/Plugins/Fragcolor.Shards.Claymore.dll
       - uses: actions/cache@v2
         with:
           path: Unity/Library
