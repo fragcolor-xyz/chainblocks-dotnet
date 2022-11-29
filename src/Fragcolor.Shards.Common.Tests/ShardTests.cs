@@ -118,13 +118,20 @@ namespace Fragcolor.Shards.Tests
         Assert.AreEqual(1, outputs.Count);
         Assert.AreEqual(SHType.Any, outputs[0].BasicType());
         var parameters = shard.Parameters();
-        Assert.AreEqual(1, parameters.Count);
+        Assert.AreEqual(2, parameters.Count);
         {
-          var param = parameters[0];
+          var param = parameters.At(0);
           Assert.AreEqual("Prefix", param.Name());
           var paramTypes = param.Types();
           Assert.AreEqual(1, paramTypes.Count);
           Assert.AreEqual(SHType.String, paramTypes[0].BasicType());
+        }
+        {
+          var param = parameters.At(1);
+          Assert.AreEqual("Level", param.Name());
+          var paramTypes = param.Types();
+          Assert.AreEqual(1, paramTypes.Count);
+          Assert.AreEqual(SHType.Enum, paramTypes[0].BasicType());
         }
       }
 

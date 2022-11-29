@@ -22,6 +22,6 @@ namespace Fragcolor.Shards
     internal SHBool _protected;
     internal SHBool _tableEntry;
     internal SHBool _global;
-    internal SHWireRef _scope;
+    internal SHBool _pushTable;
   }
 }

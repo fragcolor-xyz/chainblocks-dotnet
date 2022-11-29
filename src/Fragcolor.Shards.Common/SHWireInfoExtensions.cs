@@ -23,6 +23,17 @@ namespace Fragcolor.Shards
     }
 
     /// <summary>
+    /// Determines whether the wire has failed.
+    /// </summary>
+    /// <param name="info">A reference to the wire info.</param>
+    /// <returns><c>true</c> is the wire has failed; otherwise, <c>false</c>.</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool HasFailed(this ref SHWireInfo info)
+    {
+      return info._failed;
+    }
+
+    /// <summary>
     /// Determines whether the wire is looped.
     /// </summary>
     /// <param name="info">A reference to the wire info.</param>

@@ -22,6 +22,7 @@ namespace Fragcolor.Shards
     internal SHWireRef Wire;
     internal Collections.Shards _shards;
     internal SHBool _running;
+    internal SHBool _failed;
     internal IntPtr _failureMessage;
     internal IntPtr _finalOutput;
   }
