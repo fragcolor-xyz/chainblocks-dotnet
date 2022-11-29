@@ -4,6 +4,7 @@
     <TargetFrameworks>net48;net6.0</TargetFrameworks>
     <RootNamespace>Fragcolor.Shards.Tests</RootNamespace>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <RuntimeIdentifiers>win-x64;linux-x64</RuntimeIdentifiers>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
   <ItemGroup>
@@ -19,7 +20,7 @@
     <ProjectReference Include="..\Fragcolor.Shards.Common\Fragcolor.Shards.Common.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\lib\libshards.dll" Link="libshards.dll">
+    <None Include="..\lib\libshards$(_NativeLibraryExtension)" Link="libshards$(_NativeLibraryExtension)">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

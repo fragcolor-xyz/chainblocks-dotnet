@@ -4,6 +4,7 @@
     <TargetFrameworks>net48;net6.0</TargetFrameworks>
     <RootNamespace>Fragcolor.Shards.Claymore.Tests</RootNamespace>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <RuntimeIdentifiers>win-x64;linux-x64</RuntimeIdentifiers>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
   <ItemGroup>
@@ -19,10 +20,10 @@
     <ProjectReference Include="..\Fragcolor.Shards.Claymore\Fragcolor.Shards.Claymore.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\lib\claylib.dll" Link="claylib.dll">
+    <None Include="..\lib\claylib$(_NativeLibraryExtension)" Link="claylib$(_NativeLibraryExtension)">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="..\lib\libshards.dll" Link="libshards.dll">
+    <None Include="..\lib\libshards$(_NativeLibraryExtension)" Link="libshards$(_NativeLibraryExtension)">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
